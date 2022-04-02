@@ -26,15 +26,13 @@ namespace My_Computer_Tools_Ⅱ
             }
         }
 
-
-
-        /// &lt;summary&gt;
+        /// <summary>
         /// 添加一个节点及次节点的子节点
-        /// &lt;/summary&gt;
-        /// &lt;param name="_XmlFilePath"&gt;文件路径&lt;/param&gt;
-        /// &lt;param name="_ParentNode"&gt;父节点&lt;/param&gt;
-        /// &lt;param name="ChildNode"&gt;子节点名称&lt;/param&gt;
-        /// &lt;param name="Content"&gt;&lt;/param&gt;
+        /// </summary>
+        /// <param name="_ParentNode">文件路径</param>
+        /// <param name="ChildNode">父节点</param>
+        /// <param name="Content">子节点名称</param>
+        /// <returns></returns>
         public bool InsertSingleNode(string _ParentNode, string ChildNode, string Content="")
         {
             try
@@ -56,14 +54,12 @@ namespace My_Computer_Tools_Ⅱ
             }
         }
 
-
-        /// &lt;summary&gt;
-        /// 修改一个节点内容，使用方式如下
-        /// xmlTool.UpdateXmlNode("c:\filepath\xml.xml","Book/Authors[ISBN=\"0002\"]/Content","contents);
-        /// &lt;/summary&gt;
-        /// &lt;param name="XmlPathNode"&gt;&lt;/param&gt;
-        /// &lt;param name="Content"&gt;&lt;/param&gt;
-        /// &lt;returns&gt;&lt;/returns&gt;
+        /// <summary>
+        /// 修改一个节点内容
+        /// </summary>
+        /// <param name="XmlPathNode"></param>
+        /// <param name="Content"></param>
+        /// <returns></returns>
         public bool UpdateXmlNode(string XmlPathNode, string Content)
         {
             //更新内容。
@@ -79,11 +75,11 @@ namespace My_Computer_Tools_Ⅱ
             }
         }
 
-        /// &lt;summary&gt;
+        /// <summary>
         /// 获取节点内容
-        /// &lt;/summary&gt;
-        /// &lt;param name="XmlNode"&gt;&lt;/param&gt;
-        /// &lt;returns&gt;&lt;/returns&gt;
+        /// </summary>
+        /// <param name="XmlNode"></param>
+        /// <returns></returns>
         public string GetNodeContent(string XmlNode)
         {
             return objXmlDoc.SelectSingleNode(XmlNode).InnerText;
@@ -122,10 +118,13 @@ namespace My_Computer_Tools_Ⅱ
         /// 取节点的字节点所有名字
         /// </summary>
         /// <returns></returns>
-        public List<string> GetNodeVs()
+        public List<string> GetNodeVsStr(string Content)
         {
             List<string> vs = new List<string>();
-
+            var root = objXmlDoc.SelectSingleNode(Content);
+            //遍历
+            foreach (XmlNode item in root.ChildNodes)
+                vs.Add(item.Name);
             return vs;
         }
 

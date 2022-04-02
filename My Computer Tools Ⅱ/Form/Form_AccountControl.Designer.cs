@@ -47,17 +47,20 @@
             // lbox_AccList
             // 
             this.lbox_AccList.FormattingEnabled = true;
-            this.lbox_AccList.ItemHeight = 12;
-            this.lbox_AccList.Location = new System.Drawing.Point(13, 24);
+            this.lbox_AccList.ItemHeight = 17;
+            this.lbox_AccList.Location = new System.Drawing.Point(15, 34);
+            this.lbox_AccList.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.lbox_AccList.Name = "lbox_AccList";
-            this.lbox_AccList.Size = new System.Drawing.Size(319, 232);
+            this.lbox_AccList.Size = new System.Drawing.Size(372, 327);
             this.lbox_AccList.TabIndex = 0;
+            this.lbox_AccList.SelectedIndexChanged += new System.EventHandler(this.lbox_AccList_SelectedIndexChanged);
             // 
             // but_AddChang
             // 
-            this.but_AddChang.Location = new System.Drawing.Point(242, 400);
+            this.but_AddChang.Location = new System.Drawing.Point(282, 567);
+            this.but_AddChang.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.but_AddChang.Name = "but_AddChang";
-            this.but_AddChang.Size = new System.Drawing.Size(104, 29);
+            this.but_AddChang.Size = new System.Drawing.Size(121, 41);
             this.but_AddChang.TabIndex = 1;
             this.but_AddChang.Text = "添加/修改账号";
             this.but_AddChang.UseVisualStyleBackColor = true;
@@ -65,17 +68,19 @@
             // lab_TipClass
             // 
             this.lab_TipClass.AutoSize = true;
-            this.lab_TipClass.Location = new System.Drawing.Point(12, 6);
+            this.lab_TipClass.Location = new System.Drawing.Point(14, 8);
+            this.lab_TipClass.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lab_TipClass.Name = "lab_TipClass";
-            this.lab_TipClass.Size = new System.Drawing.Size(17, 12);
+            this.lab_TipClass.Size = new System.Drawing.Size(18, 17);
             this.lab_TipClass.TabIndex = 2;
             this.lab_TipClass.Text = "--";
             // 
             // but_Up
             // 
-            this.but_Up.Location = new System.Drawing.Point(337, 80);
+            this.but_Up.Location = new System.Drawing.Point(393, 113);
+            this.but_Up.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.but_Up.Name = "but_Up";
-            this.but_Up.Size = new System.Drawing.Size(31, 30);
+            this.but_Up.Size = new System.Drawing.Size(36, 36);
             this.but_Up.TabIndex = 3;
             this.but_Up.Text = "↑";
             this.but_Up.UseVisualStyleBackColor = true;
@@ -83,9 +88,10 @@
             // 
             // but_Down
             // 
-            this.but_Down.Location = new System.Drawing.Point(337, 116);
+            this.but_Down.Location = new System.Drawing.Point(393, 162);
+            this.but_Down.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.but_Down.Name = "but_Down";
-            this.but_Down.Size = new System.Drawing.Size(31, 30);
+            this.but_Down.Size = new System.Drawing.Size(36, 36);
             this.but_Down.TabIndex = 4;
             this.but_Down.Text = "↓";
             this.but_Down.UseVisualStyleBackColor = true;
@@ -93,9 +99,10 @@
             // 
             // but_Del
             // 
-            this.but_Del.Location = new System.Drawing.Point(337, 152);
+            this.but_Del.Location = new System.Drawing.Point(393, 212);
+            this.but_Del.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.but_Del.Name = "but_Del";
-            this.but_Del.Size = new System.Drawing.Size(31, 30);
+            this.but_Del.Size = new System.Drawing.Size(36, 37);
             this.but_Del.TabIndex = 5;
             this.but_Del.Text = "×";
             this.but_Del.UseVisualStyleBackColor = true;
@@ -104,9 +111,10 @@
             // lab_split
             // 
             this.lab_split.AutoSize = true;
-            this.lab_split.Location = new System.Drawing.Point(-18, 264);
+            this.lab_split.Location = new System.Drawing.Point(14, 375);
+            this.lab_split.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lab_split.Name = "lab_split";
-            this.lab_split.Size = new System.Drawing.Size(467, 12);
+            this.lab_split.Size = new System.Drawing.Size(393, 17);
             this.lab_split.TabIndex = 6;
             this.lab_split.Text = "-----------------------------------------------------------------------------";
             // 
@@ -114,7 +122,8 @@
             // 
             this.lab_UserTip.AutoSize = true;
             this.lab_UserTip.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lab_UserTip.Location = new System.Drawing.Point(27, 329);
+            this.lab_UserTip.Location = new System.Drawing.Point(31, 466);
+            this.lab_UserTip.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lab_UserTip.Name = "lab_UserTip";
             this.lab_UserTip.Size = new System.Drawing.Size(39, 16);
             this.lab_UserTip.TabIndex = 7;
@@ -122,23 +131,26 @@
             // 
             // Text_User
             // 
-            this.Text_User.Location = new System.Drawing.Point(72, 327);
+            this.Text_User.Location = new System.Drawing.Point(84, 463);
+            this.Text_User.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Text_User.Name = "Text_User";
-            this.Text_User.Size = new System.Drawing.Size(274, 21);
+            this.Text_User.Size = new System.Drawing.Size(319, 23);
             this.Text_User.TabIndex = 8;
             // 
             // Text_Username
             // 
-            this.Text_Username.Location = new System.Drawing.Point(72, 289);
+            this.Text_Username.Location = new System.Drawing.Point(84, 409);
+            this.Text_Username.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Text_Username.Name = "Text_Username";
-            this.Text_Username.Size = new System.Drawing.Size(274, 21);
+            this.Text_Username.Size = new System.Drawing.Size(319, 23);
             this.Text_Username.TabIndex = 10;
             // 
             // lab_Username
             // 
             this.lab_Username.AutoSize = true;
             this.lab_Username.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lab_Username.Location = new System.Drawing.Point(20, 291);
+            this.lab_Username.Location = new System.Drawing.Point(23, 412);
+            this.lab_Username.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lab_Username.Name = "lab_Username";
             this.lab_Username.Size = new System.Drawing.Size(55, 16);
             this.lab_Username.TabIndex = 9;
@@ -146,16 +158,18 @@
             // 
             // Text_UserPwd
             // 
-            this.Text_UserPwd.Location = new System.Drawing.Point(72, 363);
+            this.Text_UserPwd.Location = new System.Drawing.Point(84, 514);
+            this.Text_UserPwd.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Text_UserPwd.Name = "Text_UserPwd";
-            this.Text_UserPwd.Size = new System.Drawing.Size(274, 21);
+            this.Text_UserPwd.Size = new System.Drawing.Size(319, 23);
             this.Text_UserPwd.TabIndex = 12;
             // 
             // lab_Userpwd
             // 
             this.lab_Userpwd.AutoSize = true;
             this.lab_Userpwd.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lab_Userpwd.Location = new System.Drawing.Point(27, 365);
+            this.lab_Userpwd.Location = new System.Drawing.Point(31, 517);
+            this.lab_Userpwd.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lab_Userpwd.Name = "lab_Userpwd";
             this.lab_Userpwd.Size = new System.Drawing.Size(39, 16);
             this.lab_Userpwd.TabIndex = 11;
@@ -163,9 +177,9 @@
             // 
             // Form_AccountControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(375, 441);
+            this.ClientSize = new System.Drawing.Size(439, 616);
             this.Controls.Add(this.Text_UserPwd);
             this.Controls.Add(this.lab_Userpwd);
             this.Controls.Add(this.Text_Username);
@@ -179,7 +193,9 @@
             this.Controls.Add(this.lab_TipClass);
             this.Controls.Add(this.but_AddChang);
             this.Controls.Add(this.lbox_AccList);
+            this.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Form_AccountControl";
             this.Load += new System.EventHandler(this.Form_AccountControl_Load);
             this.ResumeLayout(false);

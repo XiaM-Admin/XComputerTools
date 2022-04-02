@@ -340,12 +340,14 @@ namespace My_Computer_Tools_Ⅱ
 
             /*测试
             clsXM.InsertSingleNode("UserInfo", "CF");
-            clsXM.InsertSingleNode("UserInfo/CF", "CF1", "1234561||1234561");
-            clsXM.InsertSingleNode("UserInfo/CF", "CF2", "1234562||1234562");
-            clsXM.InsertSingleNode("UserInfo/CF", "CF3", "1234563||1234563");
-            clsXM.InsertSingleNode("UserInfo/LOL", "LOL1", "1234561||1234561");
-            clsXM.InsertSingleNode("UserInfo/LOL", "LOL2", "1234562||1234562");
+            clsXM.InsertSingleNode("UserInfo/CF", "CF1", "1234561^1234561");
+            clsXM.InsertSingleNode("UserInfo/CF", "CF2", "1234562^1234562");
+            clsXM.InsertSingleNode("UserInfo/CF", "CF3", "1234563^1234563");
+            clsXM.InsertSingleNode("UserInfo/LOL", "LOL1", "1234561^1234561");
+            clsXM.InsertSingleNode("UserInfo/LOL", "LOL2", "1234562^1234562");
             */
+
+            var strs = clsXM.GetNodeVsStr("UserInfo/LOL");
 
             //var ret = clsXM.CheckNode("UserInfo/defualt");
             //var ret1 = clsXM.CheckNode("UserInfo/Class");
@@ -392,7 +394,6 @@ namespace My_Computer_Tools_Ⅱ
             using (Form_ChangeClass Form = new Form_ChangeClass())
             {
                 Form.ShowDialog();
-                
                 //刷新class的items！
                 Commands.CreatFile(Program.xmlname, true);
                 string path = Application.StartupPath + "\\" + Program.xmlname;

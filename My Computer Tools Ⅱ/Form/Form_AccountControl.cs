@@ -1,11 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace My_Computer_Tools_Ⅱ
@@ -13,6 +7,10 @@ namespace My_Computer_Tools_Ⅱ
     public partial class Form_AccountControl : Form
     {
         private string _classname;
+
+        //这里使用字典 进行本地索引数据处理
+        //退出时操作保存文件 
+        Dictionary<string, string> AccountStrs = new Dictionary<string, string>();
 
         public Form_AccountControl(string classname)
         {
@@ -25,6 +23,17 @@ namespace My_Computer_Tools_Ⅱ
         {
             lbox_AccList.Items.Clear();
             //初始化账号列表
+            Console.WriteLine(_classname);
+
+            string path = Application.StartupPath + "\\" + Program.xmlname;
+            ClsXMLoperate clsXM = new ClsXMLoperate(path);
+            var Vsstr = clsXM.GetNodeVsStr("UserInfo/" + _classname);
+            foreach (string str in Vsstr)
+            {
+                lbox_AccList.Items.Add(str);//添加到显示列表
+                string userAcc = clsXM.GetNodeContent("UserInfo/" + _classname + "/" + str);
+                AccountStrs.Add(str, userAcc);
+            }
 
         }
 
@@ -63,6 +72,23 @@ namespace My_Computer_Tools_Ⅱ
             int i = lbox_AccList.SelectedIndex;
             lbox_AccList.Items.Remove(lbox_AccList.SelectedItem.ToString());
             lbox_AccList.SelectedIndex = i - 1;
+        }
+
+        /// <summary>
+        /// listbox切换选定账号时 刷新一下显示
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void lbox_AccList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Text_Username.Text = lbox_AccList.SelectedItem.ToString();
+            string[] vs = AccountStrs[lbox_AccList.SelectedItem.ToString()].Split('^');
+            if (vs.Length != 0)
+            {
+                Text_User.Text = vs[0];
+                Text_UserPwd.Text = vs[1];
+            }
+
         }
     }
 }
