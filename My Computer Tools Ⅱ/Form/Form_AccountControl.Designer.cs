@@ -42,6 +42,7 @@
             this.lab_Username = new System.Windows.Forms.Label();
             this.Text_UserPwd = new System.Windows.Forms.TextBox();
             this.lab_Userpwd = new System.Windows.Forms.Label();
+            this.lab_Tip = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lbox_AccList
@@ -49,7 +50,7 @@
             this.lbox_AccList.FormattingEnabled = true;
             this.lbox_AccList.ItemHeight = 17;
             this.lbox_AccList.Location = new System.Drawing.Point(15, 34);
-            this.lbox_AccList.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lbox_AccList.Margin = new System.Windows.Forms.Padding(4);
             this.lbox_AccList.Name = "lbox_AccList";
             this.lbox_AccList.Size = new System.Drawing.Size(372, 327);
             this.lbox_AccList.TabIndex = 0;
@@ -57,13 +58,14 @@
             // 
             // but_AddChang
             // 
-            this.but_AddChang.Location = new System.Drawing.Point(282, 567);
-            this.but_AddChang.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.but_AddChang.Location = new System.Drawing.Point(282, 559);
+            this.but_AddChang.Margin = new System.Windows.Forms.Padding(4);
             this.but_AddChang.Name = "but_AddChang";
             this.but_AddChang.Size = new System.Drawing.Size(121, 41);
-            this.but_AddChang.TabIndex = 1;
+            this.but_AddChang.TabIndex = 4;
             this.but_AddChang.Text = "添加/修改账号";
             this.but_AddChang.UseVisualStyleBackColor = true;
+            this.but_AddChang.Click += new System.EventHandler(this.but_AddChang_Click);
             // 
             // lab_TipClass
             // 
@@ -78,7 +80,7 @@
             // but_Up
             // 
             this.but_Up.Location = new System.Drawing.Point(393, 113);
-            this.but_Up.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.but_Up.Margin = new System.Windows.Forms.Padding(4);
             this.but_Up.Name = "but_Up";
             this.but_Up.Size = new System.Drawing.Size(36, 36);
             this.but_Up.TabIndex = 3;
@@ -89,9 +91,9 @@
             // but_Down
             // 
             this.but_Down.Location = new System.Drawing.Point(393, 162);
-            this.but_Down.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.but_Down.Margin = new System.Windows.Forms.Padding(4);
             this.but_Down.Name = "but_Down";
-            this.but_Down.Size = new System.Drawing.Size(36, 36);
+            this.but_Down.Size = new System.Drawing.Size(36, 34);
             this.but_Down.TabIndex = 4;
             this.but_Down.Text = "↓";
             this.but_Down.UseVisualStyleBackColor = true;
@@ -99,8 +101,8 @@
             // 
             // but_Del
             // 
-            this.but_Del.Location = new System.Drawing.Point(393, 212);
-            this.but_Del.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.but_Del.Location = new System.Drawing.Point(393, 210);
+            this.but_Del.Margin = new System.Windows.Forms.Padding(4);
             this.but_Del.Name = "but_Del";
             this.but_Del.Size = new System.Drawing.Size(36, 37);
             this.but_Del.TabIndex = 5;
@@ -131,19 +133,23 @@
             // 
             // Text_User
             // 
+            this.Text_User.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Text_User.Location = new System.Drawing.Point(84, 463);
-            this.Text_User.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Text_User.Margin = new System.Windows.Forms.Padding(4);
             this.Text_User.Name = "Text_User";
             this.Text_User.Size = new System.Drawing.Size(319, 23);
-            this.Text_User.TabIndex = 8;
+            this.Text_User.TabIndex = 2;
+            this.Text_User.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // Text_Username
             // 
+            this.Text_Username.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Text_Username.Location = new System.Drawing.Point(84, 409);
-            this.Text_Username.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Text_Username.Margin = new System.Windows.Forms.Padding(4);
             this.Text_Username.Name = "Text_Username";
             this.Text_Username.Size = new System.Drawing.Size(319, 23);
-            this.Text_Username.TabIndex = 10;
+            this.Text_Username.TabIndex = 1;
+            this.Text_Username.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // lab_Username
             // 
@@ -158,11 +164,13 @@
             // 
             // Text_UserPwd
             // 
+            this.Text_UserPwd.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Text_UserPwd.Location = new System.Drawing.Point(84, 514);
-            this.Text_UserPwd.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Text_UserPwd.Margin = new System.Windows.Forms.Padding(4);
             this.Text_UserPwd.Name = "Text_UserPwd";
             this.Text_UserPwd.Size = new System.Drawing.Size(319, 23);
-            this.Text_UserPwd.TabIndex = 12;
+            this.Text_UserPwd.TabIndex = 3;
+            this.Text_UserPwd.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // lab_Userpwd
             // 
@@ -175,11 +183,23 @@
             this.lab_Userpwd.TabIndex = 11;
             this.lab_Userpwd.Text = "密码";
             // 
+            // lab_Tip
+            // 
+            this.lab_Tip.AutoSize = true;
+            this.lab_Tip.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lab_Tip.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.lab_Tip.Location = new System.Drawing.Point(30, 567);
+            this.lab_Tip.Name = "lab_Tip";
+            this.lab_Tip.Size = new System.Drawing.Size(193, 21);
+            this.lab_Tip.TabIndex = 13;
+            this.lab_Tip.Text = "Tip：账号数据载入完毕！";
+            // 
             // Form_AccountControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(439, 616);
+            this.Controls.Add(this.lab_Tip);
             this.Controls.Add(this.Text_UserPwd);
             this.Controls.Add(this.lab_Userpwd);
             this.Controls.Add(this.Text_Username);
@@ -195,8 +215,9 @@
             this.Controls.Add(this.lbox_AccList);
             this.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form_AccountControl";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_AccountControl_FormClosing);
             this.Load += new System.EventHandler(this.Form_AccountControl_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -218,5 +239,6 @@
         private System.Windows.Forms.Label lab_Username;
         private System.Windows.Forms.TextBox Text_UserPwd;
         private System.Windows.Forms.Label lab_Userpwd;
+        private System.Windows.Forms.Label lab_Tip;
     }
 }

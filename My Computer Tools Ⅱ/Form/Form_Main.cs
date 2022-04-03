@@ -81,6 +81,7 @@ namespace My_Computer_Tools_Ⅱ
 
             //设置账号存储分类为首
             Cbox_UserClass.SelectedIndex = 0;
+
         }
 
         private void VoidFirstOpen()
@@ -325,6 +326,11 @@ namespace My_Computer_Tools_Ⅱ
             tlp.Controls.Add(tb,0, 0);*/
             //文件测试
 
+            Control_Show control_Show = new Control_Show("lab1","lab2","lab3");
+            tlp.RowCount++;
+            tlp.RowStyles.Add(new RowStyle(SizeType.Absolute, control_Show.Size.Height + 5));
+            tlp.Controls.Add(control_Show, 0, 0);
+
             /*
              ClsXMLoperate xmlfile = new ClsXMLoperate(xmlfilepath--是你设定的文件路径);
             xmlfile.GetNodeContent("根节点/父节点点/子节点");
@@ -337,6 +343,7 @@ namespace My_Computer_Tools_Ⅱ
             Commands.CreatFile(Program.xmlname, true);
             string path = Application.StartupPath + "\\" + Program.xmlname;
             ClsXMLoperate clsXM = new ClsXMLoperate(path);
+            
 
             /*测试
             clsXM.InsertSingleNode("UserInfo", "CF");
@@ -347,7 +354,7 @@ namespace My_Computer_Tools_Ⅱ
             clsXM.InsertSingleNode("UserInfo/LOL", "LOL2", "1234562^1234562");
             */
 
-            var strs = clsXM.GetNodeVsStr("UserInfo/LOL");
+            //var strs = clsXM.GetNodeVsStr("UserInfo/LOL");
 
             //var ret = clsXM.CheckNode("UserInfo/defualt");
             //var ret1 = clsXM.CheckNode("UserInfo/Class");
@@ -362,6 +369,7 @@ namespace My_Computer_Tools_Ⅱ
             //string ret = clsXM.GetNodeContent("UserInfo/Class");
         }
 
+
         /// <summary>
         /// 分开处理 
         /// </summary>
@@ -369,7 +377,6 @@ namespace My_Computer_Tools_Ⅱ
         /// <param name="e"></param>
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //MessageBox.Show(tabControl1.SelectedIndex.ToString());
             if (tabControl1.SelectedIndex==1)
             {
                 //刷新class的items！
@@ -413,9 +420,40 @@ namespace My_Computer_Tools_Ⅱ
             using (Form_AccountControl accform = new Form_AccountControl(Cbox_UserClass.Text))
             {
                 accform.ShowDialog();
-
-
             }
+        }
+
+        //更新显示账号显示区域！
+        private void Cbox_UserClass_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateUserACC();
+        }
+
+        /// <summary>
+        /// 更新！
+        /// </summary>
+        private void UpdateUserACC()
+        {
+                string path = Application.StartupPath + "\\" + Program.xmlname;
+                ClsXMLoperate clsXM = new ClsXMLoperate(path);
+
+                //先删除tlp的所有控件
+                tlp.Controls.Clear();
+                //获取账号 添加
+                var Vsstr = clsXM.GetNodeVsStr("UserInfo/" + Cbox_UserClass.SelectedItem.ToString());//取所有账号名
+                foreach (string str in Vsstr)
+                {
+                    string userAcc = clsXM.GetNodeContent("UserInfo/" + Cbox_UserClass.SelectedItem.ToString() + "/" + str);//取账号数据
+                    string[] vs = userAcc.Split('^');
+                    if (vs.Length == 0)
+                        continue;
+                    Control_Show control_Show = new Control_Show(str, vs[0], vs[1]);
+                    tlp.RowCount++;
+                    tlp.RowStyles.Add(new RowStyle(SizeType.Absolute, control_Show.Size.Height + 5));
+                    tlp.Controls.Add(control_Show, 0, 0);
+                }
+
+
         }
     }
 }

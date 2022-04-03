@@ -121,11 +121,21 @@ namespace My_Computer_Tools_Ⅱ
         public List<string> GetNodeVsStr(string Content)
         {
             List<string> vs = new List<string>();
-            var root = objXmlDoc.SelectSingleNode(Content);
-            //遍历
-            foreach (XmlNode item in root.ChildNodes)
-                vs.Add(item.Name);
-            return vs;
+            try
+            {
+                var root = objXmlDoc.SelectSingleNode(Content);
+                if (root==null)
+                    return vs;
+                //遍历
+                foreach (XmlNode item in root.ChildNodes)
+                    vs.Add(item.Name);
+                return vs;
+            }
+            catch (Exception)
+            {
+                return vs;
+            }
+
         }
 
         /// <summary>

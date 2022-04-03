@@ -52,6 +52,7 @@
             this.GBox_NewTip = new System.Windows.Forms.GroupBox();
             this.Text_NewTip = new System.Windows.Forms.TextBox();
             this.tabP_UorP = new System.Windows.Forms.TabPage();
+            this.lab_Sptil = new System.Windows.Forms.Label();
             this.but_ShowAccC = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.lab_UserClass = new System.Windows.Forms.Label();
@@ -68,7 +69,6 @@
             this.显示ShowtoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.关于abouttoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.退出ExitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lab_Sptil = new System.Windows.Forms.Label();
             this.STrip_Main.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabP_Home.SuspendLayout();
@@ -313,6 +313,16 @@
             this.tabP_UorP.Text = "账号本本";
             this.tabP_UorP.UseVisualStyleBackColor = true;
             // 
+            // lab_Sptil
+            // 
+            this.lab_Sptil.AutoSize = true;
+            this.lab_Sptil.Location = new System.Drawing.Point(151, -29);
+            this.lab_Sptil.Name = "lab_Sptil";
+            this.lab_Sptil.Size = new System.Drawing.Size(11, 544);
+            this.lab_Sptil.TabIndex = 7;
+            this.lab_Sptil.Text = "|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n" +
+    "|\r\n|\r\n|\r\n|\r\n|\r\n";
+            // 
             // but_ShowAccC
             // 
             this.but_ShowAccC.Location = new System.Drawing.Point(15, 189);
@@ -362,10 +372,11 @@
             this.Cbox_UserClass.Size = new System.Drawing.Size(109, 25);
             this.Cbox_UserClass.TabIndex = 2;
             this.Cbox_UserClass.TabStop = false;
+            this.Cbox_UserClass.SelectedIndexChanged += new System.EventHandler(this.Cbox_UserClass_SelectedIndexChanged);
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(34, 386);
+            this.button1.Location = new System.Drawing.Point(46, 374);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 1;
@@ -475,16 +486,6 @@
             this.退出ExitToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.退出ExitToolStripMenuItem.Text = "退出 Exit";
             this.退出ExitToolStripMenuItem.Click += new System.EventHandler(this.退出ExitToolStripMenuItem_Click);
-            // 
-            // lab_Sptil
-            // 
-            this.lab_Sptil.AutoSize = true;
-            this.lab_Sptil.Location = new System.Drawing.Point(151, -29);
-            this.lab_Sptil.Name = "lab_Sptil";
-            this.lab_Sptil.Size = new System.Drawing.Size(11, 544);
-            this.lab_Sptil.TabIndex = 7;
-            this.lab_Sptil.Text = "|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n" +
-    "|\r\n|\r\n|\r\n|\r\n|\r\n";
             // 
             // Form_Main
             // 
