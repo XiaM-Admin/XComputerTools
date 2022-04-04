@@ -6,73 +6,8 @@ using System.Threading.Tasks;
 using System.Management;
 using System.IO;
 
-
-namespace RetNetInfor
+namespace NetCommandLib
 {
-    public class NetInfor
-    {
-        public string Ret_Ch = "";
-        public NetInfor(string info)
-        {
-            Ret_Ch = GetMessage(info);
-
-        }
-        public string GetMessage(string info)
-        {
-            switch (info)
-            {
-                case "1":
-                    return "成功";
-                case "-1":
-                    return "网络连接失败";
-                case "-2":
-                    return "空程序密钥";
-                case "-3":
-                case "-4":
-                    return "数据异常";
-                case "-6":
-                    return "还未登陆";
-                case "-8":
-                    return "账户余额不足.";
-                case "-9":
-                    return "注册用户达到上限.";
-                case "-101":
-                    return "用户名填写错误,必须以字母开头6-16位字母或数字!";
-                case "-102":
-                    return "用户不存在.";
-                case "-104":
-                    return "密码填写错误,请输入6-16位密码！.";
-                case "-105":
-                    return "邮箱填写错误,请正确输入邮箱,最大长度 32！.";
-                case "-106":
-                    return "用户名重复.";
-                case "-107	":
-                    return "邮箱重复.";
-                case "-108":
-                    return "新密码输入错误.";
-                case "-109":
-                    return "用户名或密码错误";
-                case "-110":
-                    return "用户使用时间已到期";
-                case "-115":
-                    return "用户已被禁用";
-                case "-116":
-                    return "密码修改申请过于频繁.";
-                case "-120":
-                    return "注册失败,注册次数超过限制.";
-                case "-123":
-                    return "用户密码输入错误";
-                case "-124":
-                    return "用户登录数达到最大";
-                case "-210":
-                    return "程序停止新用户注册";
-                default:
-                    return "未知错误 代码："+info;
-            }
-            
-        }
-    }
-
     /// <summary> 
     /// 计算机信息类
     /// </summary> 

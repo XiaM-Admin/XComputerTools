@@ -17,7 +17,6 @@ namespace My_Computer_Tools_Ⅱ
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            var ret = NetAPI.NetApiCommand.Net_CheckUser();//检测用户权限
             foreach (var item in args)
             {
                 if (item == "-autorun")
@@ -25,14 +24,7 @@ namespace My_Computer_Tools_Ⅱ
             }
 
 
-            if (settings.Default.ShowLoad && ret != "1")//检查变量 弹出登陆窗口
-            {
-                Application.Run(new Form_Load());
-            }
-            else
-            {
-                Application.Run(new Form_Main());
-            }
+            Application.Run(new Form_Main());
             
         }
 
@@ -40,6 +32,7 @@ namespace My_Computer_Tools_Ⅱ
         public static bool backWindows_State = false;
         public static bool FirstRunArg = false;
         public const string xmlname = "Account.xml";//账号的存储名字
+        public static WindowsCommands WinCommand = new WindowsCommands();
 
     }
 }

@@ -68,23 +68,11 @@
     <Compile Include="Form\Form_AccountControl.Designer.cs">
       <DependentUpon>Form_AccountControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form\Form_Load.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form\Form_Load.Designer.cs">
-      <DependentUpon>Form_Load.cs</DependentUpon>
-    </Compile>
     <Compile Include="Form\Form_Main.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form\Form_Main.Designer.cs">
       <DependentUpon>Form_Main.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Form\Form_Register.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form\Form_Register.Designer.cs">
-      <DependentUpon>Form_Register.cs</DependentUpon>
     </Compile>
     <Compile Include="Form\Form_About.cs">
       <SubType>Form</SubType>
@@ -110,12 +98,8 @@
     <Compile Include="Form\Form_input.Designer.cs">
       <DependentUpon>Form_input.cs</DependentUpon>
     </Compile>
-    <Compile Include="NetAPI\NetApiCommand.cs" />
-    <Compile Include="NetAPI\WebPost.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rsa\BigInteger.cs" />
-    <Compile Include="Rsa\RSAHelper.cs" />
     <Compile Include="Form\ShowBox.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -135,14 +119,8 @@
     <EmbeddedResource Include="Form\Form_ChangeClass.resx">
       <DependentUpon>Form_ChangeClass.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form\Form_Load.resx">
-      <DependentUpon>Form_Load.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Form\Form_Main.resx">
       <DependentUpon>Form_Main.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form\Form_Register.resx">
-      <DependentUpon>Form_Register.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Form_SetPm.resx">
       <DependentUpon>Form_SetPm.cs</DependentUpon>
@@ -179,9 +157,9 @@
     <Content Include="My Computer Tools.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RetNetInfor\RetNetInfor.csproj">
+    <ProjectReference Include="..\RetNetInfor\CommandLib.csproj">
       <Project>{f7c91e9b-e98f-4352-8b38-4397ac4c3202}</Project>
-      <Name>RetNetInfor</Name>
+      <Name>CommandLib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

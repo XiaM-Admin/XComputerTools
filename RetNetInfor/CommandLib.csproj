@@ -7,8 +7,8 @@
     <ProjectGuid>{F7C91E9B-E98F-4352-8B38-4397AC4C3202}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RetNetInfor</RootNamespace>
-    <AssemblyName>RetNetInfor</AssemblyName>
+    <RootNamespace>NetCommandLib</RootNamespace>
+    <AssemblyName>CommandLib</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -42,7 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="NetCommandLib.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

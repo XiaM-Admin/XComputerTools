@@ -55,16 +55,10 @@ namespace My_Computer_Tools_Ⅱ
                     }
                     return true;
                 }
-
+                MessageBox.Show("缺失账号配置文件！\r\n将为您自动创建xml文件，记录账号！\r\n此操作必须进行，您可无视它，不进行记录。", "提醒");
                 FileStream fileStream = new FileStream(path, FileMode.CreateNew, FileAccess.ReadWrite);
                 if (isXml)
                 {
-                    /*
-                    <?xml version="1.0" encoding="utf-8"?>\r\n
-                    <UserInfo>\r\n
-                      <Class>未分类</Class>\r\n
-                    </UserInfo>\r\n
-                    */
                     fileStream.Write(Encoding.Default.GetBytes("<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n"), 0, "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n".Length);
                     fileStream.Write(Encoding.Default.GetBytes("<UserInfo>\r\n"), 0, "<UserInfo>\r\n".Length);
                     fileStream.Write(Encoding.Default.GetBytes("  <Class>defualt</Class>\r\n"), 0, "  <Class>defualt</Class>\r\n".Length);

@@ -46,19 +46,18 @@
             this.lab_Ip = new System.Windows.Forms.Label();
             this.lab_ComputerName = new System.Windows.Forms.Label();
             this.But_ExitLogin = new System.Windows.Forms.Button();
-            this.lab_User = new System.Windows.Forms.Label();
             this.lab_WelCome = new System.Windows.Forms.Label();
             this.lab_ProName = new System.Windows.Forms.Label();
             this.GBox_NewTip = new System.Windows.Forms.GroupBox();
             this.Text_NewTip = new System.Windows.Forms.TextBox();
             this.tabP_UorP = new System.Windows.Forms.TabPage();
+            this.lab_UserTip = new System.Windows.Forms.Label();
             this.lab_Sptil = new System.Windows.Forms.Label();
             this.but_ShowAccC = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.lab_UserClass = new System.Windows.Forms.Label();
             this.but_ChangClass = new System.Windows.Forms.Button();
             this.Cbox_UserClass = new System.Windows.Forms.ComboBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.tlp = new System.Windows.Forms.TableLayoutPanel();
             this.tabP_About = new System.Windows.Forms.TabPage();
             this.lab_MySaid = new System.Windows.Forms.Label();
@@ -110,7 +109,6 @@
             this.StaLab_LoginState.Name = "StaLab_LoginState";
             this.StaLab_LoginState.Size = new System.Drawing.Size(32, 17);
             this.StaLab_LoginState.Text = "状态";
-            this.StaLab_LoginState.Click += new System.EventHandler(this.StaLab_LoginState_Click);
             // 
             // StaLab_State
             // 
@@ -146,7 +144,6 @@
             this.tabP_Home.Controls.Add(this.lab_Ip);
             this.tabP_Home.Controls.Add(this.lab_ComputerName);
             this.tabP_Home.Controls.Add(this.But_ExitLogin);
-            this.tabP_Home.Controls.Add(this.lab_User);
             this.tabP_Home.Controls.Add(this.lab_WelCome);
             this.tabP_Home.Controls.Add(this.lab_ProName);
             this.tabP_Home.Controls.Add(this.GBox_NewTip);
@@ -162,7 +159,7 @@
             // 
             this.lab_isAdmin.AutoSize = true;
             this.lab_isAdmin.Font = new System.Drawing.Font("微软雅黑", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lab_isAdmin.Location = new System.Drawing.Point(92, 157);
+            this.lab_isAdmin.Location = new System.Drawing.Point(92, 151);
             this.lab_isAdmin.Name = "lab_isAdmin";
             this.lab_isAdmin.Size = new System.Drawing.Size(132, 27);
             this.lab_isAdmin.TabIndex = 11;
@@ -194,7 +191,7 @@
             // 
             this.lab_MAC.AutoSize = true;
             this.lab_MAC.Font = new System.Drawing.Font("微软雅黑", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lab_MAC.Location = new System.Drawing.Point(92, 348);
+            this.lab_MAC.Location = new System.Drawing.Point(92, 315);
             this.lab_MAC.Name = "lab_MAC";
             this.lab_MAC.Size = new System.Drawing.Size(79, 27);
             this.lab_MAC.TabIndex = 8;
@@ -204,7 +201,7 @@
             // 
             this.lab_SizeMeo.AutoSize = true;
             this.lab_SizeMeo.Font = new System.Drawing.Font("微软雅黑", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lab_SizeMeo.Location = new System.Drawing.Point(92, 311);
+            this.lab_SizeMeo.Location = new System.Drawing.Point(92, 274);
             this.lab_SizeMeo.Name = "lab_SizeMeo";
             this.lab_SizeMeo.Size = new System.Drawing.Size(112, 27);
             this.lab_SizeMeo.TabIndex = 7;
@@ -214,7 +211,7 @@
             // 
             this.lab_Ip.AutoSize = true;
             this.lab_Ip.Font = new System.Drawing.Font("微软雅黑", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lab_Ip.Location = new System.Drawing.Point(92, 273);
+            this.lab_Ip.Location = new System.Drawing.Point(92, 233);
             this.lab_Ip.Name = "lab_Ip";
             this.lab_Ip.Size = new System.Drawing.Size(90, 27);
             this.lab_Ip.TabIndex = 6;
@@ -224,7 +221,7 @@
             // 
             this.lab_ComputerName.AutoSize = true;
             this.lab_ComputerName.Font = new System.Drawing.Font("微软雅黑", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lab_ComputerName.Location = new System.Drawing.Point(92, 233);
+            this.lab_ComputerName.Location = new System.Drawing.Point(92, 192);
             this.lab_ComputerName.Name = "lab_ComputerName";
             this.lab_ComputerName.Size = new System.Drawing.Size(152, 27);
             this.lab_ComputerName.TabIndex = 5;
@@ -239,17 +236,6 @@
             this.But_ExitLogin.TabStop = false;
             this.But_ExitLogin.Text = "退出登陆";
             this.But_ExitLogin.UseVisualStyleBackColor = true;
-            this.But_ExitLogin.Click += new System.EventHandler(this.But_ExitLogin_Click);
-            // 
-            // lab_User
-            // 
-            this.lab_User.AutoSize = true;
-            this.lab_User.Font = new System.Drawing.Font("微软雅黑", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lab_User.Location = new System.Drawing.Point(92, 195);
-            this.lab_User.Name = "lab_User";
-            this.lab_User.Size = new System.Drawing.Size(115, 27);
-            this.lab_User.TabIndex = 3;
-            this.lab_User.Text = "用户User：";
             // 
             // lab_WelCome
             // 
@@ -272,7 +258,6 @@
             this.lab_ProName.Size = new System.Drawing.Size(298, 39);
             this.lab_ProName.TabIndex = 1;
             this.lab_ProName.Text = " Computer Tools Ⅱ";
-            this.lab_ProName.Click += new System.EventHandler(this.lab_ProName_Click);
             // 
             // GBox_NewTip
             // 
@@ -297,13 +282,13 @@
             // 
             // tabP_UorP
             // 
+            this.tabP_UorP.Controls.Add(this.lab_UserTip);
             this.tabP_UorP.Controls.Add(this.lab_Sptil);
             this.tabP_UorP.Controls.Add(this.but_ShowAccC);
             this.tabP_UorP.Controls.Add(this.label1);
             this.tabP_UorP.Controls.Add(this.lab_UserClass);
             this.tabP_UorP.Controls.Add(this.but_ChangClass);
             this.tabP_UorP.Controls.Add(this.Cbox_UserClass);
-            this.tabP_UorP.Controls.Add(this.button1);
             this.tabP_UorP.Controls.Add(this.tlp);
             this.tabP_UorP.Location = new System.Drawing.Point(4, 26);
             this.tabP_UorP.Name = "tabP_UorP";
@@ -312,6 +297,17 @@
             this.tabP_UorP.TabIndex = 1;
             this.tabP_UorP.Text = "账号本本";
             this.tabP_UorP.UseVisualStyleBackColor = true;
+            // 
+            // lab_UserTip
+            // 
+            this.lab_UserTip.AutoSize = true;
+            this.lab_UserTip.ForeColor = System.Drawing.Color.Red;
+            this.lab_UserTip.Location = new System.Drawing.Point(3, 341);
+            this.lab_UserTip.Name = "lab_UserTip";
+            this.lab_UserTip.Size = new System.Drawing.Size(152, 68);
+            this.lab_UserTip.TabIndex = 8;
+            this.lab_UserTip.Text = "注意：\r\n此程序不会将用户账号\r\n进行上传，修改等！\r\n不放心可以不使用此功能！";
+            this.lab_UserTip.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // lab_Sptil
             // 
@@ -325,9 +321,9 @@
             // 
             // but_ShowAccC
             // 
-            this.but_ShowAccC.Location = new System.Drawing.Point(15, 189);
+            this.but_ShowAccC.Location = new System.Drawing.Point(12, 110);
             this.but_ShowAccC.Name = "but_ShowAccC";
-            this.but_ShowAccC.Size = new System.Drawing.Size(130, 29);
+            this.but_ShowAccC.Size = new System.Drawing.Size(133, 29);
             this.but_ShowAccC.TabIndex = 6;
             this.but_ShowAccC.Text = "管理分类账号  ->";
             this.but_ShowAccC.UseVisualStyleBackColor = true;
@@ -336,7 +332,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 169);
+            this.label1.Location = new System.Drawing.Point(12, 90);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(73, 17);
             this.label1.TabIndex = 5;
@@ -345,7 +341,7 @@
             // lab_UserClass
             // 
             this.lab_UserClass.AutoSize = true;
-            this.lab_UserClass.Location = new System.Drawing.Point(12, 39);
+            this.lab_UserClass.Location = new System.Drawing.Point(12, 19);
             this.lab_UserClass.Name = "lab_UserClass";
             this.lab_UserClass.Size = new System.Drawing.Size(73, 17);
             this.lab_UserClass.TabIndex = 4;
@@ -353,7 +349,7 @@
             // 
             // but_ChangClass
             // 
-            this.but_ChangClass.Location = new System.Drawing.Point(124, 58);
+            this.but_ChangClass.Location = new System.Drawing.Point(124, 38);
             this.but_ChangClass.Name = "but_ChangClass";
             this.but_ChangClass.Size = new System.Drawing.Size(24, 27);
             this.but_ChangClass.TabIndex = 3;
@@ -367,22 +363,12 @@
             this.Cbox_UserClass.FormattingEnabled = true;
             this.Cbox_UserClass.Items.AddRange(new object[] {
             "未分类"});
-            this.Cbox_UserClass.Location = new System.Drawing.Point(12, 59);
+            this.Cbox_UserClass.Location = new System.Drawing.Point(12, 39);
             this.Cbox_UserClass.Name = "Cbox_UserClass";
             this.Cbox_UserClass.Size = new System.Drawing.Size(109, 25);
             this.Cbox_UserClass.TabIndex = 2;
             this.Cbox_UserClass.TabStop = false;
             this.Cbox_UserClass.SelectedIndexChanged += new System.EventHandler(this.Cbox_UserClass_SelectedIndexChanged);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(46, 374);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // tlp
             // 
@@ -447,7 +433,7 @@
             this.RText_target.Size = new System.Drawing.Size(351, 375);
             this.RText_target.TabIndex = 0;
             this.RText_target.TabStop = false;
-            this.RText_target.Text = "1.注册登陆功能用于分析查询改善程序\n2.本地密码存储功能\n3.英雄联盟暂离自动接受对局\n4.快捷图片识别文本\n5.快捷翻译\n6.第三方软件强杀保活自启等";
+            this.RText_target.Text = "1.已经移除登陆注册功能！\n2.本地密码存储功能\n3.英雄联盟暂离自动接受对局\n4.快捷图片识别文本\n5.快捷翻译\n6.第三方软件强杀保活自启等";
             // 
             // NotifyIconBack
             // 
@@ -534,7 +520,6 @@
         private System.Windows.Forms.GroupBox GBox_NewTip;
         private System.Windows.Forms.Label lab_ProName;
         private System.Windows.Forms.Label lab_WelCome;
-        private System.Windows.Forms.Label lab_User;
         private System.Windows.Forms.TabPage tabP_About;
         private System.Windows.Forms.GroupBox GBox_Target;
         private System.Windows.Forms.RichTextBox RText_target;
@@ -555,12 +540,12 @@
         private System.Windows.Forms.Button but_SetPro;
         private System.Windows.Forms.Label lab_isAdmin;
         private System.Windows.Forms.TableLayoutPanel tlp;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ComboBox Cbox_UserClass;
         private System.Windows.Forms.Button but_ChangClass;
         private System.Windows.Forms.Label lab_UserClass;
         private System.Windows.Forms.Button but_ShowAccC;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lab_Sptil;
+        private System.Windows.Forms.Label lab_UserTip;
     }
 }

@@ -22,7 +22,7 @@ namespace My_Computer_Tools_Ⅱ
             }
             else
             {
-                throw new Exception("文件不存在");
+                //throw new Exception("文件不存在");
             }
         }
 
@@ -48,7 +48,7 @@ namespace My_Computer_Tools_Ⅱ
                 objXmlDoc.Save(XmlFilePath);
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -69,7 +69,7 @@ namespace My_Computer_Tools_Ⅱ
                 objXmlDoc.Save(XmlFilePath);
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }

@@ -1,11 +1,9 @@
-﻿using RetNetInfor;
+﻿using NetCommandLib;
 using System;
 using System.Drawing;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
-using System.Xml;
-using settings = My_Computer_Tools_Ⅱ.Properties.Settings;
 
 namespace My_Computer_Tools_Ⅱ
 {
@@ -18,29 +16,19 @@ namespace My_Computer_Tools_Ⅱ
             WinCommand._Main = this;
 
             showBox_Loc = WinCommand.showBox = new ShowBox("提示标题", "提示内容", this);
+            Program.WinCommand = WinCommand;//同步到Program里
         }
         private WindowsCommands WinCommand = new WindowsCommands();//窗口控件互动类
         private ShowBox showBox_Loc;//窗口控件互动类
 
-        private bool Login_status = false;//登陆状态
-        private bool LastLogin_status = false;//上次登陆状态
+        private int UserClassindex = 0;//用户账号分类索引
 
         //线程变量
-        private Thread thread_CheckLogin=null;
-        private Thread thread_FirstOpen=null;
+        private Thread thread_FirstOpen = null;
 
 
         private void Form_Main_Load(object sender, EventArgs e)
         {
-
-            var ret = NetAPI.NetApiCommand.Net_CheckUser();//检测用户权限
-            if (ret == "1")
-                Login_status = true;
-            thread_CheckLogin = new Thread(Thread_Net);
-            thread_CheckLogin.IsBackground = true;
-            thread_CheckLogin.Start();//开启循环查询验证
-            LastLogin_status = !Login_status;
-
             STrip_Main_init();
             Command_Init();
             Control_Init();
@@ -70,8 +58,10 @@ namespace My_Computer_Tools_Ⅱ
             lab_isAdmin.Text += Commands.IsAdministrator();
             //日月处理显示
             lab_TimeDate.Text += DateTime.Now.ToString("D") + " " + DateTime.Now.ToString("dddd");
+            
             //RText_target设置
             StartStrikeout(RText_target, 1);
+            StartStrikeout(RText_target, 2);
 
             //初始化动态弹窗提示效果
             WinCommand.ChangeTips("运行提示", "初始化中...", 1);
@@ -81,7 +71,6 @@ namespace My_Computer_Tools_Ⅱ
 
             //设置账号存储分类为首
             Cbox_UserClass.SelectedIndex = 0;
-
         }
 
         private void VoidFirstOpen()
@@ -99,25 +88,17 @@ namespace My_Computer_Tools_Ⅱ
         private void STrip_Main_init()
         {
             StaLab_Time.Text = "Time：" + DateTime.Now.ToString();
-            StaLab_LoginState.Text = !Login_status ? "未登录或失效，点此登陆" : "已登陆";
-            if (StaLab_LoginState.Text == "未登录或失效，点此登陆")
-                StaLab_LoginState.BackColor = Color.Red;
-            else
-                StaLab_LoginState.BackColor = Color.White;
-            lab_User.Text = "用户User：" + (Login_status ? settings.Default.LoadName : "暂未登陆");
             Thread.Sleep(0);
         }
+        
         /// <summary>
         /// 程序部分功能初始化
         /// </summary>
         private void Command_Init()
         {
             Timer_STrip.Enabled = true;//状态栏定时器开始
-            Text_NewTip.Text = NetAPI.NetApiCommand.Net_GetGG();//获取公告
-            if (Login_status)
-                lab_User.Text = "用户User：" + (settings.Default.LoadName != "" ? settings.Default.LoadName : "暂未登陆");
-            else
-                lab_User.Text = "用户User：暂未登陆";
+
+
         }
 
         /// <summary>
@@ -127,6 +108,8 @@ namespace My_Computer_Tools_Ⅱ
         /// <param name="i">行</param>
         private void StartStrikeout(RichTextBox RTextBox, int i)
         {
+            //给超文本编辑框加删除线
+
             FontStyle fontStyle = FontStyle.Strikeout;
             i--;
             var txt = RText_target.Lines[i];
@@ -158,90 +141,18 @@ namespace My_Computer_Tools_Ⅱ
         {
 
             StaLab_Time.Text = "Time：" + DateTime.Now.ToString();
-            if (LastLogin_status != Login_status)
-            {
-                LastLogin_status = Login_status;
-                StaLab_LoginState.Text = !Login_status ? "未登录或失效，点此登陆" : "已登陆";
-                if (StaLab_LoginState.Text == "未登录或失效，点此登陆")
-                    StaLab_LoginState.BackColor = Color.Red;
-                else
-                    StaLab_LoginState.BackColor = Color.White;
-                lab_User.Text = "用户User：" + (Login_status ? settings.Default.LoadName : "暂未登陆");
-
-                //日月处理显示
-                lab_TimeDate.Text = "日期：" + DateTime.Now.ToString("D") + " " + DateTime.Now.ToString("dddd");
-            }
+            //日月处理显示
+            lab_TimeDate.Text = "日期：" + DateTime.Now.ToString("D") + " " + DateTime.Now.ToString("dddd");
         }
         /// <summary>
         /// 重新登陆
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void StaLab_LoginState_Click(object sender, EventArgs e)
-        {
-            if (StaLab_LoginState.Text == "未登录或失效，点此登陆")
-            {
-                using (Form_Load form = new Form_Load())
-                {
-                    form.isReLogin = true;
-                    form.ShowDialog();
-                    Login_status = form.ReLogin_Ret;//恢复登陆状态
-                    Command_Init();//重新获取网络配置
-                }
-
-            }
-        }
-        /// <summary>
-        /// 用户状态检测 10min/s
-        /// </summary>
-        private void Thread_Net()
-        {
-            while (true)
-            {
-                Thread.Sleep(10 * 1000 * 60);
-                var ret = NetAPI.NetApiCommand.Net_CheckUser();//检测用户权限
-                if (ret == "1")
-                    Login_status = true;
-                else
-                    Login_status = false;
-            }
-
-        }
-
-        private void But_ExitLogin_Click(object sender, EventArgs e)
-        {
-            NetAPI.NetApiCommand.Net_Exit();
-            Thread.Sleep(2000);
-            var ret = NetAPI.NetApiCommand.Net_CheckUser();//检测用户权限
-            if (ret == "1")
-                Login_status = true;
-            else
-                Login_status = false;
-
-        }
-
-        /// <summary>
-        /// 测试函数
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void lab_ProName_Click(object sender, EventArgs e)
-        {
-            /*
-            var ret = Commands.IsAdministrator();
-            WinCommand.ChangeTips("测试", "管理员身份："+ret, 4);
-            
-            if (Program.FirstRunArg)
-                WinCommand.ChangeTips("测试", "是自启动的程序", 4);
-            else
-                WinCommand.ChangeTips("测试", "非自启动的程序", 4);
-            */
-            WinCommand.ChangeTips("测试多行提示标题", "第一行\r\n第二行\r\n第三行\r\n第四行", 4);
-        }
 
         private void Form_Main_LocationChanged(object sender, EventArgs e)
         {
-            if (Program .backWindows_State==true)
+            if (Program.backWindows_State == true)
                 return;
 
             if (showBox_Loc.ShowNow == true)
@@ -257,7 +168,6 @@ namespace My_Computer_Tools_Ⅱ
         {
             NotifyIconBack.Visible = false;
             Timer_STrip.Enabled = false;
-            thread_CheckLogin = null;
             GC.Collect();
             Application.Exit();
             Application.Exit();
@@ -275,7 +185,7 @@ namespace My_Computer_Tools_Ⅱ
 
         private void Form_Main_FormClosing(object sender, FormClosingEventArgs e)
         {
-            
+
             if (!Program.backWindows_State)
             {
                 if (showBox_Loc.ShowNow == true)
@@ -286,7 +196,7 @@ namespace My_Computer_Tools_Ⅱ
                 WinCommand.ChangeTips("程序提示", "主程序已转移到后台运行！\r\n请检查托盘图标！", 4);
                 return;
             }
-            
+
 
         }
 
@@ -303,72 +213,12 @@ namespace My_Computer_Tools_Ⅱ
                 Program.backWindows_State = false;
             }
         }
-
+        
         private void but_SetPro_Click(object sender, EventArgs e)
         {
             Form_SetPm form = new Form_SetPm();
             form.ShowDialog();
         }
-
-        private int i = 0;
-        /// <summary>
-        /// 测试按钮
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void button1_Click(object sender, EventArgs e)
-        {
-            /*
-            TextBox tb = new TextBox();
-            tb.Text = "Hello World"+ i++; 
-            tlp.RowCount++;
-            tlp.RowStyles.Add(new RowStyle(SizeType.Absolute,tb.Size.Height+6));
-            tlp.Controls.Add(tb,0, 0);*/
-            //文件测试
-
-            Control_Show control_Show = new Control_Show("lab1","lab2","lab3");
-            tlp.RowCount++;
-            tlp.RowStyles.Add(new RowStyle(SizeType.Absolute, control_Show.Size.Height + 5));
-            tlp.Controls.Add(control_Show, 0, 0);
-
-            /*
-             ClsXMLoperate xmlfile = new ClsXMLoperate(xmlfilepath--是你设定的文件路径);
-            xmlfile.GetNodeContent("根节点/父节点点/子节点");
-            更新：
-             xmlDoc.UpdateXmlNode("根节点/父节点点/子节点","节点内容");
-            添加时使用函数InsertSingleNode( 父节点，插入节点名称，内容）就可以了。
-            更新和插入成功的话会返回true，否则是false*/
-
-
-            Commands.CreatFile(Program.xmlname, true);
-            string path = Application.StartupPath + "\\" + Program.xmlname;
-            ClsXMLoperate clsXM = new ClsXMLoperate(path);
-            
-
-            /*测试
-            clsXM.InsertSingleNode("UserInfo", "CF");
-            clsXM.InsertSingleNode("UserInfo/CF", "CF1", "1234561^1234561");
-            clsXM.InsertSingleNode("UserInfo/CF", "CF2", "1234562^1234562");
-            clsXM.InsertSingleNode("UserInfo/CF", "CF3", "1234563^1234563");
-            clsXM.InsertSingleNode("UserInfo/LOL", "LOL1", "1234561^1234561");
-            clsXM.InsertSingleNode("UserInfo/LOL", "LOL2", "1234562^1234562");
-            */
-
-            //var strs = clsXM.GetNodeVsStr("UserInfo/LOL");
-
-            //var ret = clsXM.CheckNode("UserInfo/defualt");
-            //var ret1 = clsXM.CheckNode("UserInfo/Class");
-
-            // clsXM.InsertSingleNode("UserInfo", "defualt");
-            //clsXM.InsertSingleNode("UserInfo/defualt", "绝地求生小号","123456|xslxsl");
-
-            //clsXM.Delete("UserInfo/defualt", "UserInfo/defualt/绝地求生小号");
-            //clsXM.Delete("UserInfo", "UserInfo/defualt");
-
-            //clsXM.UpdateXmlNode("UserInfo/Class","A|B|C");
-            //string ret = clsXM.GetNodeContent("UserInfo/Class");
-        }
-
 
         /// <summary>
         /// 分开处理 
@@ -377,7 +227,7 @@ namespace My_Computer_Tools_Ⅱ
         /// <param name="e"></param>
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (tabControl1.SelectedIndex==1)
+            if (tabControl1.SelectedIndex == 1)
             {
                 //刷新class的items！
                 Commands.CreatFile(Program.xmlname, true);
@@ -388,7 +238,7 @@ namespace My_Computer_Tools_Ⅱ
                 Cbox_UserClass.Items.Clear();
                 foreach (var item in vs)
                     Cbox_UserClass.Items.Add(item);
-                Cbox_UserClass.SelectedIndex = 0;
+                Cbox_UserClass.SelectedIndex = UserClassindex;
             }
         }
         /// <summary>
@@ -420,6 +270,7 @@ namespace My_Computer_Tools_Ⅱ
             using (Form_AccountControl accform = new Form_AccountControl(Cbox_UserClass.Text))
             {
                 accform.ShowDialog();
+                UpdateUserACC();
             }
         }
 
@@ -427,6 +278,7 @@ namespace My_Computer_Tools_Ⅱ
         private void Cbox_UserClass_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateUserACC();
+            UserClassindex = Cbox_UserClass.SelectedIndex;
         }
 
         /// <summary>
@@ -434,24 +286,24 @@ namespace My_Computer_Tools_Ⅱ
         /// </summary>
         private void UpdateUserACC()
         {
-                string path = Application.StartupPath + "\\" + Program.xmlname;
-                ClsXMLoperate clsXM = new ClsXMLoperate(path);
+            string path = Application.StartupPath + "\\" + Program.xmlname;
+            ClsXMLoperate clsXM = new ClsXMLoperate(path);
 
-                //先删除tlp的所有控件
-                tlp.Controls.Clear();
-                //获取账号 添加
-                var Vsstr = clsXM.GetNodeVsStr("UserInfo/" + Cbox_UserClass.SelectedItem.ToString());//取所有账号名
-                foreach (string str in Vsstr)
-                {
-                    string userAcc = clsXM.GetNodeContent("UserInfo/" + Cbox_UserClass.SelectedItem.ToString() + "/" + str);//取账号数据
-                    string[] vs = userAcc.Split('^');
-                    if (vs.Length == 0)
-                        continue;
-                    Control_Show control_Show = new Control_Show(str, vs[0], vs[1]);
-                    tlp.RowCount++;
-                    tlp.RowStyles.Add(new RowStyle(SizeType.Absolute, control_Show.Size.Height + 5));
-                    tlp.Controls.Add(control_Show, 0, 0);
-                }
+            //先删除tlp的所有控件
+            tlp.Controls.Clear();
+            //获取账号 添加
+            var Vsstr = clsXM.GetNodeVsStr("UserInfo/" + Cbox_UserClass.SelectedItem.ToString());//取所有账号名
+            foreach (string str in Vsstr)
+            {
+                string userAcc = clsXM.GetNodeContent("UserInfo/" + Cbox_UserClass.SelectedItem.ToString() + "/" + str);//取账号数据
+                string[] vs = userAcc.Split('^');
+                if (vs.Length == 0)
+                    continue;
+                Control_Show control_Show = new Control_Show(str, vs[0], vs[1]);
+                tlp.RowCount++;
+                tlp.RowStyles.Add(new RowStyle(SizeType.Absolute, control_Show.Size.Height + 5));
+                tlp.Controls.Add(control_Show, 0, 0);
+            }
 
 
         }

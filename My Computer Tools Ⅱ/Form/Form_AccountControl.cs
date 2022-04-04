@@ -9,11 +9,12 @@ namespace My_Computer_Tools_Ⅱ
     {
         private readonly string _classname;
         private readonly string _lab_Tip;
-        private Dictionary<string, string> _AccountStrs = new Dictionary<string, string>();
 
         //这里使用字典 进行本地索引数据处理
         //退出时操作保存文件 
         Dictionary<string, string> AccountStrs = new Dictionary<string, string>();
+
+        List<string> BackVs = new List<string>();
 
         Thread TipThread = null;
         public Form_AccountControl(string classname)
@@ -22,14 +23,9 @@ namespace My_Computer_Tools_Ⅱ
             _classname = classname;
             lab_TipClass.Text += classname;
             _lab_Tip = lab_Tip.Text;
-        }
 
-        private void Form_AccountControl_Load(object sender, EventArgs e)
-        {
-            lbox_AccList.Items.Clear();
             //初始化账号列表
-            Console.WriteLine(_classname);
-
+            lbox_AccList.Items.Clear();
             string path = Application.StartupPath + "\\" + Program.xmlname;
             ClsXMLoperate clsXM = new ClsXMLoperate(path);
             var Vsstr = clsXM.GetNodeVsStr("UserInfo/" + _classname);
@@ -38,13 +34,16 @@ namespace My_Computer_Tools_Ⅱ
                 lbox_AccList.Items.Add(str);//添加到显示列表
                 string userAcc = clsXM.GetNodeContent("UserInfo/" + _classname + "/" + str);
                 AccountStrs.Add(str, userAcc);
+                BackVs.Add(str);
             }
             TipThread = new Thread(Thread_Tip);
             TipThread.IsBackground = true;
             TipThread.Start();
+        }
 
-            //存一下字典备份 最后判断用
-            _AccountStrs = AccountStrs;
+        private void Form_AccountControl_Load(object sender, EventArgs e)
+        {
+            Console.WriteLine(_classname);
         }
 
         private void but_Up_Click(object sender, EventArgs e)
@@ -124,6 +123,13 @@ namespace My_Computer_Tools_Ⅱ
                 MessageBox.Show("填入的账号信息部分为空，或不合法。\r\n请检查并且重新填写！", "错误");
                 return;
             }
+            //检查Text_Username.Text是否符合xml命名规则
+            if (!Check_XmlName(Text_Username.Text))
+            {
+                MessageBox.Show("账号名称第一个字符不能为数字，请检查并且重新填写！", "错误");
+                return;
+            }
+
             string Accuserpwd = Text_User.Text + "^" + Text_UserPwd.Text;
             //检查账号名字是否存在
             var ret = AccountStrs.ContainsKey(Text_Username.Text);
@@ -139,8 +145,31 @@ namespace My_Computer_Tools_Ⅱ
                 lbox_AccList.Items.Add(Text_Username.Text);
                 lab_Tip.Text = "Tip：新账号已经添加！";
             }
+            //清空编辑框
+            Text_User.Text = "";
+            Text_UserPwd.Text = "";
+            Text_Username.Text = "";
 
+        }
 
+        /// <summary>
+        /// 检查xml元素的规则
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        private bool Check_XmlName(string text)
+        {
+            try
+            {
+                Convert.ToInt16(text.PadLeft(1));
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+                throw;
+            }
         }
 
         //启动tip提示线程 
@@ -182,23 +211,29 @@ namespace My_Computer_Tools_Ⅱ
         /// <param name="e"></param>
         private void Form_AccountControl_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (MessageBox.Show("确认退出保存吗？\r\n一旦您确认退出，程序将更改保存本地文件！","提醒！",MessageBoxButtons.YesNo)==DialogResult.No)
+            if (MessageBox.Show("确认退出保存吗？\r\n一旦您确认退出，程序将更改保存本地文件！", "提醒！", MessageBoxButtons.YesNo) == DialogResult.No)
+            {
                 e.Cancel = true;
-
-            //检查一下字典是否更改  没改就直接退出了...
-            if (AccountStrs.Equals(_AccountStrs))
                 return;
+            }
 
+            List<string> Vs = new List<string>();
+            //检查一下字典是否更改  没改就直接退出了...
+            foreach (var item in AccountStrs)
+                Vs.Add(item.Key);
+            if (Vs.Equals(BackVs))
+                return;
+            
             string path = Application.StartupPath + "\\" + Program.xmlname;
             ClsXMLoperate clsXM = new ClsXMLoperate(path);
             //先删除分类下的所有账号
             var Vsstr = clsXM.GetNodeVsStr("UserInfo/" + _classname);
             foreach (var item in Vsstr)
-                clsXM.Delete("UserInfo/" + _classname, "UserInfo/"+_classname+"/"+item);
+                clsXM.Delete("UserInfo/" + _classname, "UserInfo/" + _classname + "/" + item);
 
             //再依次添加字典中的值
             foreach (var item in AccountStrs)
-                clsXM.InsertSingleNode("UserInfo/" + _classname, item.Key,item.Value);               
+                clsXM.InsertSingleNode("UserInfo/" + _classname, item.Key, item.Value);
         }
     }
 }
