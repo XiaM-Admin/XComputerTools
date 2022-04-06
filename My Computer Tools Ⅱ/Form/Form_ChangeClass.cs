@@ -17,7 +17,7 @@ namespace My_Computer_Tools_Ⅱ
             InitializeComponent();
         }
 
-        public string retstr = "defualt";
+        public string retstr = "*";
         List<string> delstr = new List<string>();
         private void Form_ChangeClass_Load(object sender, EventArgs e)
         {
@@ -30,7 +30,11 @@ namespace My_Computer_Tools_Ⅱ
             Lbox_Class.Items.Clear();
             string[] vs = ret.Split('|');
             foreach (var str in vs)
+            {
                 Lbox_Class.Items.Add(str);
+                retstr = retstr+"|"+ str;
+            }
+            retstr = retstr.Replace("*|","");
 
         }
 

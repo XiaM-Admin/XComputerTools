@@ -1,5 +1,7 @@
 ﻿using NetCommandLib;
+using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Reflection;
 using System.Threading;
@@ -25,8 +27,6 @@ namespace My_Computer_Tools_Ⅱ
 
         //线程变量
         private Thread thread_FirstOpen = null;
-
-
         private void Form_Main_Load(object sender, EventArgs e)
         {
             STrip_Main_init();
@@ -58,7 +58,7 @@ namespace My_Computer_Tools_Ⅱ
             lab_isAdmin.Text += Commands.IsAdministrator();
             //日月处理显示
             lab_TimeDate.Text += DateTime.Now.ToString("D") + " " + DateTime.Now.ToString("dddd");
-            
+
             //RText_target设置
             StartStrikeout(RText_target, 1);
             StartStrikeout(RText_target, 2);
@@ -90,14 +90,35 @@ namespace My_Computer_Tools_Ⅱ
             StaLab_Time.Text = "Time：" + DateTime.Now.ToString();
             Thread.Sleep(0);
         }
-        
+
         /// <summary>
         /// 程序部分功能初始化
         /// </summary>
         private void Command_Init()
         {
             Timer_STrip.Enabled = true;//状态栏定时器开始
+            //http://8.130.100.111/?s=Pro.GetNotice&Ver=T1
+            //使用api发送Get请求
+            IDictionary<string, string> parameters = new Dictionary<string, string>();
+            try
+            {
+                parameters.Add("s", "Pro.GetNotice");
+                parameters.Add("Ver", "T1");
+                var ret = WebPost.ApiPost("http://8.130.100.111", parameters);
+                JObject jo = Commands.ToJson(ret);
+                if (jo["ret"].ToString() == "200")
+                {
+                    string Notice = jo["data"]["Notice"].ToString();
+                    Text_NewTip.Text = Notice;
+                }
+                else
+                    Text_NewTip.Text = "网络错误，或服务器更改，或服务器没了...";
 
+            }
+            catch (Exception)
+            {
+                Text_NewTip.Text = "网络错误，或服务器更改，或服务器没了...";
+            }
 
         }
 
@@ -213,7 +234,7 @@ namespace My_Computer_Tools_Ⅱ
                 Program.backWindows_State = false;
             }
         }
-        
+
         private void but_SetPro_Click(object sender, EventArgs e)
         {
             Form_SetPm form = new Form_SetPm();
@@ -299,7 +320,7 @@ namespace My_Computer_Tools_Ⅱ
                 string[] vs = userAcc.Split('^');
                 if (vs.Length == 0)
                     continue;
-                Control_Show control_Show = new Control_Show(str, vs[0], vs[1]);
+                Control_Show control_Show = new Control_Show(Cbox_UserClass.SelectedItem.ToString(), str, vs[0], vs[1]);
                 tlp.RowCount++;
                 tlp.RowStyles.Add(new RowStyle(SizeType.Absolute, control_Show.Size.Height + 5));
                 tlp.Controls.Add(control_Show, 0, 0);

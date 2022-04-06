@@ -12,10 +12,12 @@ namespace My_Computer_Tools_Ⅱ
 {
     public partial class Control_Show : UserControl
     {
-        private readonly string _userpwd;
-        public Control_Show(string lab1, string lab2, string lab3)
+        private string _userpwd;
+        private readonly string _class;
+        public Control_Show(string classstr,string lab1, string lab2, string lab3)
         {
             InitializeComponent();
+            _class = classstr;
             lab_Name.Text = lab1;
             Lab_User.Text = lab2;
             
@@ -59,6 +61,37 @@ namespace My_Computer_Tools_Ⅱ
             //导入密码到剪贴板
             Clipboard.SetText(_userpwd);
             Program.WinCommand.ChangeTips("密码本本", "密码已复制到剪贴板", 3);
+        }
+
+        /// <summary>
+        /// 快捷修改密码
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void but_ChangPwd_Click(object sender, EventArgs e)
+        {
+            using (Form_input input = new Form_input("请输入您要更改的密码："))
+            {
+                input.ShowDialog();
+                string str = input.tbox_input.Text;
+                if (str == "")
+                    return;
+                string Accstr = Lab_User.Text + "^" + str;
+                
+                //修改xml文件
+                string path = Application.StartupPath + "\\" + Program.xmlname;
+                ClsXMLoperate clsXM = new ClsXMLoperate(path);
+
+                var ret = clsXM.UpdateXmlNode("UserInfo/"+ _class+"/"+ lab_Name.Text, Accstr);
+
+                if (ret)
+                {
+                    MessageBox.Show("修改密码完毕！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    _userpwd = str;
+                }
+                else
+                    MessageBox.Show("修改密码未完成，请重试...", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

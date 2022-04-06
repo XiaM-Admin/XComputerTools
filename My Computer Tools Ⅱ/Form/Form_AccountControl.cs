@@ -117,12 +117,13 @@ namespace My_Computer_Tools_Ⅱ
         /// <param name="e"></param>
         private void but_AddChang_Click(object sender, EventArgs e)
         {
-            //检查合法
+            //检查编辑框合法
             if (Text_User.Text == "" || Text_Username.Text == "" || Text_UserPwd.Text == "")
             {
                 MessageBox.Show("填入的账号信息部分为空，或不合法。\r\n请检查并且重新填写！", "错误");
                 return;
             }
+
             //检查Text_Username.Text是否符合xml命名规则
             if (!Check_XmlName(Text_Username.Text))
             {
@@ -163,11 +164,11 @@ namespace My_Computer_Tools_Ⅱ
             try
             {
                 Convert.ToInt16(text.PadLeft(1));
-                return true;
+                return false;
             }
             catch (Exception)
             {
-                return false;
+                return true;
                 throw;
             }
         }
@@ -211,29 +212,57 @@ namespace My_Computer_Tools_Ⅱ
         /// <param name="e"></param>
         private void Form_AccountControl_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (MessageBox.Show("确认退出保存吗？\r\n一旦您确认退出，程序将更改保存本地文件！", "提醒！", MessageBoxButtons.YesNo) == DialogResult.No)
-            {
-                e.Cancel = true;
-                return;
-            }
-
             List<string> Vs = new List<string>();
             //检查一下字典是否更改  没改就直接退出了...
             foreach (var item in AccountStrs)
                 Vs.Add(item.Key);
-            if (Vs.Equals(BackVs))
-                return;
-            
+            int i = 0;
+            //判断两个List是否相等
+            foreach (var item in Vs)
+            {
+                if (i == BackVs.Count ||  BackVs.Count != Vs.Count ||  item != BackVs[i])
+                {
+                    //提示保存
+                    DialogResult dr = MessageBox.Show("账号数据已经更改，是否保存？", "提示", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                    if (dr == DialogResult.Yes)
+                    {
+                        SaveAccountList();
+                        return;
+                    }
+                    else if (dr == DialogResult.No)
+                    {
+                        //不保存
+                        break;
+                    }
+                    else if (dr == DialogResult.Cancel)
+                    {
+                        //取消
+                        e.Cancel = true;
+                        break;
+                    }
+                }
+
+                i++;
+            }
+
+        }
+
+        /// <summary>
+        /// 保存账号
+        /// </summary>
+        private void SaveAccountList()
+        {
+            //保存
             string path = Application.StartupPath + "\\" + Program.xmlname;
             ClsXMLoperate clsXM = new ClsXMLoperate(path);
             //先删除分类下的所有账号
             var Vsstr = clsXM.GetNodeVsStr("UserInfo/" + _classname);
-            foreach (var item in Vsstr)
-                clsXM.Delete("UserInfo/" + _classname, "UserInfo/" + _classname + "/" + item);
+            foreach (var item1 in Vsstr)
+                clsXM.Delete("UserInfo/" + _classname, "UserInfo/" + _classname + "/" + item1);
 
             //再依次添加字典中的值
-            foreach (var item in AccountStrs)
-                clsXM.InsertSingleNode("UserInfo/" + _classname, item.Key, item.Value);
+            foreach (var item1 in AccountStrs)
+                clsXM.InsertSingleNode("UserInfo/" + _classname, item1.Key, item1.Value);
         }
     }
 }

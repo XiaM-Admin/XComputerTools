@@ -267,7 +267,7 @@
             this.GBox_NewTip.Size = new System.Drawing.Size(291, 338);
             this.GBox_NewTip.TabIndex = 0;
             this.GBox_NewTip.TabStop = false;
-            this.GBox_NewTip.Text = "最新告示";
+            this.GBox_NewTip.Text = "测试告示";
             // 
             // Text_NewTip
             // 

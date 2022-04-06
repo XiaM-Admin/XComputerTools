@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.IO;
 using System.Security.Principal;
+using System.Text;
+using System.Windows.Forms;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace My_Computer_Tools_Ⅱ
 {
@@ -38,11 +37,11 @@ namespace My_Computer_Tools_Ⅱ
         /// <param name="name"></param>
         /// <param name="isXml">是不是xml文档</param>
         /// <returns></returns>
-        public static bool CreatFile(string name,bool isXml=false)
+        public static bool CreatFile(string name, bool isXml = false)
         {
             try
             {
-                string path = Application.StartupPath+"\\"+ name;
+                string path = Application.StartupPath + "\\" + name;
                 if (File.Exists(path))
                 {
                     StreamReader streamReader = new StreamReader(Application.StartupPath + "\\" + name);
@@ -88,12 +87,21 @@ namespace My_Computer_Tools_Ⅱ
 
         }
 
+
+        //string类型转为json类型
+        public static JObject ToJson(this string str)
+        {
+            JObject jo = (JObject)JsonConvert.DeserializeObject(str);
+            return jo;
+        }
+
+
     }
 
     /// <summary>
     /// 窗口控件互动日志类
     /// </summary>
-    public  class WindowsCommands
+    public class WindowsCommands
     {
         public Form_Main _Main;
         public ShowBox showBox;//提示窗口
@@ -120,12 +128,12 @@ namespace My_Computer_Tools_Ⅱ
         /// <param name="Txt">标题</param>
         /// <param name="Tip">内容</param>
         /// <param name="s">显示秒数</param>
-        public void ChangeTips(string Txt,string Tip,int s)
+        public void ChangeTips(string Txt, string Tip, int s)
         {
             ChangeTips(Tip);
             if (Txt.Length > 4)
-                Txt=Txt.Insert(4,"\r\n");
-            showBox.Show(Txt,Tip, _Main, s);
+                Txt = Txt.Insert(4, "\r\n");
+            showBox.Show(Txt, Tip, _Main, s);
         }
     }
 }

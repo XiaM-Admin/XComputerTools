@@ -33,6 +33,7 @@
             this.Lab_Userpwd = new System.Windows.Forms.LinkLabel();
             this.label2 = new System.Windows.Forms.Label();
             this.but_ShowHide = new System.Windows.Forms.Button();
+            this.but_ChangPwd = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lab_Name
@@ -96,10 +97,21 @@
             this.but_ShowHide.UseVisualStyleBackColor = true;
             this.but_ShowHide.Click += new System.EventHandler(this.but_ShowHide_Click);
             // 
+            // but_ChangPwd
+            // 
+            this.but_ChangPwd.Location = new System.Drawing.Point(309, 11);
+            this.but_ChangPwd.Name = "but_ChangPwd";
+            this.but_ChangPwd.Size = new System.Drawing.Size(75, 23);
+            this.but_ChangPwd.TabIndex = 5;
+            this.but_ChangPwd.Text = "更改密码";
+            this.but_ChangPwd.UseVisualStyleBackColor = true;
+            this.but_ChangPwd.Click += new System.EventHandler(this.but_ChangPwd_Click);
+            // 
             // Control_Show
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.but_ChangPwd);
             this.Controls.Add(this.but_ShowHide);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.Lab_Userpwd);
@@ -121,5 +133,6 @@
         public System.Windows.Forms.LinkLabel Lab_User;
         public System.Windows.Forms.LinkLabel Lab_Userpwd;
         private System.Windows.Forms.Button but_ShowHide;
+        private System.Windows.Forms.Button but_ChangPwd;
     }
 }
