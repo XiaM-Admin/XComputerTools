@@ -45,7 +45,6 @@
             this.lab_SizeMeo = new System.Windows.Forms.Label();
             this.lab_Ip = new System.Windows.Forms.Label();
             this.lab_ComputerName = new System.Windows.Forms.Label();
-            this.But_ExitLogin = new System.Windows.Forms.Button();
             this.lab_WelCome = new System.Windows.Forms.Label();
             this.lab_ProName = new System.Windows.Forms.Label();
             this.GBox_NewTip = new System.Windows.Forms.GroupBox();
@@ -54,7 +53,7 @@
             this.lab_UserTip = new System.Windows.Forms.Label();
             this.lab_Sptil = new System.Windows.Forms.Label();
             this.but_ShowAccC = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lab_AccountTip = new System.Windows.Forms.Label();
             this.lab_UserClass = new System.Windows.Forms.Label();
             this.but_ChangClass = new System.Windows.Forms.Button();
             this.Cbox_UserClass = new System.Windows.Forms.ComboBox();
@@ -68,6 +67,9 @@
             this.显示ShowtoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.关于abouttoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.退出ExitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lab_SGTip = new System.Windows.Forms.Label();
+            this.but_ImportAcc = new System.Windows.Forms.Button();
+            this.but_exportAcc = new System.Windows.Forms.Button();
             this.STrip_Main.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabP_Home.SuspendLayout();
@@ -143,7 +145,6 @@
             this.tabP_Home.Controls.Add(this.lab_SizeMeo);
             this.tabP_Home.Controls.Add(this.lab_Ip);
             this.tabP_Home.Controls.Add(this.lab_ComputerName);
-            this.tabP_Home.Controls.Add(this.But_ExitLogin);
             this.tabP_Home.Controls.Add(this.lab_WelCome);
             this.tabP_Home.Controls.Add(this.lab_ProName);
             this.tabP_Home.Controls.Add(this.GBox_NewTip);
@@ -167,7 +168,7 @@
             // 
             // but_SetPro
             // 
-            this.but_SetPro.Location = new System.Drawing.Point(412, 351);
+            this.but_SetPro.Location = new System.Drawing.Point(412, 386);
             this.but_SetPro.Name = "but_SetPro";
             this.but_SetPro.Size = new System.Drawing.Size(78, 23);
             this.but_SetPro.TabIndex = 10;
@@ -227,16 +228,6 @@
             this.lab_ComputerName.TabIndex = 5;
             this.lab_ComputerName.Text = "计算机用户名：";
             // 
-            // But_ExitLogin
-            // 
-            this.But_ExitLogin.Location = new System.Drawing.Point(412, 380);
-            this.But_ExitLogin.Name = "But_ExitLogin";
-            this.But_ExitLogin.Size = new System.Drawing.Size(78, 23);
-            this.But_ExitLogin.TabIndex = 4;
-            this.But_ExitLogin.TabStop = false;
-            this.But_ExitLogin.Text = "退出登陆";
-            this.But_ExitLogin.UseVisualStyleBackColor = true;
-            // 
             // lab_WelCome
             // 
             this.lab_WelCome.AutoSize = true;
@@ -252,7 +243,7 @@
             // 
             this.lab_ProName.AutoSize = true;
             this.lab_ProName.Font = new System.Drawing.Font("微软雅黑", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lab_ProName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.lab_ProName.ForeColor = System.Drawing.Color.DarkViolet;
             this.lab_ProName.Location = new System.Drawing.Point(487, 19);
             this.lab_ProName.Name = "lab_ProName";
             this.lab_ProName.Size = new System.Drawing.Size(298, 39);
@@ -282,10 +273,13 @@
             // 
             // tabP_UorP
             // 
+            this.tabP_UorP.Controls.Add(this.but_exportAcc);
+            this.tabP_UorP.Controls.Add(this.but_ImportAcc);
+            this.tabP_UorP.Controls.Add(this.lab_SGTip);
             this.tabP_UorP.Controls.Add(this.lab_UserTip);
             this.tabP_UorP.Controls.Add(this.lab_Sptil);
             this.tabP_UorP.Controls.Add(this.but_ShowAccC);
-            this.tabP_UorP.Controls.Add(this.label1);
+            this.tabP_UorP.Controls.Add(this.lab_AccountTip);
             this.tabP_UorP.Controls.Add(this.lab_UserClass);
             this.tabP_UorP.Controls.Add(this.but_ChangClass);
             this.tabP_UorP.Controls.Add(this.Cbox_UserClass);
@@ -329,14 +323,14 @@
             this.but_ShowAccC.UseVisualStyleBackColor = true;
             this.but_ShowAccC.Click += new System.EventHandler(this.but_ShowAccC_Click);
             // 
-            // label1
+            // lab_AccountTip
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 90);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(73, 17);
-            this.label1.TabIndex = 5;
-            this.label1.Text = "— 账号管理";
+            this.lab_AccountTip.AutoSize = true;
+            this.lab_AccountTip.Location = new System.Drawing.Point(12, 90);
+            this.lab_AccountTip.Name = "lab_AccountTip";
+            this.lab_AccountTip.Size = new System.Drawing.Size(73, 17);
+            this.lab_AccountTip.TabIndex = 5;
+            this.lab_AccountTip.Text = "— 账号管理";
             // 
             // lab_UserClass
             // 
@@ -473,6 +467,35 @@
             this.退出ExitToolStripMenuItem.Text = "退出 Exit";
             this.退出ExitToolStripMenuItem.Click += new System.EventHandler(this.退出ExitToolStripMenuItem_Click);
             // 
+            // lab_SGTip
+            // 
+            this.lab_SGTip.AutoSize = true;
+            this.lab_SGTip.Location = new System.Drawing.Point(12, 175);
+            this.lab_SGTip.Name = "lab_SGTip";
+            this.lab_SGTip.Size = new System.Drawing.Size(73, 17);
+            this.lab_SGTip.TabIndex = 9;
+            this.lab_SGTip.Text = "— 导入导出";
+            // 
+            // but_ImportAcc
+            // 
+            this.but_ImportAcc.Location = new System.Drawing.Point(81, 195);
+            this.but_ImportAcc.Name = "but_ImportAcc";
+            this.but_ImportAcc.Size = new System.Drawing.Size(70, 23);
+            this.but_ImportAcc.TabIndex = 10;
+            this.but_ImportAcc.Text = "导入";
+            this.but_ImportAcc.UseVisualStyleBackColor = true;
+            this.but_ImportAcc.Click += new System.EventHandler(this.but_ImportAcc_Click);
+            // 
+            // but_exportAcc
+            // 
+            this.but_exportAcc.Location = new System.Drawing.Point(10, 195);
+            this.but_exportAcc.Name = "but_exportAcc";
+            this.but_exportAcc.Size = new System.Drawing.Size(70, 23);
+            this.but_exportAcc.TabIndex = 11;
+            this.but_exportAcc.Text = "导出";
+            this.but_exportAcc.UseVisualStyleBackColor = true;
+            this.but_exportAcc.Click += new System.EventHandler(this.but_exportAcc_Click);
+            // 
             // Form_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -524,7 +547,6 @@
         private System.Windows.Forms.GroupBox GBox_Target;
         private System.Windows.Forms.RichTextBox RText_target;
         private System.Windows.Forms.Label lab_MySaid;
-        private System.Windows.Forms.Button But_ExitLogin;
         private System.Windows.Forms.Label lab_ComputerName;
         private System.Windows.Forms.Label lab_Ip;
         private System.Windows.Forms.Label lab_SizeMeo;
@@ -544,8 +566,11 @@
         private System.Windows.Forms.Button but_ChangClass;
         private System.Windows.Forms.Label lab_UserClass;
         private System.Windows.Forms.Button but_ShowAccC;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lab_AccountTip;
         private System.Windows.Forms.Label lab_Sptil;
         private System.Windows.Forms.Label lab_UserTip;
+        private System.Windows.Forms.Label lab_SGTip;
+        private System.Windows.Forms.Button but_exportAcc;
+        private System.Windows.Forms.Button but_ImportAcc;
     }
 }

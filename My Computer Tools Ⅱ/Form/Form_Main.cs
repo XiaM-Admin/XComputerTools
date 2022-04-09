@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
@@ -327,6 +328,79 @@ namespace My_Computer_Tools_Ⅱ
             }
 
 
+        }
+
+
+        private void UpdateUserAcc_All()
+        {
+            //刷新class的items！
+            Commands.CreatFile(Program.xmlname, true);
+            string path = Application.StartupPath + "\\" + Program.xmlname;
+            ClsXMLoperate clsXM = new ClsXMLoperate(path);
+            string ret = clsXM.GetNodeContent("UserInfo/Class");
+            string[] vs = ret.Split('|');
+            Cbox_UserClass.Items.Clear();
+            foreach (var item in vs)
+                Cbox_UserClass.Items.Add(item);
+            Cbox_UserClass.SelectedIndex = UserClassindex;
+            
+            UpdateUserACC();
+        }
+        /// <summary>
+        /// 导出账号
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void but_exportAcc_Click(object sender, EventArgs e)
+        {
+            if (File.Exists("Account.xml"))
+            {
+                //导出文件
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "xml文件|*.xml";
+                saveFileDialog.FileName = "Account.xml";
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    File.Copy("Account.xml", saveFileDialog.FileName, true);
+                    WinCommand.ChangeTips("提示", "导出成功！", 4);
+                }
+                
+            }
+            else
+            {
+                MessageBox.Show("没有账号文件可以导出，\r\n" +
+                    "通常是程序出现了问题，或配置文件没有生成。\r\n" +
+                    "请尝试重新启动程序。","错误：");
+                return;
+            }
+        }
+        /// <summary>
+        /// 导入账号
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void but_ImportAcc_Click(object sender, EventArgs e)
+        {
+            
+            if (MessageBox.Show("导入配置文件，会覆盖当前存在的配置文件\r\n" +
+                "确定要继续导入文件吗？", "提示", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "xml文件|*.xml";
+                openFileDialog.FileName = "Account.xml";
+                openFileDialog.Title = "请确保导入的文件名为：Account.xml，否则无法选择到！";
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    File.Copy(openFileDialog.FileName, "Account.xml", true);
+                    WinCommand.ChangeTips("提示", "导入成功！", 4);
+                    UpdateUserAcc_All();
+                }
+                else
+                {
+                    WinCommand.ChangeTips("导入操作被取消");
+                }
+            }
+            
         }
     }
 }
