@@ -50,6 +50,9 @@
             this.GBox_NewTip = new System.Windows.Forms.GroupBox();
             this.Text_NewTip = new System.Windows.Forms.TextBox();
             this.tabP_UorP = new System.Windows.Forms.TabPage();
+            this.but_exportAcc = new System.Windows.Forms.Button();
+            this.but_ImportAcc = new System.Windows.Forms.Button();
+            this.lab_SGTip = new System.Windows.Forms.Label();
             this.lab_UserTip = new System.Windows.Forms.Label();
             this.lab_Sptil = new System.Windows.Forms.Label();
             this.but_ShowAccC = new System.Windows.Forms.Button();
@@ -67,9 +70,9 @@
             this.显示ShowtoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.关于abouttoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.退出ExitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lab_SGTip = new System.Windows.Forms.Label();
-            this.but_ImportAcc = new System.Windows.Forms.Button();
-            this.but_exportAcc = new System.Windows.Forms.Button();
+            this.lab_Find = new System.Windows.Forms.Label();
+            this.Tbox_Find = new System.Windows.Forms.TextBox();
+            this.but_Find = new System.Windows.Forms.Button();
             this.STrip_Main.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabP_Home.SuspendLayout();
@@ -273,6 +276,9 @@
             // 
             // tabP_UorP
             // 
+            this.tabP_UorP.Controls.Add(this.but_Find);
+            this.tabP_UorP.Controls.Add(this.Tbox_Find);
+            this.tabP_UorP.Controls.Add(this.lab_Find);
             this.tabP_UorP.Controls.Add(this.but_exportAcc);
             this.tabP_UorP.Controls.Add(this.but_ImportAcc);
             this.tabP_UorP.Controls.Add(this.lab_SGTip);
@@ -291,6 +297,35 @@
             this.tabP_UorP.TabIndex = 1;
             this.tabP_UorP.Text = "账号本本";
             this.tabP_UorP.UseVisualStyleBackColor = true;
+            // 
+            // but_exportAcc
+            // 
+            this.but_exportAcc.Location = new System.Drawing.Point(10, 188);
+            this.but_exportAcc.Name = "but_exportAcc";
+            this.but_exportAcc.Size = new System.Drawing.Size(70, 23);
+            this.but_exportAcc.TabIndex = 11;
+            this.but_exportAcc.Text = "导出";
+            this.but_exportAcc.UseVisualStyleBackColor = true;
+            this.but_exportAcc.Click += new System.EventHandler(this.but_exportAcc_Click);
+            // 
+            // but_ImportAcc
+            // 
+            this.but_ImportAcc.Location = new System.Drawing.Point(81, 188);
+            this.but_ImportAcc.Name = "but_ImportAcc";
+            this.but_ImportAcc.Size = new System.Drawing.Size(70, 23);
+            this.but_ImportAcc.TabIndex = 10;
+            this.but_ImportAcc.Text = "导入";
+            this.but_ImportAcc.UseVisualStyleBackColor = true;
+            this.but_ImportAcc.Click += new System.EventHandler(this.but_ImportAcc_Click);
+            // 
+            // lab_SGTip
+            // 
+            this.lab_SGTip.AutoSize = true;
+            this.lab_SGTip.Location = new System.Drawing.Point(12, 168);
+            this.lab_SGTip.Name = "lab_SGTip";
+            this.lab_SGTip.Size = new System.Drawing.Size(73, 17);
+            this.lab_SGTip.TabIndex = 9;
+            this.lab_SGTip.Text = "— 导入导出";
             // 
             // lab_UserTip
             // 
@@ -467,34 +502,32 @@
             this.退出ExitToolStripMenuItem.Text = "退出 Exit";
             this.退出ExitToolStripMenuItem.Click += new System.EventHandler(this.退出ExitToolStripMenuItem_Click);
             // 
-            // lab_SGTip
+            // lab_Find
             // 
-            this.lab_SGTip.AutoSize = true;
-            this.lab_SGTip.Location = new System.Drawing.Point(12, 175);
-            this.lab_SGTip.Name = "lab_SGTip";
-            this.lab_SGTip.Size = new System.Drawing.Size(73, 17);
-            this.lab_SGTip.TabIndex = 9;
-            this.lab_SGTip.Text = "— 导入导出";
+            this.lab_Find.AutoSize = true;
+            this.lab_Find.Location = new System.Drawing.Point(12, 248);
+            this.lab_Find.Name = "lab_Find";
+            this.lab_Find.Size = new System.Drawing.Size(49, 17);
+            this.lab_Find.TabIndex = 12;
+            this.lab_Find.Text = "— 搜索";
             // 
-            // but_ImportAcc
+            // Tbox_Find
             // 
-            this.but_ImportAcc.Location = new System.Drawing.Point(81, 195);
-            this.but_ImportAcc.Name = "but_ImportAcc";
-            this.but_ImportAcc.Size = new System.Drawing.Size(70, 23);
-            this.but_ImportAcc.TabIndex = 10;
-            this.but_ImportAcc.Text = "导入";
-            this.but_ImportAcc.UseVisualStyleBackColor = true;
-            this.but_ImportAcc.Click += new System.EventHandler(this.but_ImportAcc_Click);
+            this.Tbox_Find.Location = new System.Drawing.Point(10, 268);
+            this.Tbox_Find.Name = "Tbox_Find";
+            this.Tbox_Find.Size = new System.Drawing.Size(111, 23);
+            this.Tbox_Find.TabIndex = 13;
+            this.Tbox_Find.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Tbox_Find_KeyPress);
             // 
-            // but_exportAcc
+            // but_Find
             // 
-            this.but_exportAcc.Location = new System.Drawing.Point(10, 195);
-            this.but_exportAcc.Name = "but_exportAcc";
-            this.but_exportAcc.Size = new System.Drawing.Size(70, 23);
-            this.but_exportAcc.TabIndex = 11;
-            this.but_exportAcc.Text = "导出";
-            this.but_exportAcc.UseVisualStyleBackColor = true;
-            this.but_exportAcc.Click += new System.EventHandler(this.but_exportAcc_Click);
+            this.but_Find.Location = new System.Drawing.Point(124, 266);
+            this.but_Find.Name = "but_Find";
+            this.but_Find.Size = new System.Drawing.Size(24, 27);
+            this.but_Find.TabIndex = 14;
+            this.but_Find.Text = "F";
+            this.but_Find.UseVisualStyleBackColor = true;
+            this.but_Find.Click += new System.EventHandler(this.but_Find_Click);
             // 
             // Form_Main
             // 
@@ -572,5 +605,8 @@
         private System.Windows.Forms.Label lab_SGTip;
         private System.Windows.Forms.Button but_exportAcc;
         private System.Windows.Forms.Button but_ImportAcc;
+        private System.Windows.Forms.Label lab_Find;
+        private System.Windows.Forms.Button but_Find;
+        private System.Windows.Forms.TextBox Tbox_Find;
     }
 }
