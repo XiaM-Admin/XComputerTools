@@ -5,12 +5,12 @@ VisualStudioVersion = 17.1.32228.430
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "My Computer Tools Ⅱ", "My Computer Tools Ⅱ\My Computer Tools Ⅱ.csproj", "{6D967BC5-E00F-4B7A-B40B-460D4BE65F54}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommandLib", "RetNetInfor\CommandLib.csproj", "{F7C91E9B-E98F-4352-8B38-4397AC4C3202}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D992DA10-92F5-4DB2-A964-5134BFFD54D7}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommandLib", "CommandLib\CommandLib.csproj", "{F7C91E9B-E98F-4352-8B38-4397AC4C3202}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -162,7 +162,7 @@
     <Content Include="My Computer Tools.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RetNetInfor\CommandLib.csproj">
+    <ProjectReference Include="..\CommandLib\CommandLib.csproj">
       <Project>{f7c91e9b-e98f-4352-8b38-4397ac4c3202}</Project>
       <Name>CommandLib</Name>
     </ProjectReference>

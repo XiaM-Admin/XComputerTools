@@ -402,5 +402,58 @@ namespace My_Computer_Tools_Ⅱ
             }
             
         }
+
+        /// <summary>
+        /// 查找账号
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void but_Find_Click(object sender, EventArgs e)
+        {
+            string FindStr = Tbox_Find.Text.Trim();
+            if (FindStr == "")
+            {
+                UpdateUserAcc_All();
+                return;
+            }
+            string path = Application.StartupPath + "\\" + Program.xmlname;
+            ClsXMLoperate clsXM = new ClsXMLoperate(path);
+            //先删除tlp的所有控件
+            tlp.Controls.Clear();
+            //阻塞窗口 禁止用户操作
+            this.Enabled = false;
+            WinCommand.ChangeTips("账号搜索", "开始搜索全部账号！", 3);
+            //获取账号 添加 时间复杂度O(n^2) 
+            foreach (var item in Cbox_UserClass.Items)
+            {
+                var Vsstr = clsXM.GetNodeVsStr("UserInfo/" + item.ToString());//取所有账号名
+                foreach (string str in Vsstr)
+                {
+                    string userAcc = clsXM.GetNodeContent("UserInfo/" + item.ToString() + "/" + str);//取账号数据
+                    string[] vs = userAcc.Split('^');
+                    if (vs.Length == 0)
+                        continue;
+                    if (vs[0].Contains(FindStr) || vs[1].Contains(FindStr) || str.Contains(FindStr))
+                    {
+                        Control_Show control_Show = new Control_Show(item.ToString(), str, vs[0], vs[1]);
+                        tlp.RowCount++;
+                        tlp.RowStyles.Add(new RowStyle(SizeType.Absolute, control_Show.Size.Height + 5));
+                        tlp.Controls.Add(control_Show, 0, 0);
+                    }
+                }
+            }
+            WinCommand.ChangeTips("账号搜索","账号搜索完毕！",3);
+            //解除窗口阻塞
+            this.Enabled = true;
+
+        }
+
+        private void Tbox_Find_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            //按下回车
+            if (e.KeyChar == (char)Keys.Enter)
+                but_Find_Click(null, null);
+
+        }
     }
 }
