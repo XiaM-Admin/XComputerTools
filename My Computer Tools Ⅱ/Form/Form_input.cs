@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace My_Computer_Tools_Ⅱ
@@ -25,7 +18,7 @@ namespace My_Computer_Tools_Ⅱ
 
         private void but_Done_Click(object sender, EventArgs e)
         {
-            if (tbox_input.Text =="")
+            if (tbox_input.Text == "")
             {
                 MessageBox.Show("请输入内容！");
                 return;

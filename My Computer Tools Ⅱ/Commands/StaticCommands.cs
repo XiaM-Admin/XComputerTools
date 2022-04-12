@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.IO;
 using System.Security.Principal;
 using System.Text;
 using System.Windows.Forms;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace My_Computer_Tools_Ⅱ
 {
@@ -89,10 +89,15 @@ namespace My_Computer_Tools_Ⅱ
 
 
         //string类型转为json类型
-        public static JObject ToJson(this string str)
+        public static JObject ToJson(string str)
         {
-            JObject jo = (JObject)JsonConvert.DeserializeObject(str);
-            return jo;
+            if (str != null)
+            {
+                JObject jo = (JObject)JsonConvert.DeserializeObject(str);
+                return jo;
+            }
+            else
+                return null;
         }
 
 

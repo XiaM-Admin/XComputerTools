@@ -26,8 +26,8 @@ namespace My_Computer_Tools_Ⅱ
 
             //初始化账号列表
             lbox_AccList.Items.Clear();
-            string path = Application.StartupPath + "\\" + Program.xmlname;
-            ClsXMLoperate clsXM = new ClsXMLoperate(path);
+
+            ClsXMLoperate clsXM = Program.CreaterXMLHelper();
             var Vsstr = clsXM.GetNodeVsStr("UserInfo/" + _classname);
             foreach (string str in Vsstr)
             {
@@ -220,7 +220,7 @@ namespace My_Computer_Tools_Ⅱ
             //判断两个List是否相等
             foreach (var item in Vs)
             {
-                if (i == BackVs.Count ||  BackVs.Count != Vs.Count ||  item != BackVs[i])
+                if (i == BackVs.Count || BackVs.Count != Vs.Count || item != BackVs[i])
                 {
                     //提示保存
                     DialogResult dr = MessageBox.Show("账号数据已经更改，是否保存？", "提示", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
@@ -253,8 +253,7 @@ namespace My_Computer_Tools_Ⅱ
         private void SaveAccountList()
         {
             //保存
-            string path = Application.StartupPath + "\\" + Program.xmlname;
-            ClsXMLoperate clsXM = new ClsXMLoperate(path);
+            ClsXMLoperate clsXM = Program.CreaterXMLHelper();
             //先删除分类下的所有账号
             var Vsstr = clsXM.GetNodeVsStr("UserInfo/" + _classname);
             foreach (var item1 in Vsstr)

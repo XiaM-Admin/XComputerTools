@@ -38,6 +38,9 @@
             this.Timer_STrip = new System.Windows.Forms.Timer(this.components);
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabP_Home = new System.Windows.Forms.TabPage();
+            this.lab_WaiIP = new System.Windows.Forms.Label();
+            this.PBox_Data = new System.Windows.Forms.PictureBox();
+            this.lab_HyperData = new System.Windows.Forms.Label();
             this.lab_isAdmin = new System.Windows.Forms.Label();
             this.but_SetPro = new System.Windows.Forms.Button();
             this.lab_TimeDate = new System.Windows.Forms.Label();
@@ -50,6 +53,9 @@
             this.GBox_NewTip = new System.Windows.Forms.GroupBox();
             this.Text_NewTip = new System.Windows.Forms.TextBox();
             this.tabP_UorP = new System.Windows.Forms.TabPage();
+            this.but_Find = new System.Windows.Forms.Button();
+            this.Tbox_Find = new System.Windows.Forms.TextBox();
+            this.lab_Find = new System.Windows.Forms.Label();
             this.but_exportAcc = new System.Windows.Forms.Button();
             this.but_ImportAcc = new System.Windows.Forms.Button();
             this.lab_SGTip = new System.Windows.Forms.Label();
@@ -66,21 +72,18 @@
             this.GBox_Target = new System.Windows.Forms.GroupBox();
             this.RText_target = new System.Windows.Forms.RichTextBox();
             this.NotifyIconBack = new System.Windows.Forms.NotifyIcon(this.components);
-            this.ContextMenuBackStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.CMBS = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.显示ShowtoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.关于abouttoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.退出ExitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lab_Find = new System.Windows.Forms.Label();
-            this.Tbox_Find = new System.Windows.Forms.TextBox();
-            this.but_Find = new System.Windows.Forms.Button();
             this.STrip_Main.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabP_Home.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PBox_Data)).BeginInit();
             this.GBox_NewTip.SuspendLayout();
             this.tabP_UorP.SuspendLayout();
             this.tabP_About.SuspendLayout();
             this.GBox_Target.SuspendLayout();
-            this.ContextMenuBackStrip.SuspendLayout();
+            this.CMBS.SuspendLayout();
             this.SuspendLayout();
             // 
             // STrip_Main
@@ -141,6 +144,9 @@
             // 
             // tabP_Home
             // 
+            this.tabP_Home.Controls.Add(this.lab_WaiIP);
+            this.tabP_Home.Controls.Add(this.PBox_Data);
+            this.tabP_Home.Controls.Add(this.lab_HyperData);
             this.tabP_Home.Controls.Add(this.lab_isAdmin);
             this.tabP_Home.Controls.Add(this.but_SetPro);
             this.tabP_Home.Controls.Add(this.lab_TimeDate);
@@ -159,11 +165,41 @@
             this.tabP_Home.Text = "首页";
             this.tabP_Home.UseVisualStyleBackColor = true;
             // 
+            // lab_WaiIP
+            // 
+            this.lab_WaiIP.AutoSize = true;
+            this.lab_WaiIP.Font = new System.Drawing.Font("微软雅黑", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lab_WaiIP.Location = new System.Drawing.Point(92, 302);
+            this.lab_WaiIP.Name = "lab_WaiIP";
+            this.lab_WaiIP.Size = new System.Drawing.Size(90, 27);
+            this.lab_WaiIP.TabIndex = 14;
+            this.lab_WaiIP.Text = "外网IP：";
+            // 
+            // PBox_Data
+            // 
+            this.PBox_Data.Location = new System.Drawing.Point(6, 117);
+            this.PBox_Data.Name = "PBox_Data";
+            this.PBox_Data.Size = new System.Drawing.Size(94, 70);
+            this.PBox_Data.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PBox_Data.TabIndex = 13;
+            this.PBox_Data.TabStop = false;
+            // 
+            // lab_HyperData
+            // 
+            this.lab_HyperData.AutoSize = true;
+            this.lab_HyperData.Font = new System.Drawing.Font("微软雅黑", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lab_HyperData.ForeColor = System.Drawing.Color.Teal;
+            this.lab_HyperData.Location = new System.Drawing.Point(106, 128);
+            this.lab_HyperData.Name = "lab_HyperData";
+            this.lab_HyperData.Size = new System.Drawing.Size(92, 27);
+            this.lab_HyperData.TabIndex = 12;
+            this.lab_HyperData.Text = "天气数据";
+            // 
             // lab_isAdmin
             // 
             this.lab_isAdmin.AutoSize = true;
             this.lab_isAdmin.Font = new System.Drawing.Font("微软雅黑", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lab_isAdmin.Location = new System.Drawing.Point(92, 151);
+            this.lab_isAdmin.Location = new System.Drawing.Point(92, 194);
             this.lab_isAdmin.Name = "lab_isAdmin";
             this.lab_isAdmin.Size = new System.Drawing.Size(132, 27);
             this.lab_isAdmin.TabIndex = 11;
@@ -185,7 +221,7 @@
             this.lab_TimeDate.AutoSize = true;
             this.lab_TimeDate.Font = new System.Drawing.Font("微软雅黑", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.lab_TimeDate.ForeColor = System.Drawing.Color.BlueViolet;
-            this.lab_TimeDate.Location = new System.Drawing.Point(92, 111);
+            this.lab_TimeDate.Location = new System.Drawing.Point(92, 83);
             this.lab_TimeDate.Name = "lab_TimeDate";
             this.lab_TimeDate.Size = new System.Drawing.Size(69, 26);
             this.lab_TimeDate.TabIndex = 9;
@@ -195,7 +231,7 @@
             // 
             this.lab_MAC.AutoSize = true;
             this.lab_MAC.Font = new System.Drawing.Font("微软雅黑", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lab_MAC.Location = new System.Drawing.Point(92, 315);
+            this.lab_MAC.Location = new System.Drawing.Point(92, 374);
             this.lab_MAC.Name = "lab_MAC";
             this.lab_MAC.Size = new System.Drawing.Size(79, 27);
             this.lab_MAC.TabIndex = 8;
@@ -205,7 +241,7 @@
             // 
             this.lab_SizeMeo.AutoSize = true;
             this.lab_SizeMeo.Font = new System.Drawing.Font("微软雅黑", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lab_SizeMeo.Location = new System.Drawing.Point(92, 274);
+            this.lab_SizeMeo.Location = new System.Drawing.Point(92, 338);
             this.lab_SizeMeo.Name = "lab_SizeMeo";
             this.lab_SizeMeo.Size = new System.Drawing.Size(112, 27);
             this.lab_SizeMeo.TabIndex = 7;
@@ -215,7 +251,7 @@
             // 
             this.lab_Ip.AutoSize = true;
             this.lab_Ip.Font = new System.Drawing.Font("微软雅黑", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lab_Ip.Location = new System.Drawing.Point(92, 233);
+            this.lab_Ip.Location = new System.Drawing.Point(92, 266);
             this.lab_Ip.Name = "lab_Ip";
             this.lab_Ip.Size = new System.Drawing.Size(90, 27);
             this.lab_Ip.TabIndex = 6;
@@ -225,7 +261,7 @@
             // 
             this.lab_ComputerName.AutoSize = true;
             this.lab_ComputerName.Font = new System.Drawing.Font("微软雅黑", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lab_ComputerName.Location = new System.Drawing.Point(92, 192);
+            this.lab_ComputerName.Location = new System.Drawing.Point(92, 230);
             this.lab_ComputerName.Name = "lab_ComputerName";
             this.lab_ComputerName.Size = new System.Drawing.Size(152, 27);
             this.lab_ComputerName.TabIndex = 5;
@@ -236,7 +272,7 @@
             this.lab_WelCome.AutoSize = true;
             this.lab_WelCome.Font = new System.Drawing.Font("微软雅黑", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.lab_WelCome.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.lab_WelCome.Location = new System.Drawing.Point(92, 41);
+            this.lab_WelCome.Location = new System.Drawing.Point(92, 19);
             this.lab_WelCome.Name = "lab_WelCome";
             this.lab_WelCome.Size = new System.Drawing.Size(245, 52);
             this.lab_WelCome.TabIndex = 2;
@@ -297,6 +333,33 @@
             this.tabP_UorP.TabIndex = 1;
             this.tabP_UorP.Text = "账号本本";
             this.tabP_UorP.UseVisualStyleBackColor = true;
+            // 
+            // but_Find
+            // 
+            this.but_Find.Location = new System.Drawing.Point(124, 266);
+            this.but_Find.Name = "but_Find";
+            this.but_Find.Size = new System.Drawing.Size(24, 27);
+            this.but_Find.TabIndex = 14;
+            this.but_Find.Text = "F";
+            this.but_Find.UseVisualStyleBackColor = true;
+            this.but_Find.Click += new System.EventHandler(this.but_Find_Click);
+            // 
+            // Tbox_Find
+            // 
+            this.Tbox_Find.Location = new System.Drawing.Point(10, 268);
+            this.Tbox_Find.Name = "Tbox_Find";
+            this.Tbox_Find.Size = new System.Drawing.Size(111, 23);
+            this.Tbox_Find.TabIndex = 13;
+            this.Tbox_Find.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Tbox_Find_KeyPress);
+            // 
+            // lab_Find
+            // 
+            this.lab_Find.AutoSize = true;
+            this.lab_Find.Location = new System.Drawing.Point(12, 248);
+            this.lab_Find.Name = "lab_Find";
+            this.lab_Find.Size = new System.Drawing.Size(49, 17);
+            this.lab_Find.TabIndex = 12;
+            this.lab_Find.Text = "— 搜索";
             // 
             // but_exportAcc
             // 
@@ -466,68 +529,33 @@
             // 
             // NotifyIconBack
             // 
-            this.NotifyIconBack.ContextMenuStrip = this.ContextMenuBackStrip;
+            this.NotifyIconBack.ContextMenuStrip = this.CMBS;
             this.NotifyIconBack.Icon = ((System.Drawing.Icon)(resources.GetObject("NotifyIconBack.Icon")));
             this.NotifyIconBack.Text = "Computer Tools";
             this.NotifyIconBack.Visible = true;
             this.NotifyIconBack.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.NotifyIconBack_MouseDoubleClick);
             // 
-            // ContextMenuBackStrip
+            // CMBS
             // 
-            this.ContextMenuBackStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.CMBS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.显示ShowtoolStripMenuItem,
-            this.关于abouttoolStripMenuItem,
             this.退出ExitToolStripMenuItem});
-            this.ContextMenuBackStrip.Name = "ContextMenuBackStrip";
-            this.ContextMenuBackStrip.Size = new System.Drawing.Size(140, 70);
+            this.CMBS.Name = "ContextMenuBackStrip";
+            this.CMBS.Size = new System.Drawing.Size(136, 48);
             // 
             // 显示ShowtoolStripMenuItem
             // 
             this.显示ShowtoolStripMenuItem.Name = "显示ShowtoolStripMenuItem";
-            this.显示ShowtoolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.显示ShowtoolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.显示ShowtoolStripMenuItem.Text = "显示 Show";
             this.显示ShowtoolStripMenuItem.Click += new System.EventHandler(this.显示ShowtoolStripMenuItem_Click);
-            // 
-            // 关于abouttoolStripMenuItem
-            // 
-            this.关于abouttoolStripMenuItem.Name = "关于abouttoolStripMenuItem";
-            this.关于abouttoolStripMenuItem.Size = new System.Drawing.Size(139, 22);
-            this.关于abouttoolStripMenuItem.Text = "关于 About";
-            this.关于abouttoolStripMenuItem.Click += new System.EventHandler(this.关于abouttoolStripMenuItem_Click);
             // 
             // 退出ExitToolStripMenuItem
             // 
             this.退出ExitToolStripMenuItem.Name = "退出ExitToolStripMenuItem";
-            this.退出ExitToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.退出ExitToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.退出ExitToolStripMenuItem.Text = "退出 Exit";
             this.退出ExitToolStripMenuItem.Click += new System.EventHandler(this.退出ExitToolStripMenuItem_Click);
-            // 
-            // lab_Find
-            // 
-            this.lab_Find.AutoSize = true;
-            this.lab_Find.Location = new System.Drawing.Point(12, 248);
-            this.lab_Find.Name = "lab_Find";
-            this.lab_Find.Size = new System.Drawing.Size(49, 17);
-            this.lab_Find.TabIndex = 12;
-            this.lab_Find.Text = "— 搜索";
-            // 
-            // Tbox_Find
-            // 
-            this.Tbox_Find.Location = new System.Drawing.Point(10, 268);
-            this.Tbox_Find.Name = "Tbox_Find";
-            this.Tbox_Find.Size = new System.Drawing.Size(111, 23);
-            this.Tbox_Find.TabIndex = 13;
-            this.Tbox_Find.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Tbox_Find_KeyPress);
-            // 
-            // but_Find
-            // 
-            this.but_Find.Location = new System.Drawing.Point(124, 266);
-            this.but_Find.Name = "but_Find";
-            this.but_Find.Size = new System.Drawing.Size(24, 27);
-            this.but_Find.TabIndex = 14;
-            this.but_Find.Text = "F";
-            this.but_Find.UseVisualStyleBackColor = true;
-            this.but_Find.Click += new System.EventHandler(this.but_Find_Click);
             // 
             // Form_Main
             // 
@@ -550,6 +578,7 @@
             this.tabControl1.ResumeLayout(false);
             this.tabP_Home.ResumeLayout(false);
             this.tabP_Home.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PBox_Data)).EndInit();
             this.GBox_NewTip.ResumeLayout(false);
             this.GBox_NewTip.PerformLayout();
             this.tabP_UorP.ResumeLayout(false);
@@ -557,7 +586,7 @@
             this.tabP_About.ResumeLayout(false);
             this.tabP_About.PerformLayout();
             this.GBox_Target.ResumeLayout(false);
-            this.ContextMenuBackStrip.ResumeLayout(false);
+            this.CMBS.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -587,11 +616,10 @@
         public System.Windows.Forms.ToolStripStatusLabel StaLab_State;
         private System.Windows.Forms.TextBox Text_NewTip;
         private System.Windows.Forms.NotifyIcon NotifyIconBack;
-        private System.Windows.Forms.ContextMenuStrip ContextMenuBackStrip;
+        private System.Windows.Forms.ContextMenuStrip CMBS;
         private System.Windows.Forms.Label lab_TimeDate;
         private System.Windows.Forms.ToolStripMenuItem 退出ExitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 显示ShowtoolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 关于abouttoolStripMenuItem;
         private System.Windows.Forms.Button but_SetPro;
         private System.Windows.Forms.Label lab_isAdmin;
         private System.Windows.Forms.TableLayoutPanel tlp;
@@ -608,5 +636,8 @@
         private System.Windows.Forms.Label lab_Find;
         private System.Windows.Forms.Button but_Find;
         private System.Windows.Forms.TextBox Tbox_Find;
+        private System.Windows.Forms.Label lab_HyperData;
+        private System.Windows.Forms.PictureBox PBox_Data;
+        private System.Windows.Forms.Label lab_WaiIP;
     }
 }

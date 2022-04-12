@@ -30,7 +30,7 @@ namespace My_Computer_Tools_Ⅱ
                 request = WebRequest.Create(url.Trim()) as HttpWebRequest;
                 request.ProtocolVersion = HttpVersion.Version10;
                 request.Method = "POST";
-                request.ContentType = "application/x-www-form-urlencoded";
+                request.ContentType = "application/json;charset=utf-8";
                 request.UserAgent = DefaultUserAgent;
 
                 //如果需要POST数据     
@@ -49,19 +49,57 @@ namespace My_Computer_Tools_Ⅱ
                 }
                 HttpWebResponse response = (request.GetResponse() as HttpWebResponse);
 
-                Stream htmlStream = response.GetResponseStream(); 
+                Stream htmlStream = response.GetResponseStream();
 
-                StreamReader sr = new StreamReader(htmlStream); 
+                StreamReader sr = new StreamReader(htmlStream);
 
-                var html = sr.ReadToEnd(); 
+                var html = sr.ReadToEnd();
 
                 return html;
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
-                throw;
+                Console.WriteLine($"api:{url} 异常：{e.Message}");
+                return null;
             }
         }
+
+
+        /// <summary> 
+        /// GET请求与获取结果 
+        /// </summary> 
+        public static string ApiGet(string Url, IDictionary<string, string> parameters)
+        {
+            try
+            {
+                string data = "";// "UserName=admin&Password=123";
+                foreach (var item in parameters)
+                {
+                    data += $"{item.Key}={item.Value}&";
+                }
+                if (data.Contains("&"))
+                    data = data.Remove(data.Length - 1, 1);
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Url + "?" + data);
+                request.Method = "GET";
+                request.ContentType = "application/json; charset=utf-8";//"text/json; charset=utf-8";
+
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                Stream myResponseStream = response.GetResponseStream();
+                StreamReader myStreamReader = new StreamReader(myResponseStream, Encoding.UTF8);
+                string retString = myStreamReader.ReadToEnd();
+                myStreamReader.Close();
+                myResponseStream.Close();
+
+                return retString;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"api:{Url} 异常：{e.Message}");
+                return null;
+            }
+
+        }
+
     }
 }

@@ -23,54 +23,6 @@ namespace My_Computer_Tools_Ⅱ.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string LoadName {
-            get {
-                return ((string)(this["LoadName"]));
-            }
-            set {
-                this["LoadName"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string LoadPwd {
-            get {
-                return ((string)(this["LoadPwd"]));
-            }
-            set {
-                this["LoadPwd"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool ShowLoad {
-            get {
-                return ((bool)(this["ShowLoad"]));
-            }
-            set {
-                this["ShowLoad"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string LoadCode {
-            get {
-                return ((string)(this["LoadCode"]));
-            }
-            set {
-                this["LoadCode"] = value;
-            }
-        }
-        
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("T1")]
@@ -89,6 +41,30 @@ namespace My_Computer_Tools_Ⅱ.Properties {
             }
             set {
                 this["OpenStartRun"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ShowAccinCMBS {
+            get {
+                return ((bool)(this["ShowAccinCMBS"]));
+            }
+            set {
+                this["ShowAccinCMBS"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string City {
+            get {
+                return ((string)(this["City"]));
+            }
+            set {
+                this["City"] = value;
             }
         }
     }

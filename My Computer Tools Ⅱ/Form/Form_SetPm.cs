@@ -1,7 +1,8 @@
-﻿using System;
-using Microsoft.Win32;
-using System.Windows.Forms;
+﻿using Microsoft.Win32;
+using NetCommandLib;
+using System;
 using System.Diagnostics;
+using System.Windows.Forms;
 using settings = My_Computer_Tools_Ⅱ.Properties.Settings;
 
 namespace My_Computer_Tools_Ⅱ
@@ -12,21 +13,48 @@ namespace My_Computer_Tools_Ⅱ
         {
             InitializeComponent();
         }
+        /// <summary>
+        /// 是否立刻刷新天气
+        /// </summary>
+        public bool UpDateWeather = false;
 
         private void Form_SetPm_Load(object sender, EventArgs e)
         {
             //初始化配置
             CBox_OpenStartRun.Checked = settings.Default.OpenStartRun;
-
+            CBox_ShowAccinCMBS.Checked = settings.Default.ShowAccinCMBS;
+            if (settings.Default.City != "")
+            {
+                string[] vs = settings.Default.City.Split('|');
+                try
+                {
+                    CBox_GeographyPos.Text = vs[1];
+                    SetComonBoxItemCity SetBoxItem = new SetComonBoxItemCity(CBox_City, CBox_GeographyPos.Text);
+                    CBox_City.Text = vs[0];
+                }
+                catch (Exception)
+                {
+                    settings.Default.City = "";
+                    settings.Default.Save();
+                }
+            }
         }
-
         private void Form_SetPm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (CBox_OpenStartRun.Checked!= settings.Default.OpenStartRun)
+            if (CBox_OpenStartRun.Checked != settings.Default.OpenStartRun)
             {
                 settings.Default.OpenStartRun = CBox_OpenStartRun.Checked;
                 SetMeStart(CBox_OpenStartRun.Checked);
             }
+            if (CBox_ShowAccinCMBS.Checked != settings.Default.ShowAccinCMBS)
+                settings.Default.ShowAccinCMBS = CBox_ShowAccinCMBS.Checked;
+
+            if (CBox_City.Text != "")
+                if (settings.Default.City != CBox_City.Text + "|" + CBox_GeographyPos.Text)
+                {
+                    settings.Default.City = CBox_City.Text + "|" + CBox_GeographyPos.Text;
+                    UpDateWeather = true;
+                }
             settings.Default.Save();
         }
 
@@ -41,7 +69,7 @@ namespace My_Computer_Tools_Ⅱ
             bool isOk = false;
             string appName = Process.GetCurrentProcess().MainModule.ModuleName;
             string appPath = Process.GetCurrentProcess().MainModule.FileName;
-            isOk = SetAutoStart(onOff, appName, appPath+ " -autorun");
+            isOk = SetAutoStart(onOff, appName, appPath + " -autorun");
             return isOk;
         }
 
@@ -152,5 +180,9 @@ namespace My_Computer_Tools_Ⅱ
 
         #endregion
 
+        private void CBox_GeographyPos_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SetComonBoxItemCity SetBoxItem = new SetComonBoxItemCity(CBox_City, CBox_GeographyPos.Text);
+        }
     }
 }

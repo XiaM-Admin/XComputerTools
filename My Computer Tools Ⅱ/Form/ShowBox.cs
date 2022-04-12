@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace My_Computer_Tools_Ⅱ
@@ -71,7 +65,7 @@ namespace My_Computer_Tools_Ⅱ
 
 
         #endregion
-        public ShowBox(string Tip,string Txt, Form_Main form_Main, int S=3)
+        public ShowBox(string Tip, string Txt, Form_Main form_Main, int S = 3)
         {
             InitializeComponent();
             AnimateWindow(this.Handle, 300, AW_HIDE | AW_BLEND);
@@ -79,7 +73,7 @@ namespace My_Computer_Tools_Ⅱ
 
             lab_Tip.Text = Tip;
             lab_Txt.Text = Txt;
-            if (S!=3)
+            if (S != 3)
             {
                 this.S = S;
             }
@@ -92,7 +86,7 @@ namespace My_Computer_Tools_Ⅱ
         private void ShowBox_Load(object sender, EventArgs e)
         {
             ChangThisSize();
-            ToolTip.SetToolTip(this.lab_About,"点击跳过·");
+            ToolTip.SetToolTip(this.lab_About, "点击跳过·");
         }
 
         private Thread thread;
@@ -106,7 +100,7 @@ namespace My_Computer_Tools_Ⅱ
                 return;
             }
 
-            
+
 
 
             lab_Tip.Text = Tip;
@@ -154,7 +148,7 @@ namespace My_Computer_Tools_Ⅱ
             this.Invoke(new MethodInvoker(delegate ()
             {
                 this.Hide();
-                ShowNow=false;
+                ShowNow = false;
             }));
 
         }

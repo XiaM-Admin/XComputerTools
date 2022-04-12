@@ -102,6 +102,9 @@
     <Compile Include="Form\Form_input.Designer.cs">
       <DependentUpon>Form_input.cs</DependentUpon>
     </Compile>
+    <Compile Include="Main_Fun.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Form\ShowBox.cs">
@@ -140,6 +143,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="Form\ShowBox.resx">
       <DependentUpon>ShowBox.cs</DependentUpon>
@@ -160,6 +164,46 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="My Computer Tools.ico" />
+    <EmbeddedResource Include="Resources\weather_99.png" />
+    <None Include="Resources\weather_38.png" />
+    <None Include="Resources\weather_37.png" />
+    <None Include="Resources\weather_36.png" />
+    <None Include="Resources\weather_35.png" />
+    <None Include="Resources\weather_34.png" />
+    <None Include="Resources\weather_33.png" />
+    <None Include="Resources\weather_32.png" />
+    <None Include="Resources\weather_31.png" />
+    <None Include="Resources\weather_30.png" />
+    <None Include="Resources\weather_29.png" />
+    <None Include="Resources\weather_28.png" />
+    <None Include="Resources\weather_27.png" />
+    <None Include="Resources\weather_26.png" />
+    <None Include="Resources\weather_25.png" />
+    <None Include="Resources\weather_24.png" />
+    <None Include="Resources\weather_23.png" />
+    <None Include="Resources\weather_22.png" />
+    <None Include="Resources\weather_21.png" />
+    <None Include="Resources\weather_20.png" />
+    <None Include="Resources\weather_19.png" />
+    <None Include="Resources\weather_18.png" />
+    <None Include="Resources\weather_17.png" />
+    <None Include="Resources\weather_16.png" />
+    <None Include="Resources\weather_15.png" />
+    <None Include="Resources\weather_14.png" />
+    <None Include="Resources\weather_13.png" />
+    <None Include="Resources\weather_12.png" />
+    <None Include="Resources\weather_11.png" />
+    <None Include="Resources\weather_10.png" />
+    <None Include="Resources\weather_9.png" />
+    <None Include="Resources\weather_8.png" />
+    <None Include="Resources\weather_7.png" />
+    <None Include="Resources\weather_6.png" />
+    <None Include="Resources\weather_5.png" />
+    <None Include="Resources\weather_4.png" />
+    <None Include="Resources\weather_3.png" />
+    <None Include="Resources\weather_2.png" />
+    <None Include="Resources\weather_1.png" />
+    <None Include="Resources\weather_0.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CommandLib\CommandLib.csproj">

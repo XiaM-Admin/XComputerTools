@@ -1,10 +1,7 @@
-﻿using NetCommandLib;
-using Newtonsoft.Json.Linq;
+﻿using My_Computer_Tools_Ⅱ.Properties;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -12,7 +9,6 @@ namespace My_Computer_Tools_Ⅱ
 {
     public partial class Form_Main : Form
     {
-
         public Form_Main()
         {
             InitializeComponent();
@@ -21,13 +17,14 @@ namespace My_Computer_Tools_Ⅱ
             showBox_Loc = WinCommand.showBox = new ShowBox("提示标题", "提示内容", this);
             Program.WinCommand = WinCommand;//同步到Program里
         }
+
         private WindowsCommands WinCommand = new WindowsCommands();//窗口控件互动类
+
         private ShowBox showBox_Loc;//窗口控件互动类
 
         private int UserClassindex = 0;//用户账号分类索引
 
-        //线程变量
-        private Thread thread_FirstOpen = null;
+        private Thread thread_FirstOpen = null;//线程变量
         private void Form_Main_Load(object sender, EventArgs e)
         {
             STrip_Main_init();
@@ -36,122 +33,13 @@ namespace My_Computer_Tools_Ⅱ
             //处理完毕
             WinCommand.ChangeTips("初始化完毕");
 
-            thread_FirstOpen = new Thread(VoidFirstOpen);
-            thread_FirstOpen.IsBackground = true;
-            thread_FirstOpen.Start();
-        }
-
-        /// <summary>
-        /// 控件初始化
-        /// </summary>
-        private void Control_Init()
-        {
-            //计算机信息处理
-            GetComputerInfo computerInfo = new GetComputerInfo();
-            string IpAddress = computerInfo.IpAddress;
-            lab_Ip.Text += IpAddress;
-            string ComputerName = computerInfo.ComputerName;
-            lab_ComputerName.Text += ComputerName;
-            string SizeOfMemery = (Convert.ToDouble(computerInfo.SizeOfMemery) / 1024.0 / 1024.0).ToString("0.00");
-            lab_SizeMeo.Text += SizeOfMemery + " G";
-            string MacAddress = computerInfo.MacAddress;
-            lab_MAC.Text += MacAddress;
-            lab_isAdmin.Text += Commands.IsAdministrator();
-            //日月处理显示
-            lab_TimeDate.Text += DateTime.Now.ToString("D") + " " + DateTime.Now.ToString("dddd");
-
-            //RText_target设置
-            StartStrikeout(RText_target, 1);
-            StartStrikeout(RText_target, 2);
-
-            //初始化动态弹窗提示效果
-            WinCommand.ChangeTips("运行提示", "初始化中...", 1);
-
-            //设置布局栏双缓存
-            this.tlp.GetType().GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(this.tlp, true, null);
-
-            //设置账号存储分类为首
-            Cbox_UserClass.SelectedIndex = 0;
-        }
-
-        private void VoidFirstOpen()
-        {
-            Thread.Sleep(1000);
-            if (Program.FirstRunArg)
-                this.Invoke(new Action(() =>
-                Application.Exit()
-                ));//调用一次退出 让其最小化
-        }
-
-        /// <summary>
-        /// 初始化状态栏
-        /// </summary>
-        private void STrip_Main_init()
-        {
-            StaLab_Time.Text = "Time：" + DateTime.Now.ToString();
-            Thread.Sleep(0);
-        }
-
-        /// <summary>
-        /// 程序部分功能初始化
-        /// </summary>
-        private void Command_Init()
-        {
-            Timer_STrip.Enabled = true;//状态栏定时器开始
-            //http://8.130.100.111/?s=Pro.GetNotice&Ver=T1
-            //使用api发送Get请求
-            IDictionary<string, string> parameters = new Dictionary<string, string>();
-            try
+            if (Program.FirstRunArg)//如果是开机自启，就最小化主界面
             {
-                parameters.Add("s", "Pro.GetNotice");
-                parameters.Add("Ver", "T1");
-                var ret = WebPost.ApiPost("http://8.130.100.111", parameters);
-                JObject jo = Commands.ToJson(ret);
-                if (jo["ret"].ToString() == "200")
-                {
-                    string Notice = jo["data"]["Notice"].ToString();
-                    Text_NewTip.Text = Notice;
-                }
-                else
-                    Text_NewTip.Text = "网络错误，或服务器更改，或服务器没了...";
-
-            }
-            catch (Exception)
-            {
-                Text_NewTip.Text = "网络错误，或服务器更改，或服务器没了...";
+                thread_FirstOpen = new Thread(VoidFirstOpen);
+                thread_FirstOpen.IsBackground = true;
+                thread_FirstOpen.Start();
             }
 
-        }
-
-        /// <summary>
-        /// 给超文本编辑框加删除线并设置绿色
-        /// </summary>
-        /// <param name="RTextBox"></param>
-        /// <param name="i">行</param>
-        private void StartStrikeout(RichTextBox RTextBox, int i)
-        {
-            //给超文本编辑框加删除线
-
-            FontStyle fontStyle = FontStyle.Strikeout;
-            i--;
-            var txt = RText_target.Lines[i];
-            if (i > 0)
-            {
-                int Startlen = 0;
-
-                for (int x = 0; x < i; x++)
-                {
-                    string str = RText_target.Lines[x];
-                    Startlen += str.Length;
-                    Startlen++;
-                }
-                RText_target.SelectionStart = Startlen;
-
-            }
-
-            RText_target.SelectionLength = txt.Length;
-            RText_target.SelectionFont = new Font(RText_target.SelectionFont, fontStyle);
-            RText_target.SelectionColor = Color.FromName("Green");
         }
 
         /// <summary>
@@ -166,12 +54,12 @@ namespace My_Computer_Tools_Ⅱ
             //日月处理显示
             lab_TimeDate.Text = "日期：" + DateTime.Now.ToString("D") + " " + DateTime.Now.ToString("dddd");
         }
+
         /// <summary>
-        /// 重新登陆
+        /// 提示窗口跟随主界面移动
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-
         private void Form_Main_LocationChanged(object sender, EventArgs e)
         {
             if (Program.backWindows_State == true)
@@ -195,6 +83,11 @@ namespace My_Computer_Tools_Ⅱ
             Application.Exit();
         }
 
+        /// <summary>
+        /// 显示主界面
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void 显示ShowtoolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (Program.backWindows_State)
@@ -205,9 +98,13 @@ namespace My_Computer_Tools_Ⅱ
 
         }
 
+        /// <summary>
+        /// 不关闭程序，最小化到托盘
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Form_Main_FormClosing(object sender, FormClosingEventArgs e)
         {
-
             if (!Program.backWindows_State)
             {
                 if (showBox_Loc.ShowNow == true)
@@ -218,15 +115,12 @@ namespace My_Computer_Tools_Ⅱ
                 WinCommand.ChangeTips("程序提示", "主程序已转移到后台运行！\r\n请检查托盘图标！", 4);
                 return;
             }
-
-
         }
-
-        private void 关于abouttoolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            WinCommand.ChangeTips("提示", "关于没做呢~嗨害嗨！", 4);
-        }
-
+        /// <summary>
+        /// 托盘图标被双击显示主界面
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void NotifyIconBack_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             if (Program.backWindows_State)
@@ -235,11 +129,30 @@ namespace My_Computer_Tools_Ⅱ
                 Program.backWindows_State = false;
             }
         }
-
+        /// <summary>
+        /// 调用设置界面\r\n在关闭时处理一些事情
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void but_SetPro_Click(object sender, EventArgs e)
         {
             Form_SetPm form = new Form_SetPm();
             form.ShowDialog();
+            if (form.UpDateWeather)
+            {
+                Net_GetWeather(Settings.Default.City.Split('|')[0]);
+                form.UpDateWeather = !form.UpDateWeather;
+            }
+
+            //检查ShowAccinCMBS的值
+            if (Settings.Default.ShowAccinCMBS)
+                ShowAccinCMBS();//显示账号到托盘菜单
+            else
+                HideAccinCMBS();//不显示账号
+
+            //释放form
+            form.Dispose();
+
         }
 
         /// <summary>
@@ -253,8 +166,8 @@ namespace My_Computer_Tools_Ⅱ
             {
                 //刷新class的items！
                 Commands.CreatFile(Program.xmlname, true);
-                string path = Application.StartupPath + "\\" + Program.xmlname;
-                ClsXMLoperate clsXM = new ClsXMLoperate(path);
+
+                ClsXMLoperate clsXM = Program.CreaterXMLHelper();
                 string ret = clsXM.GetNodeContent("UserInfo/Class");
                 string[] vs = ret.Split('|');
                 Cbox_UserClass.Items.Clear();
@@ -275,8 +188,8 @@ namespace My_Computer_Tools_Ⅱ
                 Form.ShowDialog();
                 //刷新class的items！
                 Commands.CreatFile(Program.xmlname, true);
-                string path = Application.StartupPath + "\\" + Program.xmlname;
-                ClsXMLoperate clsXM = new ClsXMLoperate(path);
+
+                ClsXMLoperate clsXM = Program.CreaterXMLHelper();
                 //存到文件中 Form.retstr
                 clsXM.UpdateXmlNode("UserInfo/Class", Form.retstr);
                 string[] vs = Form.retstr.Split('|');
@@ -287,6 +200,11 @@ namespace My_Computer_Tools_Ⅱ
             }
         }
 
+        /// <summary>
+        /// 调用显示账号管理界面
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void but_ShowAccC_Click(object sender, EventArgs e)
         {
             using (Form_AccountControl accform = new Form_AccountControl(Cbox_UserClass.Text))
@@ -296,56 +214,17 @@ namespace My_Computer_Tools_Ⅱ
             }
         }
 
-        //更新显示账号显示区域！
+        /// <summary>
+        /// 更新显示账号显示区域！
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Cbox_UserClass_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateUserACC();
             UserClassindex = Cbox_UserClass.SelectedIndex;
         }
 
-        /// <summary>
-        /// 更新！
-        /// </summary>
-        private void UpdateUserACC()
-        {
-            string path = Application.StartupPath + "\\" + Program.xmlname;
-            ClsXMLoperate clsXM = new ClsXMLoperate(path);
-
-            //先删除tlp的所有控件
-            tlp.Controls.Clear();
-            //获取账号 添加
-            var Vsstr = clsXM.GetNodeVsStr("UserInfo/" + Cbox_UserClass.SelectedItem.ToString());//取所有账号名
-            foreach (string str in Vsstr)
-            {
-                string userAcc = clsXM.GetNodeContent("UserInfo/" + Cbox_UserClass.SelectedItem.ToString() + "/" + str);//取账号数据
-                string[] vs = userAcc.Split('^');
-                if (vs.Length == 0)
-                    continue;
-                Control_Show control_Show = new Control_Show(Cbox_UserClass.SelectedItem.ToString(), str, vs[0], vs[1]);
-                tlp.RowCount++;
-                tlp.RowStyles.Add(new RowStyle(SizeType.Absolute, control_Show.Size.Height + 5));
-                tlp.Controls.Add(control_Show, 0, 0);
-            }
-
-
-        }
-
-
-        private void UpdateUserAcc_All()
-        {
-            //刷新class的items！
-            Commands.CreatFile(Program.xmlname, true);
-            string path = Application.StartupPath + "\\" + Program.xmlname;
-            ClsXMLoperate clsXM = new ClsXMLoperate(path);
-            string ret = clsXM.GetNodeContent("UserInfo/Class");
-            string[] vs = ret.Split('|');
-            Cbox_UserClass.Items.Clear();
-            foreach (var item in vs)
-                Cbox_UserClass.Items.Add(item);
-            Cbox_UserClass.SelectedIndex = UserClassindex;
-            
-            UpdateUserACC();
-        }
         /// <summary>
         /// 导出账号
         /// </summary>
@@ -364,13 +243,13 @@ namespace My_Computer_Tools_Ⅱ
                     File.Copy("Account.xml", saveFileDialog.FileName, true);
                     WinCommand.ChangeTips("提示", "导出成功！", 4);
                 }
-                
+
             }
             else
             {
                 MessageBox.Show("没有账号文件可以导出，\r\n" +
                     "通常是程序出现了问题，或配置文件没有生成。\r\n" +
-                    "请尝试重新启动程序。","错误：");
+                    "请尝试重新启动程序。", "错误：");
                 return;
             }
         }
@@ -381,7 +260,7 @@ namespace My_Computer_Tools_Ⅱ
         /// <param name="e"></param>
         private void but_ImportAcc_Click(object sender, EventArgs e)
         {
-            
+
             if (MessageBox.Show("导入配置文件，会覆盖当前存在的配置文件\r\n" +
                 "确定要继续导入文件吗？", "提示", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
@@ -400,7 +279,7 @@ namespace My_Computer_Tools_Ⅱ
                     WinCommand.ChangeTips("导入操作被取消");
                 }
             }
-            
+
         }
 
         /// <summary>
@@ -416,8 +295,8 @@ namespace My_Computer_Tools_Ⅱ
                 UpdateUserAcc_All();
                 return;
             }
-            string path = Application.StartupPath + "\\" + Program.xmlname;
-            ClsXMLoperate clsXM = new ClsXMLoperate(path);
+
+            ClsXMLoperate clsXM = Program.CreaterXMLHelper();
             //先删除tlp的所有控件
             tlp.Controls.Clear();
             //阻塞窗口 禁止用户操作
@@ -442,12 +321,16 @@ namespace My_Computer_Tools_Ⅱ
                     }
                 }
             }
-            WinCommand.ChangeTips("账号搜索","账号搜索完毕！",3);
+            WinCommand.ChangeTips("账号搜索", "账号搜索完毕！", 3);
             //解除窗口阻塞
             this.Enabled = true;
 
         }
-
+        /// <summary>
+        /// 查找账号
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Tbox_Find_KeyPress(object sender, KeyPressEventArgs e)
         {
             //按下回车
@@ -455,5 +338,22 @@ namespace My_Computer_Tools_Ⅱ
                 but_Find_Click(null, null);
 
         }
+
+        private void LabelClick(object sender, EventArgs e)
+        {
+            //标签被单击复制到剪贴板
+            if (((Label)sender).Name == "lab_HyperData")
+            {
+                Clipboard.SetText(((Label)sender).Text);
+                WinCommand.ChangeTips($"{((Label)sender).Text}已复制");
+                return;
+            }
+            string str = ((Label)sender).Text.Split('：')[1];
+            Clipboard.SetText(str);
+            WinCommand.ChangeTips($"{str}已复制");
+        }
     }
+
+
+
 }

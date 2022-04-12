@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace My_Computer_Tools_Ⅱ
@@ -14,13 +7,13 @@ namespace My_Computer_Tools_Ⅱ
     {
         private string _userpwd;
         private readonly string _class;
-        public Control_Show(string classstr,string lab1, string lab2, string lab3)
+        public Control_Show(string classstr, string lab1, string lab2, string lab3)
         {
             InitializeComponent();
             _class = classstr;
             lab_Name.Text = lab1;
             Lab_User.Text = lab2;
-            
+
             Lab_Userpwd.Text = "************";
             _userpwd = lab3;
         }
@@ -53,7 +46,7 @@ namespace My_Computer_Tools_Ⅱ
         {
             //导入剪贴板
             Clipboard.SetText(Lab_User.Text);
-            Program.WinCommand.ChangeTips("账号本本", "账号已复制到剪贴板",3);
+            Program.WinCommand.ChangeTips("账号本本", "账号已复制到剪贴板", 3);
         }
 
         private void Lab_Userpwd_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -77,12 +70,11 @@ namespace My_Computer_Tools_Ⅱ
                 if (str == "")
                     return;
                 string Accstr = Lab_User.Text + "^" + str;
-                
-                //修改xml文件
-                string path = Application.StartupPath + "\\" + Program.xmlname;
-                ClsXMLoperate clsXM = new ClsXMLoperate(path);
 
-                var ret = clsXM.UpdateXmlNode("UserInfo/"+ _class+"/"+ lab_Name.Text, Accstr);
+                //修改xml文件
+                ClsXMLoperate clsXM = Program.CreaterXMLHelper();
+
+                var ret = clsXM.UpdateXmlNode("UserInfo/" + _class + "/" + lab_Name.Text, Accstr);
 
                 if (ret)
                 {

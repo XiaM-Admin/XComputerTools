@@ -1,11 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace My_Computer_Tools_Ⅱ
@@ -23,8 +17,8 @@ namespace My_Computer_Tools_Ⅱ
         {
             //获取原始的class items
             Commands.CreatFile(Program.xmlname, true);
-            string path = Application.StartupPath + "\\" + Program.xmlname;
-            ClsXMLoperate clsXM = new ClsXMLoperate(path);
+
+            ClsXMLoperate clsXM = Program.CreaterXMLHelper();
             string ret = clsXM.GetNodeContent("UserInfo/Class");
             //放入ListBox中
             Lbox_Class.Items.Clear();
@@ -32,9 +26,9 @@ namespace My_Computer_Tools_Ⅱ
             foreach (var str in vs)
             {
                 Lbox_Class.Items.Add(str);
-                retstr = retstr+"|"+ str;
+                retstr = retstr + "|" + str;
             }
-            retstr = retstr.Replace("*|","");
+            retstr = retstr.Replace("*|", "");
 
         }
 
@@ -50,7 +44,7 @@ namespace My_Computer_Tools_Ⅱ
                 {
                     if ((string)item == str)
                     {
-                        MessageBox.Show("列表中已存在 "+str+ " 分类！");
+                        MessageBox.Show("列表中已存在 " + str + " 分类！");
                         return;
                     }
                 }
@@ -66,9 +60,9 @@ namespace My_Computer_Tools_Ⅱ
             int i = Lbox_Class.SelectedIndex;
             if (i == 0)
                 return;
-            string item_up = (string)Lbox_Class.Items[i-1];
+            string item_up = (string)Lbox_Class.Items[i - 1];
             Lbox_Class.Items[i] = item_up;
-            Lbox_Class.Items[i-1] = item;
+            Lbox_Class.Items[i - 1] = item;
             Lbox_Class.SelectedIndex = i - 1;
         }
 
@@ -78,7 +72,7 @@ namespace My_Computer_Tools_Ⅱ
                 return;
             string item = Lbox_Class.SelectedItem.ToString();
             int i = Lbox_Class.SelectedIndex;
-            if (i == Lbox_Class.Items.Count-1)
+            if (i == Lbox_Class.Items.Count - 1)
                 return;
             string item_down = (string)Lbox_Class.Items[i + 1];
             Lbox_Class.Items[i] = item_down;
@@ -93,16 +87,16 @@ namespace My_Computer_Tools_Ⅱ
             int i = Lbox_Class.SelectedIndex;
             delstr.Add(Lbox_Class.SelectedItem.ToString());
             Lbox_Class.Items.Remove(Lbox_Class.SelectedItem.ToString());
-            
-            Lbox_Class.SelectedIndex = i-1;
+
+            Lbox_Class.SelectedIndex = i - 1;
         }
 
         private void but_Done_Click(object sender, EventArgs e)
         {
             string str = "";
             foreach (var item in Lbox_Class.Items)
-                str+=item.ToString()+"|";
-            str=str.Remove(str.Length - 1);
+                str += item.ToString() + "|";
+            str = str.Remove(str.Length - 1);
             if (str == "")
                 str = "defualt";
             else
@@ -116,19 +110,19 @@ namespace My_Computer_Tools_Ⅱ
 
         private void ChangXmlFile()
         {
-            string path = Application.StartupPath + "\\" + Program.xmlname;
-            ClsXMLoperate clsXM = new ClsXMLoperate(path);
+
+            ClsXMLoperate clsXM = Program.CreaterXMLHelper();
 
             foreach (var item in Lbox_Class.Items)
                 if (!clsXM.CheckNode("UserInfo/" + item.ToString()))//否存在
                     clsXM.InsertSingleNode("UserInfo", item.ToString());
             if (delstr.Count == 0)
                 return;
-            var ret = MessageBox.Show("您 确定要删除账号分组吗？\r\n分组下记录的账号将全部删除！","警告",MessageBoxButtons.YesNo);
+            var ret = MessageBox.Show("您 确定要删除账号分组吗？\r\n分组下记录的账号将全部删除！", "警告", MessageBoxButtons.YesNo);
             if (ret == DialogResult.Yes)
                 foreach (var item in delstr)
                     if (clsXM.CheckNode("UserInfo/" + item.ToString()))//存在
-                        clsXM.Delete("UserInfo", "UserInfo/"+ item.ToString());
+                        clsXM.Delete("UserInfo", "UserInfo/" + item.ToString());
         }
     }
 }

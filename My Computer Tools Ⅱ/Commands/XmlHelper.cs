@@ -33,7 +33,7 @@ namespace My_Computer_Tools_Ⅱ
         /// <param name="ChildNode">父节点</param>
         /// <param name="Content">子节点名称</param>
         /// <returns></returns>
-        public bool InsertSingleNode(string _ParentNode, string ChildNode, string Content="")
+        public bool InsertSingleNode(string _ParentNode, string ChildNode, string Content = "")
         {
             try
             {
@@ -41,7 +41,7 @@ namespace My_Computer_Tools_Ⅱ
                 //插入一节点
                 XmlNode objRootNode = objXmlDoc.SelectSingleNode(_ParentNode);
                 XmlElement objChildNode = objXmlDoc.CreateElement(ChildNode);
-                if (Content!="")
+                if (Content != "")
                     objChildNode.InnerText = Content;
                 objRootNode.AppendChild(objChildNode);
 
@@ -90,7 +90,7 @@ namespace My_Computer_Tools_Ⅱ
         /// </summary>
         /// <param name="rootpath"></param>
         /// <param name="XmlPathNode"></param>
-        public void Delete(string rootpath,string XmlPathNode)
+        public void Delete(string rootpath, string XmlPathNode)
         {
             var root = objXmlDoc.SelectSingleNode(rootpath);
             var element = objXmlDoc.SelectSingleNode(XmlPathNode);
@@ -109,7 +109,7 @@ namespace My_Computer_Tools_Ⅱ
         public bool CheckNode(string rootpath)
         {
             var root = objXmlDoc.SelectSingleNode(rootpath);
-            if (root==null)
+            if (root == null)
                 return false;
             return true;
         }
@@ -124,7 +124,7 @@ namespace My_Computer_Tools_Ⅱ
             try
             {
                 var root = objXmlDoc.SelectSingleNode(Content);
-                if (root==null)
+                if (root == null)
                     return vs;
                 //遍历
                 foreach (XmlNode item in root.ChildNodes)
