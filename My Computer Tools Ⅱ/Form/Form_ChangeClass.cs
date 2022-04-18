@@ -12,7 +12,8 @@ namespace My_Computer_Tools_Ⅱ
         }
 
         public string retstr = "*";
-        List<string> delstr = new List<string>();
+        private readonly List<string> delstr = new List<string>();
+
         private void Form_ChangeClass_Load(object sender, EventArgs e)
         {
             //获取原始的class items
@@ -29,10 +30,9 @@ namespace My_Computer_Tools_Ⅱ
                 retstr = retstr + "|" + str;
             }
             retstr = retstr.Replace("*|", "");
-
         }
 
-        private void but_Add_Click(object sender, EventArgs e)
+        private void But_Add_Click(object sender, EventArgs e)
         {
             using (Form_input input = new Form_input("请输入分类组名"))
             {
@@ -52,7 +52,7 @@ namespace My_Computer_Tools_Ⅱ
             }
         }
 
-        private void but_Up_Click(object sender, EventArgs e)
+        private void But_Up_Click(object sender, EventArgs e)
         {
             if (Lbox_Class.SelectedIndex == -1)
                 return;
@@ -66,7 +66,7 @@ namespace My_Computer_Tools_Ⅱ
             Lbox_Class.SelectedIndex = i - 1;
         }
 
-        private void but_Down_Click(object sender, EventArgs e)
+        private void But_Down_Click(object sender, EventArgs e)
         {
             if (Lbox_Class.SelectedIndex == -1)
                 return;
@@ -80,7 +80,7 @@ namespace My_Computer_Tools_Ⅱ
             Lbox_Class.SelectedIndex = i + 1;
         }
 
-        private void but_Del_Click(object sender, EventArgs e)
+        private void But_Del_Click(object sender, EventArgs e)
         {
             if (Lbox_Class.SelectedIndex == -1)
                 return;
@@ -91,7 +91,7 @@ namespace My_Computer_Tools_Ⅱ
             Lbox_Class.SelectedIndex = i - 1;
         }
 
-        private void but_Done_Click(object sender, EventArgs e)
+        private void But_Done_Click(object sender, EventArgs e)
         {
             string str = "";
             foreach (var item in Lbox_Class.Items)
@@ -110,7 +110,6 @@ namespace My_Computer_Tools_Ⅱ
 
         private void ChangXmlFile()
         {
-
             ClsXMLoperate clsXM = Program.CreaterXMLHelper();
 
             foreach (var item in Lbox_Class.Items)

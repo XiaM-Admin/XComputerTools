@@ -7,6 +7,7 @@ namespace My_Computer_Tools_Ⅱ
     {
         private string _userpwd;
         private readonly string _class;
+
         public Control_Show(string classstr, string lab1, string lab2, string lab3)
         {
             InitializeComponent();
@@ -20,7 +21,6 @@ namespace My_Computer_Tools_Ⅱ
 
         private void Control_Show_Load(object sender, EventArgs e)
         {
-
         }
 
         private void but_ShowHide_Click(object sender, EventArgs e)
@@ -32,11 +32,13 @@ namespace My_Computer_Tools_Ⅱ
                     Lab_Userpwd.Text = _userpwd;
                     but_ShowHide.Text = "H";
                     break;
+
                 case "H":
                     //隐藏
                     Lab_Userpwd.Text = "************";
                     but_ShowHide.Text = "S";
                     break;
+
                 default:
                     break;
             }

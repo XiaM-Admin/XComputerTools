@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Management;
 using System.Windows.Forms;
 
 namespace NetCommandLib
 {
-    /// <summary> 
+    /// <summary>
     /// 计算机信息类
-    /// </summary> 
+    /// </summary>
     public class GetComputerInfo
     {
         public string MacAddress;//Mac地址
@@ -23,6 +22,7 @@ namespace NetCommandLib
                 _instance = new GetComputerInfo();
             return _instance;
         }
+
         public GetComputerInfo()
         {
             MacAddress = GetMacAddress();
@@ -30,6 +30,7 @@ namespace NetCommandLib
             ComputerName = GetComputerName();
             SizeOfMemery = GetSizeOfMemery();
         }
+
         /// <summary>
         /// 获取CPU的个数
         /// </summary>
@@ -70,6 +71,7 @@ namespace NetCommandLib
             mySearch.Dispose();
             return mHz;
         }
+
         /// <summary>
         /// 获取本机硬盘的大小
         /// </summary>
@@ -84,6 +86,7 @@ namespace NetCommandLib
             }
             return "-1";
         }
+
         /// <summary>
         ///  获取本机内存的大小：
         /// </summary>
@@ -100,7 +103,6 @@ namespace NetCommandLib
                     sizeAll += Convert.ToDouble(m.Properties["TotalVisibleMemorySize"].Value.ToString());
                 }
             }
-            mc = null;
             moc.Dispose();
             return sizeAll.ToString();
         }
@@ -110,48 +112,49 @@ namespace NetCommandLib
         /// </summary>
         /// <param name="str_HardDiskName"></param>
         /// <returns></returns>
-        long GetHardDiskFreeSpace(string str_HardDiskName)
-        {
-            long num = 0L;
-            str_HardDiskName = str_HardDiskName + @":\";
-            foreach (DriveInfo info in DriveInfo.GetDrives())
-            {
-                if (info.Name.ToUpper() == str_HardDiskName.ToUpper())
-                {
-                    num = info.TotalFreeSpace / 0x100000L;
-                }
-            }
-            return num;
-        }
+        //private long GetHardDiskFreeSpace(string str_HardDiskName)
+        //{
+        //    long num = 0L;
+        //    str_HardDiskName = str_HardDiskName + @":\";
+        //    foreach (DriveInfo info in DriveInfo.GetDrives())
+        //    {
+        //        if (info.Name.ToUpper() == str_HardDiskName.ToUpper())
+        //        {
+        //            num = info.TotalFreeSpace / 0x100000L;
+        //        }
+        //    }
+        //    return num;
+        //}
 
         //获得CPU编号
-        string GetCpuID()
-        {
-            try
-            {
-                //获取CPU序列号代码 
-                string cpuInfo = "";//cpu序列号 
-                ManagementClass mc = new ManagementClass("Win32_Processor");
-                ManagementObjectCollection moc = mc.GetInstances();
-                foreach (ManagementObject mo in moc)
-                {
-                    cpuInfo = mo.Properties["ProcessorId"].Value.ToString();
-                }
-                moc = null;
-                mc = null;
-                return cpuInfo;
-            }
-            catch
-            {
-                return "unknow";
-            }
-        }
+        //private string GetCpuID()
+        //{
+        //    try
+        //    {
+        //        //获取CPU序列号代码
+        //        string cpuInfo = "";//cpu序列号
+        //        ManagementClass mc = new ManagementClass("Win32_Processor");
+        //        ManagementObjectCollection moc = mc.GetInstances();
+        //        foreach (ManagementObject mo in moc)
+        //        {
+        //            cpuInfo = mo.Properties["ProcessorId"].Value.ToString();
+        //        }
+        //        moc = null;
+        //        mc = null;
+        //        return cpuInfo;
+        //    }
+        //    catch
+        //    {
+        //        return "unknow";
+        //    }
+        //}
+
         //获得Mac地址
-        string GetMacAddress()
+        private string GetMacAddress()
         {
             try
             {
-                //获取网卡硬件地址 
+                //获取网卡硬件地址
                 string mac = "";
                 ManagementClass mc = new ManagementClass("Win32_NetworkAdapterConfiguration");
                 ManagementObjectCollection moc = mc.GetInstances();
@@ -172,12 +175,13 @@ namespace NetCommandLib
                 return "unknow";
             }
         }
+
         //获得Ip地址
-        string GetIPAddress()
+        private string GetIPAddress()
         {
             try
             {
-                //获取IP地址 
+                //获取IP地址
                 string st = "";
                 ManagementClass mc = new ManagementClass("Win32_NetworkAdapterConfiguration");
                 ManagementObjectCollection moc = mc.GetInstances();
@@ -185,7 +189,7 @@ namespace NetCommandLib
                 {
                     if ((bool)mo["IPEnabled"] == true)
                     {
-                        //st=mo["IpAddress"].ToString(); 
+                        //st=mo["IpAddress"].ToString();
                         System.Array ar;
                         ar = (System.Array)(mo.Properties["IpAddress"].Value);
                         st = ar.GetValue(0).ToString();
@@ -201,106 +205,110 @@ namespace NetCommandLib
                 return "unknow";
             }
         }
-        //获得磁盘Id
-        string GetDiskID()
-        {
-            try
-            {
-                //获取硬盘ID 
-                String HDid = "";
-                ManagementClass mc = new ManagementClass("Win32_DiskDrive");
-                ManagementObjectCollection moc = mc.GetInstances();
-                foreach (ManagementObject mo in moc)
-                {
-                    HDid = (string)mo.Properties["Model"].Value;
-                }
-                moc = null;
-                mc = null;
-                return HDid;
-            }
-            catch
-            {
-                return "unknow";
-            }
-        }
-        /// <summary> 
-        /// 操作系统的登录用户名 
-        /// </summary> 
-        /// <returns></returns> 
-        string GetUserName()
-        {
-            try
-            {
-                string st = "";
-                ManagementClass mc = new ManagementClass("Win32_ComputerSystem");
-                ManagementObjectCollection moc = mc.GetInstances();
-                foreach (ManagementObject mo in moc)
-                {
-                    st = mo["UserName"].ToString();
-                }
-                moc = null;
-                mc = null;
-                return st;
-            }
-            catch
-            {
-                return "unknow";
-            }
-        }
-        /// <summary> 
-        /// PC类型 
-        /// </summary> 
-        /// <returns></returns> 
-        string GetSystemType()
-        {
-            try
-            {
-                string st = "";
-                ManagementClass mc = new ManagementClass("Win32_ComputerSystem");
-                ManagementObjectCollection moc = mc.GetInstances();
-                foreach (ManagementObject mo in moc)
-                {
-                    st = mo["SystemType"].ToString();
-                }
-                moc = null;
-                mc = null;
-                return st;
-            }
-            catch
-            {
-                return "unknow";
-            }
-        }
 
-        /// <summary> 
-        /// 物理内存 
-        /// </summary> 
-        /// <returns></returns> 
-        string GetTotalPhysicalMemory()
-        {
-            try
-            {
-                string st = "";
-                ManagementClass mc = new ManagementClass("Win32_ComputerSystem");
-                ManagementObjectCollection moc = mc.GetInstances();
-                foreach (ManagementObject mo in moc)
-                {
-                    st = mo["TotalPhysicalMemory"].ToString();
-                }
-                moc = null;
-                mc = null;
-                return st;
-            }
-            catch
-            {
-                return "unknow";
-            }
-        }
-        /// <summary> 
+        //获得磁盘Id
+        //private string GetDiskID()
+        //{
+        //    try
+        //    {
+        //        //获取硬盘ID
+        //        String HDid = "";
+        //        ManagementClass mc = new ManagementClass("Win32_DiskDrive");
+        //        ManagementObjectCollection moc = mc.GetInstances();
+        //        foreach (ManagementObject mo in moc)
+        //        {
+        //            HDid = (string)mo.Properties["Model"].Value;
+        //        }
+        //        moc = null;
+        //        mc = null;
+        //        return HDid;
+        //    }
+        //    catch
+        //    {
+        //        return "unknow";
+        //    }
+        //}
+
+        /// <summary>
+        /// 操作系统的登录用户名
+        /// </summary>
+        /// <returns></returns>
+        //private string GetUserName()
+        //{
+        //    try
+        //    {
+        //        string st = "";
+        //        ManagementClass mc = new ManagementClass("Win32_ComputerSystem");
+        //        ManagementObjectCollection moc = mc.GetInstances();
+        //        foreach (ManagementObject mo in moc)
+        //        {
+        //            st = mo["UserName"].ToString();
+        //        }
+        //        moc = null;
+        //        mc = null;
+        //        return st;
+        //    }
+        //    catch
+        //    {
+        //        return "unknow";
+        //    }
+        //}
+
+        /// <summary>
+        /// PC类型
+        /// </summary>
+        /// <returns></returns>
+        //private string GetSystemType()
+        //{
+        //    try
+        //    {
+        //        string st = "";
+        //        ManagementClass mc = new ManagementClass("Win32_ComputerSystem");
+        //        ManagementObjectCollection moc = mc.GetInstances();
+        //        foreach (ManagementObject mo in moc)
+        //        {
+        //            st = mo["SystemType"].ToString();
+        //        }
+        //        moc = null;
+        //        mc = null;
+        //        return st;
+        //    }
+        //    catch
+        //    {
+        //        return "unknow";
+        //    }
+        //}
+
+        /// <summary>
+        /// 物理内存
+        /// </summary>
+        /// <returns></returns>
+        //private string GetTotalPhysicalMemory()
+        //{
+        //    try
+        //    {
+        //        string st = "";
+        //        ManagementClass mc = new ManagementClass("Win32_ComputerSystem");
+        //        ManagementObjectCollection moc = mc.GetInstances();
+        //        foreach (ManagementObject mo in moc)
+        //        {
+        //            st = mo["TotalPhysicalMemory"].ToString();
+        //        }
+        //        moc = null;
+        //        mc = null;
+        //        return st;
+        //    }
+        //    catch
+        //    {
+        //        return "unknow";
+        //    }
+        //}
+
+        /// <summary>
         ///  获取计算机名称
-        /// </summary> 
-        /// <returns></returns> 
-        string GetComputerName()
+        /// </summary>
+        /// <returns></returns>
+        private string GetComputerName()
         {
             try
             {
@@ -315,10 +323,8 @@ namespace NetCommandLib
 
     public class SetComonBoxItemCity
     {
-
-
         //北京
-        static List<string> beijing = new List<string>
+        private static readonly List<string> beijing = new List<string>
         {
             "北京",
             "朝阳区",
@@ -328,7 +334,7 @@ namespace NetCommandLib
         };
 
         //天津
-        static List<string> tianjin = new List<string>
+        private static readonly List<string> tianjin = new List<string>
         {
             "天津",
             "和平区",
@@ -337,7 +343,7 @@ namespace NetCommandLib
         };
 
         //河北省
-        static List<string> hebei = new List<string>
+        private static readonly List<string> hebei = new List<string>
         {
             "河北",
             "石家庄市",
@@ -354,7 +360,7 @@ namespace NetCommandLib
         };
 
         //山西省
-        static List<string> shanxi = new List<string>
+        private static readonly List<string> shanxi = new List<string>
         {
             "山西",
             "太原市",
@@ -371,7 +377,7 @@ namespace NetCommandLib
         };
 
         //内蒙古自治区
-        static List<string> neimenggu = new List<string>
+        private static readonly List<string> neimenggu = new List<string>
         {
             "内蒙古",
             "呼和浩特市",
@@ -389,7 +395,7 @@ namespace NetCommandLib
         };
 
         //辽宁省
-        static List<string> liaoning = new List<string>
+        private static readonly List<string> liaoning = new List<string>
         {
             "辽宁",
             "沈阳市",
@@ -409,7 +415,7 @@ namespace NetCommandLib
         };
 
         //吉林省
-        static List<string> jilin = new List<string>
+        private static readonly List<string> jilin = new List<string>
         {
             "吉林",
             "长春市",
@@ -424,7 +430,7 @@ namespace NetCommandLib
         };
 
         //黑龙江省
-        static List<string> heilongjiang = new List<string>
+        private static readonly List<string> heilongjiang = new List<string>
         {
             "黑龙江",
             "哈尔滨市",
@@ -443,7 +449,7 @@ namespace NetCommandLib
         };
 
         //上海市
-        static List<string> shanghai = new List<string>
+        private static readonly List<string> shanghai = new List<string>
         {
             "上海",
             "黄浦区",
@@ -455,7 +461,7 @@ namespace NetCommandLib
         };
 
         //江苏省
-        static List<string> jiangsu = new List<string>
+        private static readonly List<string> jiangsu = new List<string>
         {
             "南京市",
             "无锡市",
@@ -473,7 +479,7 @@ namespace NetCommandLib
         };
 
         //浙江省
-        static List<string> zhejiang = new List<string>
+        private static readonly List<string> zhejiang = new List<string>
         {
             "浙江",
             "杭州市",
@@ -490,7 +496,7 @@ namespace NetCommandLib
         };
 
         //安徽省
-        static List<string> anhui = new List<string>
+        private static readonly List<string> anhui = new List<string>
         {
             "合肥市",
             "芜湖市",
@@ -511,7 +517,7 @@ namespace NetCommandLib
         };
 
         //福建省
-        static List<string> fujian = new List<string>
+        private static readonly List<string> fujian = new List<string>
         {
             "福建",
             "福州市",
@@ -526,7 +532,7 @@ namespace NetCommandLib
         };
 
         //江西省
-        static List<string> jiangxi = new List<string>
+        private static readonly List<string> jiangxi = new List<string>
         {
             "江西",
             "南昌市",
@@ -543,7 +549,7 @@ namespace NetCommandLib
         };
 
         //山东省
-        static List<string> shandong = new List<string>
+        private static readonly List<string> shandong = new List<string>
         {
             "济南市",
             "青岛市",
@@ -565,7 +571,7 @@ namespace NetCommandLib
         };
 
         //河南省
-        static List<string> henan = new List<string>
+        private static readonly List<string> henan = new List<string>
         {
             "郑州市",
             "开封市",
@@ -588,7 +594,7 @@ namespace NetCommandLib
         };
 
         //湖北省
-        static List<string> hubei = new List<string>
+        private static readonly List<string> hubei = new List<string>
         {
             "武汉市",
             "黄石市",
@@ -610,7 +616,7 @@ namespace NetCommandLib
         };
 
         //湖南省
-        static List<string> hunan = new List<string>
+        private static readonly List<string> hunan = new List<string>
         {
             "长沙市",
             "株洲市",
@@ -629,7 +635,7 @@ namespace NetCommandLib
         };
 
         //广东省
-        static List<string> guangdong = new List<string>
+        private static readonly List<string> guangdong = new List<string>
         {
             "广州",
             "深圳市",
@@ -652,7 +658,7 @@ namespace NetCommandLib
         };
 
         //广西壮族自治区
-        static List<string> guangxi = new List<string>
+        private static readonly List<string> guangxi = new List<string>
         {
             "南宁市",
             "柳州市",
@@ -669,7 +675,7 @@ namespace NetCommandLib
         };
 
         //海南省
-        static List<string> hainan = new List<string>
+        private static readonly List<string> hainan = new List<string>
         {
             "海口市",
             "三亚市",
@@ -693,7 +699,7 @@ namespace NetCommandLib
         };
 
         //重庆市
-        static List<string> chongqing = new List<string>
+        private static readonly List<string> chongqing = new List<string>
         {
             "重庆",
             "渝中区",
@@ -705,7 +711,7 @@ namespace NetCommandLib
         };
 
         //四川省
-        static List<string> sichuan = new List<string>
+        private static readonly List<string> sichuan = new List<string>
         {
             "四川",
             "成都市",
@@ -732,7 +738,7 @@ namespace NetCommandLib
         };
 
         //贵州省
-        static List<string> guizhou = new List<string>
+        private static readonly List<string> guizhou = new List<string>
         {
             "贵州",
             "贵阳市",
@@ -745,7 +751,7 @@ namespace NetCommandLib
         };
 
         //云南省
-        static List<string> yunnan = new List<string>
+        private static readonly List<string> yunnan = new List<string>
         {
             "昆明市",
             "曲靖市",
@@ -766,7 +772,7 @@ namespace NetCommandLib
         };
 
         //西藏自治区
-        static List<string> xizang = new List<string>
+        private static readonly List<string> xizang = new List<string>
         {
             "拉萨市",
             "林芝市",
@@ -780,7 +786,7 @@ namespace NetCommandLib
         };
 
         //陕西省西安
-        static List<string> shanxixian = new List<string>
+        private static readonly List<string> shanxixian = new List<string>
         {
             "陕西",
             "西安市",
@@ -796,7 +802,7 @@ namespace NetCommandLib
         };
 
         //甘肃省
-        static List<string> gansu = new List<string>
+        private static readonly List<string> gansu = new List<string>
         {
             "甘肃",
             "兰州市",
@@ -816,7 +822,7 @@ namespace NetCommandLib
         };
 
         //青海省
-        static List<string> qinghai = new List<string>
+        private static readonly List<string> qinghai = new List<string>
         {
             "青海",
             "西宁市",
@@ -830,7 +836,7 @@ namespace NetCommandLib
         };
 
         //宁夏回族自治区
-        static List<string> ningxia = new List<string>
+        private static readonly List<string> ningxia = new List<string>
         {
             "宁夏回族自治区",
             "银川市",
@@ -841,7 +847,7 @@ namespace NetCommandLib
         };
 
         //新疆维吾尔自治区
-        static List<string> xinjiang = new List<string>
+        private static readonly List<string> xinjiang = new List<string>
         {
             "乌鲁木齐市",
             "克拉玛依市",
@@ -855,19 +861,18 @@ namespace NetCommandLib
         };
 
         //台湾
-        static List<string> taiwan = new List<string>
+        private static readonly List<string> taiwan = new List<string>
         {
             "台北"
         };
 
         //香港
-        static List<string> xianggang = new List<string>
+        private static readonly List<string> xianggang = new List<string>
         {
             "香港"
         };
 
-
-        Dictionary<string, List<string>> keys = new Dictionary<string, List<string>>
+        private readonly Dictionary<string, List<string>> keys = new Dictionary<string, List<string>>
         {
             {"beijing",beijing},
             {"tianjin",tianjin},
@@ -899,10 +904,12 @@ namespace NetCommandLib
             {"qinghai",qinghai},
             {"ningxia",ningxia},
             {"xianggang",xianggang},
-            {"taiwan",taiwan}
+            {"taiwan",taiwan},
+            {"chongqing",chongqing },
+            { "xinjiang",xinjiang}
         };
 
-        Dictionary<string, string> KeyEn = new Dictionary<string, string>
+        private readonly Dictionary<string, string> KeyEn = new Dictionary<string, string>
         {
             { "北京市","beijing" },
             { "天津市","tianjin" },
@@ -952,6 +959,4 @@ namespace NetCommandLib
             }
         }
     }
-
-
 }

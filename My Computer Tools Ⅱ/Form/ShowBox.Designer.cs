@@ -70,7 +70,7 @@
             this.lab_About.Size = new System.Drawing.Size(116, 20);
             this.lab_About.TabIndex = 2;
             this.lab_About.Text = "Computer Tools";
-            this.lab_About.Click += new System.EventHandler(this.lab_About_Click);
+            this.lab_About.Click += new System.EventHandler(this.Lab_About_Click);
             // 
             // ShowBox
             // 

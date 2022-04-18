@@ -54,7 +54,7 @@
             this.lbox_AccList.Name = "lbox_AccList";
             this.lbox_AccList.Size = new System.Drawing.Size(372, 327);
             this.lbox_AccList.TabIndex = 0;
-            this.lbox_AccList.SelectedIndexChanged += new System.EventHandler(this.lbox_AccList_SelectedIndexChanged);
+            this.lbox_AccList.SelectedIndexChanged += new System.EventHandler(this.Lbox_AccList_SelectedIndexChanged);
             // 
             // but_AddChang
             // 
@@ -65,7 +65,7 @@
             this.but_AddChang.TabIndex = 4;
             this.but_AddChang.Text = "添加/修改账号";
             this.but_AddChang.UseVisualStyleBackColor = true;
-            this.but_AddChang.Click += new System.EventHandler(this.but_AddChang_Click);
+            this.but_AddChang.Click += new System.EventHandler(this.But_AddChang_Click);
             // 
             // lab_TipClass
             // 
@@ -86,7 +86,7 @@
             this.but_Up.TabIndex = 3;
             this.but_Up.Text = "↑";
             this.but_Up.UseVisualStyleBackColor = true;
-            this.but_Up.Click += new System.EventHandler(this.but_Up_Click);
+            this.but_Up.Click += new System.EventHandler(this.But_Up_Click);
             // 
             // but_Down
             // 
@@ -97,7 +97,7 @@
             this.but_Down.TabIndex = 4;
             this.but_Down.Text = "↓";
             this.but_Down.UseVisualStyleBackColor = true;
-            this.but_Down.Click += new System.EventHandler(this.but_Down_Click);
+            this.but_Down.Click += new System.EventHandler(this.But_Down_Click);
             // 
             // but_Del
             // 
@@ -108,7 +108,7 @@
             this.but_Del.TabIndex = 5;
             this.but_Del.Text = "×";
             this.but_Del.UseVisualStyleBackColor = true;
-            this.but_Del.Click += new System.EventHandler(this.but_Del_Click);
+            this.but_Del.Click += new System.EventHandler(this.But_Del_Click);
             // 
             // lab_split
             // 

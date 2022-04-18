@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Security.Principal;
 using System.Text;
@@ -8,7 +9,6 @@ using System.Windows.Forms;
 
 namespace My_Computer_Tools_Ⅱ
 {
-
     public static class Commands
     {
         /// <summary>
@@ -84,11 +84,13 @@ namespace My_Computer_Tools_Ⅱ
                 }
                 return false;
             }
-
         }
 
-
-        //string类型转为json类型
+        /// <summary>
+        /// string类型转为json类型
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
         public static JObject ToJson(string str)
         {
             if (str != null)
@@ -100,7 +102,66 @@ namespace My_Computer_Tools_Ⅱ
                 return null;
         }
 
+        /// <summary>
+        /// 字节转为带单位的字符串
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
+        public static string ByteTostring(long x)
+        {
+            if (x < 1024)
+                return x.ToString() + " " + "B";
 
+            Dictionary<int, string> dic = new Dictionary<int, string> { { 1, "KB" }, { 2, "MB" }, { 3, "GB" }, { 4, "TB" } };
+            int end = 0;
+            double ret = x / 1024.0;
+            end++;
+            while (ret >= 1024)
+            {
+                ret = ret / 1024.0;
+                end++;
+            }
+            return ret.ToString("#0.00") + " " + dic[end];
+        }
+
+        /// <summary>
+        /// 遍历文件夹，包括子文件夹
+        /// </summary>
+        /// <returns>所有文件</returns>
+        public static List<string> File_GetList(string path)
+        {
+            List<string> list = new List<string>();
+            DirectoryInfo dir = new DirectoryInfo(path);
+            FileInfo[] files = dir.GetFiles();
+            foreach (FileInfo file in files)
+            {
+                list.Add(file.FullName);
+            }
+            DirectoryInfo[] dirs = dir.GetDirectories();
+            foreach (DirectoryInfo d in dirs)
+            {
+                list.AddRange(File_GetList(d.FullName));
+            }
+            return list;
+        }
+
+        /// <summary>
+        /// 判断目标是文件夹还是目录(目录包括磁盘)
+        /// </summary>
+        /// <param name="filepath">路径</param>
+        /// <returns>返回true为一个文件夹，返回false为一个文件</returns>
+        public static bool File_IsDir(string filepath)
+        {
+            FileInfo fi = new FileInfo(filepath);
+            if ((fi.Attributes & FileAttributes.Directory) != 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 
     /// <summary>
@@ -115,10 +176,10 @@ namespace My_Computer_Tools_Ⅱ
 
         public WindowsCommands()
         {
-
         }
+
         /// <summary>
-        /// 更改状态栏 
+        /// 更改状态栏
         /// </summary>
         /// <param name="Txt"></param>
         public void ChangeTips(string Txt)

@@ -41,8 +41,9 @@
             this.lab_Name.AutoSize = true;
             this.lab_Name.Font = new System.Drawing.Font("微软雅黑", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.lab_Name.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.lab_Name.Location = new System.Drawing.Point(224, 9);
+            this.lab_Name.Location = new System.Drawing.Point(238, 9);
             this.lab_Name.Name = "lab_Name";
+            this.lab_Name.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lab_Name.Size = new System.Drawing.Size(71, 26);
             this.lab_Name.TabIndex = 0;
             this.lab_Name.Text = "label1";
@@ -99,7 +100,7 @@
             // 
             // but_ChangPwd
             // 
-            this.but_ChangPwd.Location = new System.Drawing.Point(309, 11);
+            this.but_ChangPwd.Location = new System.Drawing.Point(511, 9);
             this.but_ChangPwd.Name = "but_ChangPwd";
             this.but_ChangPwd.Size = new System.Drawing.Size(75, 23);
             this.but_ChangPwd.TabIndex = 5;

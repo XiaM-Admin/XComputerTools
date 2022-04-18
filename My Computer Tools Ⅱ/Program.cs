@@ -8,13 +8,18 @@ using System.Windows.Forms;
 
 namespace My_Computer_Tools_Ⅱ
 {
+    /// <summary>
+    /// 一个参数委托
+    /// </summary>
+    public delegate void Fun_delegate(object data);
+
     internal static class Program
     {
         /// <summary>
         /// 应用程序的主入口点。
         /// </summary>
         [STAThread]
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
@@ -24,16 +29,18 @@ namespace My_Computer_Tools_Ⅱ
                     FirstRunArg = true;//自启动启动的程序
             }
 
-
             Application.Run(new Form_Main());
-
         }
 
-        ///程序变量
-        public static bool backWindows_State = false;
-        public static bool FirstRunArg = false;
+        //程序变量
         public const string xmlname = "Account.xml";//账号的存储名字
-        public static WindowsCommands WinCommand = new WindowsCommands();
+
+        public static bool backWindows_State = false;//现在是否处于后台状态
+        public static bool FirstRunArg = false;//是不是自启动的程序
+        public static WindowsCommands WinCommand = new WindowsCommands();//自定义消息提示类
+        public static Log logmain = new Log();//全局日志类
+
+        public static Thread_Main _Main;//全局多线程控制
 
         /// <summary>
         /// 创建一个操作xml的对象
@@ -61,7 +68,6 @@ namespace My_Computer_Tools_Ⅱ
             }
             catch (Exception)
             {
-
                 return (JObject)ret;
             }
         }
@@ -110,6 +116,5 @@ namespace My_Computer_Tools_Ⅱ
             ResourceManager resourceManager = new ResourceManager(typeof(Resources));
             return (Image)resourceManager.GetObject(imageName);
         }
-
     }
 }

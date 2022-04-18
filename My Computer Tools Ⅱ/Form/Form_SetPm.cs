@@ -13,6 +13,7 @@ namespace My_Computer_Tools_Ⅱ
         {
             InitializeComponent();
         }
+
         /// <summary>
         /// 是否立刻刷新天气
         /// </summary>
@@ -20,9 +21,18 @@ namespace My_Computer_Tools_Ⅱ
 
         private void Form_SetPm_Load(object sender, EventArgs e)
         {
+            //PicBox_TipFileCheck
+            ToolTip tip = new ToolTip();
+            tip.ToolTipIcon = ToolTipIcon.Info;
+            tip.ToolTipTitle = "注意：";
+            tip.InitialDelay = 300;
+            tip.ReshowDelay = 500;
+            tip.ShowAlways = true;
+            tip.SetToolTip(PicBox_TipFileCheck, "开启项功能后，你的每一次上传任务\r\n" +
+                "都将会进行文件对比，将云存储的文件和当前文件对比，\r\n" +
+                "如果文件不一致，才会进行上传操作。");
+
             //初始化配置
-            CBox_OpenStartRun.Checked = settings.Default.OpenStartRun;
-            CBox_ShowAccinCMBS.Checked = settings.Default.ShowAccinCMBS;
             if (settings.Default.City != "")
             {
                 string[] vs = settings.Default.City.Split('|');
@@ -39,6 +49,7 @@ namespace My_Computer_Tools_Ⅱ
                 }
             }
         }
+
         private void Form_SetPm_FormClosed(object sender, FormClosedEventArgs e)
         {
             if (CBox_OpenStartRun.Checked != settings.Default.OpenStartRun)
@@ -59,6 +70,7 @@ namespace My_Computer_Tools_Ⅱ
         }
 
         #region 开启自启
+
         /// <summary>
         /// 将本程序设为开启自启
         /// </summary>
@@ -66,10 +78,9 @@ namespace My_Computer_Tools_Ⅱ
         /// <returns></returns>
         public static bool SetMeStart(bool onOff)
         {
-            bool isOk = false;
             string appName = Process.GetCurrentProcess().MainModule.ModuleName;
             string appPath = Process.GetCurrentProcess().MainModule.FileName;
-            isOk = SetAutoStart(onOff, appName, appPath + " -autorun");
+            bool isOk = SetAutoStart(onOff, appName, appPath + " -autorun");
             return isOk;
         }
 
@@ -126,7 +137,6 @@ namespace My_Computer_Tools_Ⅱ
                     }
                 }
                 return _exist;
-
             }
             catch
             {
@@ -170,19 +180,24 @@ namespace My_Computer_Tools_Ⅱ
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                string ss = ex.Message;
                 return false;
             }
             return true;
         }
 
-        #endregion
+        #endregion 开启自启
 
         private void CBox_GeographyPos_SelectedIndexChanged(object sender, EventArgs e)
         {
-            SetComonBoxItemCity SetBoxItem = new SetComonBoxItemCity(CBox_City, CBox_GeographyPos.Text);
+            _ = new SetComonBoxItemCity(CBox_City, CBox_GeographyPos.Text);
+        }
+
+        private void CBox_UpFileCheck_CheckedChanged(object sender, EventArgs e)
+        {
+            settings.Default.qnUpFileCheck = CBox_qnUpFileCheck.Checked;
+            settings.Default.Save();
         }
     }
 }

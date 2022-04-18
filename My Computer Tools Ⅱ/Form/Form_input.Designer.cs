@@ -39,7 +39,7 @@
             this.tbox_input.Name = "tbox_input";
             this.tbox_input.Size = new System.Drawing.Size(193, 21);
             this.tbox_input.TabIndex = 0;
-            this.tbox_input.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbox_input_KeyPress);
+            this.tbox_input.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Tbox_input_KeyPress);
             // 
             // lab_Tip
             // 
@@ -61,7 +61,7 @@
             this.but_Done.TabIndex = 2;
             this.but_Done.Text = "完成";
             this.but_Done.UseVisualStyleBackColor = true;
-            this.but_Done.Click += new System.EventHandler(this.but_Done_Click);
+            this.but_Done.Click += new System.EventHandler(this.But_Done_Click);
             // 
             // Form_input
             // 

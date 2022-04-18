@@ -38,15 +38,22 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.CBox_ShowAccinCMBS = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.CBox_qnUpFileCheck = new System.Windows.Forms.CheckBox();
+            this.CBox_UpFileCheck = new System.Windows.Forms.CheckBox();
+            this.PicBox_TipFileCheck = new System.Windows.Forms.PictureBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PicBox_TipFileCheck)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Location = new System.Drawing.Point(12, 31);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -131,6 +138,8 @@
             // CBox_OpenStartRun
             // 
             this.CBox_OpenStartRun.AutoSize = true;
+            this.CBox_OpenStartRun.Checked = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.OpenStartRun;
+            this.CBox_OpenStartRun.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "OpenStartRun", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.CBox_OpenStartRun.Location = new System.Drawing.Point(19, 21);
             this.CBox_OpenStartRun.Name = "CBox_OpenStartRun";
             this.CBox_OpenStartRun.Size = new System.Drawing.Size(72, 16);
@@ -152,6 +161,8 @@
             // CBox_ShowAccinCMBS
             // 
             this.CBox_ShowAccinCMBS.AutoSize = true;
+            this.CBox_ShowAccinCMBS.Checked = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.ShowAccinCMBS;
+            this.CBox_ShowAccinCMBS.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "ShowAccinCMBS", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.CBox_ShowAccinCMBS.Location = new System.Drawing.Point(19, 21);
             this.CBox_ShowAccinCMBS.Name = "CBox_ShowAccinCMBS";
             this.CBox_ShowAccinCMBS.Size = new System.Drawing.Size(144, 16);
@@ -171,6 +182,55 @@
             this.label1.Text = "设置";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.PicBox_TipFileCheck);
+            this.tabPage3.Controls.Add(this.CBox_qnUpFileCheck);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(484, 221);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "文件同步";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // CBox_qnUpFileCheck
+            // 
+            this.CBox_qnUpFileCheck.AutoSize = true;
+            this.CBox_qnUpFileCheck.Checked = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.qnUpFileCheck;
+            this.CBox_qnUpFileCheck.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.CBox_qnUpFileCheck.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "qnUpFileCheck", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.CBox_qnUpFileCheck.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.CBox_qnUpFileCheck.ForeColor = System.Drawing.Color.Red;
+            this.CBox_qnUpFileCheck.Location = new System.Drawing.Point(19, 21);
+            this.CBox_qnUpFileCheck.Name = "CBox_qnUpFileCheck";
+            this.CBox_qnUpFileCheck.Size = new System.Drawing.Size(135, 16);
+            this.CBox_qnUpFileCheck.TabIndex = 0;
+            this.CBox_qnUpFileCheck.Text = "上传检查 推荐开启";
+            this.CBox_qnUpFileCheck.UseVisualStyleBackColor = true;
+            this.CBox_qnUpFileCheck.CheckedChanged += new System.EventHandler(this.CBox_UpFileCheck_CheckedChanged);
+            // 
+            // CBox_UpFileCheck
+            // 
+            this.CBox_UpFileCheck.AutoSize = true;
+            this.CBox_UpFileCheck.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.CBox_UpFileCheck.ForeColor = System.Drawing.Color.Red;
+            this.CBox_UpFileCheck.Location = new System.Drawing.Point(19, 21);
+            this.CBox_UpFileCheck.Name = "CBox_UpFileCheck";
+            this.CBox_UpFileCheck.Size = new System.Drawing.Size(135, 16);
+            this.CBox_UpFileCheck.TabIndex = 0;
+            this.CBox_UpFileCheck.Text = "上传检查 推荐开启";
+            this.CBox_UpFileCheck.UseVisualStyleBackColor = true;
+            // 
+            // PicBox_TipFileCheck
+            // 
+            this.PicBox_TipFileCheck.Image = global::My_Computer_Tools_Ⅱ.Properties.Resources.警告;
+            this.PicBox_TipFileCheck.Location = new System.Drawing.Point(157, 13);
+            this.PicBox_TipFileCheck.Name = "PicBox_TipFileCheck";
+            this.PicBox_TipFileCheck.Size = new System.Drawing.Size(32, 32);
+            this.PicBox_TipFileCheck.TabIndex = 1;
+            this.PicBox_TipFileCheck.TabStop = false;
+            // 
             // Form_SetPm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -188,6 +248,9 @@
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PicBox_TipFileCheck)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -204,5 +267,9 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox CBox_GeographyPos;
         private System.Windows.Forms.ComboBox CBox_City;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.CheckBox CBox_qnUpFileCheck;
+        private System.Windows.Forms.PictureBox PicBox_TipFileCheck;
+        private System.Windows.Forms.CheckBox CBox_UpFileCheck;
     }
 }

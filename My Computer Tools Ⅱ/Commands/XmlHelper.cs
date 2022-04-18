@@ -5,10 +5,11 @@ using System.Xml;
 
 namespace My_Computer_Tools_Ⅱ
 {
-    class ClsXMLoperate
+    internal class ClsXMLoperate
     {
         //定义变量
         private static XmlDocument objXmlDoc = null;
+
         private static string XmlFilePath;
 
         public ClsXMLoperate(string _XmlFilePath)
@@ -96,10 +97,8 @@ namespace My_Computer_Tools_Ⅱ
             var element = objXmlDoc.SelectSingleNode(XmlPathNode);
             root.RemoveChild(element);
 
-
             SaveXml();
         }
-
 
         /// <summary>
         /// 检查节点是否存在
@@ -135,7 +134,6 @@ namespace My_Computer_Tools_Ⅱ
             {
                 return vs;
             }
-
         }
 
         /// <summary>
@@ -151,7 +149,6 @@ namespace My_Computer_Tools_Ⅱ
             {
                 throw ex;
             }
-
         }
     }
 }
