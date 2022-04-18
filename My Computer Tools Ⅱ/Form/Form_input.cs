@@ -16,7 +16,7 @@ namespace My_Computer_Tools_Ⅱ
             tbox_input.Text = "";
         }
 
-        private void but_Done_Click(object sender, EventArgs e)
+        private void But_Done_Click(object sender, EventArgs e)
         {
             if (tbox_input.Text == "")
             {
@@ -27,7 +27,7 @@ namespace My_Computer_Tools_Ⅱ
             this.Close();
         }
 
-        private void tbox_input_KeyPress(object sender, KeyPressEventArgs e)
+        private void Tbox_input_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == 13)
                 but_Done.PerformClick();

@@ -16,7 +16,7 @@ namespace My_Computer_Tools_Ⅱ
         private static bool CheckValidationResult(object sender, X509Certificate certificate, X509Chain chain,
             SslPolicyErrors errors)
         {
-            return true; //总是接受     
+            return true; //总是接受
         }
 
         public static string ApiPost(string url, IDictionary<string, string> parameters)
@@ -25,7 +25,7 @@ namespace My_Computer_Tools_Ⅱ
             {
                 Encoding charset = Encoding.UTF8;
                 HttpWebRequest request = null;
-                //HTTPSQ请求  
+                //HTTPSQ请求
                 ServicePointManager.ServerCertificateValidationCallback = CheckValidationResult;
                 request = WebRequest.Create(url.Trim()) as HttpWebRequest;
                 request.ProtocolVersion = HttpVersion.Version10;
@@ -33,7 +33,7 @@ namespace My_Computer_Tools_Ⅱ
                 request.ContentType = "application/json;charset=utf-8";
                 request.UserAgent = DefaultUserAgent;
 
-                //如果需要POST数据     
+                //如果需要POST数据
                 if (!(parameters == null || parameters.Count == 0))
                 {
                     var buffer = new StringBuilder();
@@ -64,10 +64,9 @@ namespace My_Computer_Tools_Ⅱ
             }
         }
 
-
-        /// <summary> 
-        /// GET请求与获取结果 
-        /// </summary> 
+        /// <summary>
+        /// GET请求与获取结果
+        /// </summary>
         public static string ApiGet(string Url, IDictionary<string, string> parameters)
         {
             try
@@ -98,8 +97,6 @@ namespace My_Computer_Tools_Ⅱ
                 Console.WriteLine($"api:{Url} 异常：{e.Message}");
                 return null;
             }
-
         }
-
     }
 }

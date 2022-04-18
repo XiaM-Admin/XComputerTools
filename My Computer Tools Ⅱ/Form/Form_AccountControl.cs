@@ -11,12 +11,13 @@ namespace My_Computer_Tools_Ⅱ
         private readonly string _lab_Tip;
 
         //这里使用字典 进行本地索引数据处理
-        //退出时操作保存文件 
-        Dictionary<string, string> AccountStrs = new Dictionary<string, string>();
+        //退出时操作保存文件
+        private readonly Dictionary<string, string> AccountStrs = new Dictionary<string, string>();
 
-        List<string> BackVs = new List<string>();
+        private readonly List<string> BackVs = new List<string>();
 
-        Thread TipThread = null;
+        private readonly Thread TipThread = null;
+
         public Form_AccountControl(string classname)
         {
             InitializeComponent();
@@ -36,8 +37,10 @@ namespace My_Computer_Tools_Ⅱ
                 AccountStrs.Add(str, userAcc);
                 BackVs.Add(str);
             }
-            TipThread = new Thread(Thread_Tip);
-            TipThread.IsBackground = true;
+            TipThread = new Thread(Thread_Tip)
+            {
+                IsBackground = true
+            };
             TipThread.Start();
         }
 
@@ -46,7 +49,7 @@ namespace My_Computer_Tools_Ⅱ
             Console.WriteLine(_classname);
         }
 
-        private void but_Up_Click(object sender, EventArgs e)
+        private void But_Up_Click(object sender, EventArgs e)
         {
             if (lbox_AccList.SelectedIndex == -1)
                 return;
@@ -60,7 +63,7 @@ namespace My_Computer_Tools_Ⅱ
             lbox_AccList.SelectedIndex = i - 1;
         }
 
-        private void but_Down_Click(object sender, EventArgs e)
+        private void But_Down_Click(object sender, EventArgs e)
         {
             if (lbox_AccList.SelectedIndex == -1)
                 return;
@@ -74,7 +77,7 @@ namespace My_Computer_Tools_Ⅱ
             lbox_AccList.SelectedIndex = i + 1;
         }
 
-        private void but_Del_Click(object sender, EventArgs e)
+        private void But_Del_Click(object sender, EventArgs e)
         {
             if (lbox_AccList.SelectedIndex == -1)
                 return;
@@ -86,7 +89,6 @@ namespace My_Computer_Tools_Ⅱ
             lbox_AccList.Items.Remove(lbox_AccList.SelectedItem.ToString());
             lbox_AccList.SelectedIndex = i - 1;
             lab_Tip.Text = "Tip：账号数据已经删除！";
-
         }
 
         /// <summary>
@@ -94,7 +96,7 @@ namespace My_Computer_Tools_Ⅱ
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void lbox_AccList_SelectedIndexChanged(object sender, EventArgs e)
+        private void Lbox_AccList_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (lbox_AccList.SelectedIndex == -1)
                 return;
@@ -107,7 +109,6 @@ namespace My_Computer_Tools_Ⅱ
                 Text_User.Text = vs[0];
                 Text_UserPwd.Text = vs[1];
             }
-
         }
 
         /// <summary>
@@ -115,7 +116,7 @@ namespace My_Computer_Tools_Ⅱ
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void but_AddChang_Click(object sender, EventArgs e)
+        private void But_AddChang_Click(object sender, EventArgs e)
         {
             //检查编辑框合法
             if (Text_User.Text == "" || Text_Username.Text == "" || Text_UserPwd.Text == "")
@@ -150,7 +151,6 @@ namespace My_Computer_Tools_Ⅱ
             Text_User.Text = "";
             Text_UserPwd.Text = "";
             Text_Username.Text = "";
-
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace My_Computer_Tools_Ⅱ
             }
         }
 
-        //启动tip提示线程 
+        //启动tip提示线程
         private void Thread_Tip()
         {
             int i = 4;
@@ -185,19 +185,12 @@ namespace My_Computer_Tools_Ⅱ
                     i--;
                     if (i == 0)
                     {
-                        try
-                        {
+                        if (this.IsHandleCreated)
                             //委托操作
                             this.Invoke(new MethodInvoker(delegate ()
                             {
                                 lab_Tip.Text = _lab_Tip;
                             }));
-                        }
-                        catch (Exception)
-                        {
-                            //懒 直接用try抛出异常了.... 
-                        }
-
                         i = 4;
                     }
                 }
@@ -244,7 +237,6 @@ namespace My_Computer_Tools_Ⅱ
 
                 i++;
             }
-
         }
 
         /// <summary>

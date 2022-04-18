@@ -25,7 +25,7 @@ namespace My_Computer_Tools_Ⅱ.Properties {
     internal class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
-
+        
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
@@ -456,6 +456,16 @@ namespace My_Computer_Tools_Ⅱ.Properties {
         internal static System.Drawing.Bitmap weather_99 {
             get {
                 object obj = ResourceManager.GetObject("weather_99", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap 警告 {
+            get {
+                object obj = ResourceManager.GetObject("警告", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

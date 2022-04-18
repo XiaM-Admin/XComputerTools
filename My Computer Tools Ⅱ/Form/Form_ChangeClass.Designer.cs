@@ -54,7 +54,7 @@
             this.but_Done.TabIndex = 1;
             this.but_Done.Text = "完成";
             this.but_Done.UseVisualStyleBackColor = true;
-            this.but_Done.Click += new System.EventHandler(this.but_Done_Click);
+            this.but_Done.Click += new System.EventHandler(this.But_Done_Click);
             // 
             // but_Add
             // 
@@ -64,7 +64,7 @@
             this.but_Add.TabIndex = 2;
             this.but_Add.Text = "添加|Add";
             this.but_Add.UseVisualStyleBackColor = true;
-            this.but_Add.Click += new System.EventHandler(this.but_Add_Click);
+            this.but_Add.Click += new System.EventHandler(this.But_Add_Click);
             // 
             // but_Up
             // 
@@ -74,7 +74,7 @@
             this.but_Up.TabIndex = 3;
             this.but_Up.Text = "向上|Up";
             this.but_Up.UseVisualStyleBackColor = true;
-            this.but_Up.Click += new System.EventHandler(this.but_Up_Click);
+            this.but_Up.Click += new System.EventHandler(this.But_Up_Click);
             // 
             // but_Down
             // 
@@ -84,7 +84,7 @@
             this.but_Down.TabIndex = 4;
             this.but_Down.Text = "向下|Down";
             this.but_Down.UseVisualStyleBackColor = true;
-            this.but_Down.Click += new System.EventHandler(this.but_Down_Click);
+            this.but_Down.Click += new System.EventHandler(this.But_Down_Click);
             // 
             // but_Del
             // 
@@ -94,7 +94,7 @@
             this.but_Del.TabIndex = 5;
             this.but_Del.Text = "删除|Del";
             this.but_Del.UseVisualStyleBackColor = true;
-            this.but_Del.Click += new System.EventHandler(this.but_Del_Click);
+            this.but_Del.Click += new System.EventHandler(this.But_Del_Click);
             // 
             // Form_ChangeClass
             // 

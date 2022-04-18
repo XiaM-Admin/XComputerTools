@@ -67,5 +67,101 @@ namespace My_Computer_Tools_Ⅱ.Properties {
                 this["City"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string qiniuAK {
+            get {
+                return ((string)(this["qiniuAK"]));
+            }
+            set {
+                this["qiniuAK"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string qiniuSK {
+            get {
+                return ((string)(this["qiniuSK"]));
+            }
+            set {
+                this["qiniuSK"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string qiniuBucket {
+            get {
+                return ((string)(this["qiniuBucket"]));
+            }
+            set {
+                this["qiniuBucket"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string qiniuZoneID {
+            get {
+                return ((string)(this["qiniuZoneID"]));
+            }
+            set {
+                this["qiniuZoneID"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string qiniuDomain {
+            get {
+                return ((string)(this["qiniuDomain"]));
+            }
+            set {
+                this["qiniuDomain"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string qnwatcherstr {
+            get {
+                return ((string)(this["qnwatcherstr"]));
+            }
+            set {
+                this["qnwatcherstr"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool qnStartFolderW {
+            get {
+                return ((bool)(this["qnStartFolderW"]));
+            }
+            set {
+                this["qnStartFolderW"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool qnUpFileCheck {
+            get {
+                return ((bool)(this["qnUpFileCheck"]));
+            }
+            set {
+                this["qnUpFileCheck"] = value;
+            }
+        }
     }
 }

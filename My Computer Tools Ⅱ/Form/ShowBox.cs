@@ -9,10 +9,13 @@ namespace My_Computer_Tools_Ⅱ
     public partial class ShowBox : Form
     {
         #region 窗体穿透函数（API声明）
+
         private const uint WS_EX_LAYERED = 0x80000;
         private const int WS_EX_TRANSPARENT = 0x20;
-        private const int GWL_STYLE = (-16);
+
+        //private const int GWL_STYLE = (-16);
         private const int GWL_EXSTYLE = (-20);
+
         private const int LWA_ALPHA = 0;
 
         [DllImport("user32", EntryPoint = "SetWindowLong")]
@@ -36,9 +39,9 @@ namespace My_Computer_Tools_Ⅱ
                  int dwFlags
          );
 
-        /// <summary> 
-        /// 设置窗体具有鼠标穿透效果 
-        /// </summary> 
+        /// <summary>
+        /// 设置窗体具有鼠标穿透效果
+        /// </summary>
         public void SetPenetrate()
         {
             this.TopMost = true;
@@ -47,24 +50,27 @@ namespace My_Computer_Tools_Ⅱ
             SetLayeredWindowAttributes(this.Handle, 0, 100, LWA_ALPHA);
         }
 
-        #endregion
+        #endregion 窗体穿透函数（API声明）
 
         #region 窗体动画函数（API声明）
+
         [DllImport("user32")]
         private static extern bool AnimateWindow(IntPtr hwnd, int dwTime, int dwFlags);
 
-        private const int AW_HOR_POSITIVE = 0x0001;//自左向右显示窗口，该标志可以在滚动动画和滑动动画中使用。使用AW_CENTER标志时忽略该标志
-        private const int AW_HOR_NEGATIVE = 0x0002;//自右向左显示窗口，该标志可以在滚动动画和滑动动画中使用。使用AW_CENTER标志时忽略该标志
-        private const int AW_VER_POSITIVE = 0x0004;//自顶向下显示窗口，该标志可以在滚动动画和滑动动画中使用。使用AW_CENTER标志时忽略该标志
-        private const int AW_VER_NEGATIVE = 0x0008;//自下向上显示窗口，该标志可以在滚动动画和滑动动画中使用。使用AW_CENTER标志时忽略该标志该标志
-        private const int AW_CENTER = 0x0010;//若使用了AW_HIDE标志，则使窗口向内重叠；否则向外扩展
+        //private const int AW_HOR_POSITIVE = 0x0001;//自左向右显示窗口，该标志可以在滚动动画和滑动动画中使用。使用AW_CENTER标志时忽略该标志
+        //private const int AW_HOR_NEGATIVE = 0x0002;//自右向左显示窗口，该标志可以在滚动动画和滑动动画中使用。使用AW_CENTER标志时忽略该标志
+        //private const int AW_VER_POSITIVE = 0x0004;//自顶向下显示窗口，该标志可以在滚动动画和滑动动画中使用。使用AW_CENTER标志时忽略该标志
+        //private const int AW_VER_NEGATIVE = 0x0008;//自下向上显示窗口，该标志可以在滚动动画和滑动动画中使用。使用AW_CENTER标志时忽略该标志该标志
+        //private const int AW_CENTER = 0x0010;若使用了AW_HIDE标志，则使窗口向内重叠；否则向外扩展
         private const int AW_HIDE = 0x10000;//隐藏窗口
+
         private const int AW_ACTIVE = 0x20000;//激活窗口，在使用了AW_HIDE标志后不要使用这个标志
-        private const int AW_SLIDE = 0x40000;//使用滑动类型动画效果，默认为滚动动画类型，当使用AW_CENTER标志时，这个标志就被忽略
+
+        //private const int AW_SLIDE = 0x40000;使用滑动类型动画效果，默认为滚动动画类型，当使用AW_CENTER标志时，这个标志就被忽略
         private const int AW_BLEND = 0x80000;//使用淡入淡出效果
 
+        #endregion 窗体动画函数（API声明）
 
-        #endregion
         public ShowBox(string Tip, string Txt, Form_Main form_Main, int S = 3)
         {
             InitializeComponent();
@@ -79,6 +85,7 @@ namespace My_Computer_Tools_Ⅱ
             }
             _Main = form_Main;
         }
+
         private Form_Main _Main;
         private int S = 3;//显示秒
         public bool ShowNow = false;
@@ -90,6 +97,7 @@ namespace My_Computer_Tools_Ⅱ
         }
 
         private Thread thread;
+
         public void Show(string Tip, string Txt, Form_Main form_Main, int S)
         {
             if (ShowNow)
@@ -100,15 +108,14 @@ namespace My_Computer_Tools_Ⅱ
                 return;
             }
 
-
-
-
             lab_Tip.Text = Tip;
             lab_Txt.Text = Txt;
             this.S = S;
             _Main = form_Main;
-            thread = new Thread(ShowTimeHide);
-            thread.IsBackground = true;
+            thread = new Thread(ShowTimeHide)
+            {
+                IsBackground = true
+            };
             thread.Start();
             ChangThisSize();
             AnimateWindow(this.Handle, 300, AW_ACTIVE | AW_BLEND);
@@ -135,25 +142,32 @@ namespace My_Computer_Tools_Ⅱ
 
         private void ShowTimeHide()
         {
-            while (this.S != 0)
+            try//这里突然结束有几率报错，直接抛出
             {
-                this.Invoke(new MethodInvoker(delegate ()
+                while (this.S != 0)
                 {
-                    this.lab_About.Text = "Computer Tools " + S;
-                }));
+                    if (this.IsHandleCreated)
+                        this.Invoke(new MethodInvoker(delegate ()
+                        {
+                            this.lab_About.Text = "Computer Tools " + S;
+                        }));
 
-                Thread.Sleep(1000);
-                this.S--;
+                    Thread.Sleep(1000);
+                    this.S--;
+                }
+                if (this.IsHandleCreated)
+                    this.Invoke(new MethodInvoker(delegate ()
+                    {
+                        this.Hide();
+                        ShowNow = false;
+                    }));
             }
-            this.Invoke(new MethodInvoker(delegate ()
+            catch (Exception)
             {
-                this.Hide();
-                ShowNow = false;
-            }));
-
+            }
         }
 
-        private void lab_About_Click(object sender, EventArgs e)
+        private void Lab_About_Click(object sender, EventArgs e)
         {
             this.Hide();
             ShowNow = false;
