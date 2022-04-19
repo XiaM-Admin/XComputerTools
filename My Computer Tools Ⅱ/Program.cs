@@ -34,12 +34,10 @@ namespace My_Computer_Tools_Ⅱ
 
         //程序变量
         public const string xmlname = "Account.xml";//账号的存储名字
-
         public static bool backWindows_State = false;//现在是否处于后台状态
         public static bool FirstRunArg = false;//是不是自启动的程序
         public static WindowsCommands WinCommand = new WindowsCommands();//自定义消息提示类
         public static Log logmain = new Log();//全局日志类
-
         public static Thread_Main _Main;//全局多线程控制
 
         /// <summary>

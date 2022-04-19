@@ -49,7 +49,8 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="Qiniu, Version=8.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\七牛云c#sdk\src\Qiniu\bin\Release\netstandard2.0\Qiniu.dll</HintPath>
+      <HintPath>bin\Debug\Qiniu.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

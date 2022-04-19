@@ -1,4 +1,5 @@
 ﻿using Qiniu.Storage;
+using Qiniu;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -396,6 +397,7 @@ namespace My_Computer_Tools_Ⅱ
             }
             return Thread_State.stop;
         }
+
         /// <summary>
         /// 获取当前正在执行所有的任务名列表
         /// </summary>
@@ -405,7 +407,7 @@ namespace My_Computer_Tools_Ⅱ
             List<string> retlist = new List<string>();
             foreach (var threadData in threadDatas)
             {
-                if (threadData.State==Thread_State.run)
+                if (threadData.State == Thread_State.run)
                     retlist.Add($"{threadData.ID} {threadData.Name}");
             }
             return retlist;
@@ -440,6 +442,7 @@ namespace My_Computer_Tools_Ⅱ
             }
             return null;
         }
+
         /// <summary>
         /// 获取任务线程数据
         /// </summary>
@@ -454,7 +457,6 @@ namespace My_Computer_Tools_Ⅱ
             }
             return null;
         }
-
     }
 
     /// <summary>

@@ -179,7 +179,6 @@ namespace My_Computer_Tools_Ⅱ
         /// <param name="e"></param>
         private void TabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
             switch (tabControl1.SelectedIndex)
             {
                 case 1:
@@ -194,6 +193,7 @@ namespace My_Computer_Tools_Ⅱ
                         Cbox_UserClass.Items.Add(item);
                     Cbox_UserClass.SelectedIndex = UserClassindex;
                     break;
+
                 case 3:
                     RefreshTaskUI();//刷新任务列表
                     break;
@@ -630,6 +630,5 @@ namespace My_Computer_Tools_Ⅱ
         {
             RefreshTaskini();
         }
-
     }
 }

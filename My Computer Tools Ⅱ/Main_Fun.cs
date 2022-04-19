@@ -118,7 +118,7 @@ namespace My_Computer_Tools_Ⅱ
                 id = data.ID,
                 grade = data.Grade,
             };
-            
+
             JObject jo;
             //暂时没有公告可以读取的
             try
@@ -157,7 +157,7 @@ namespace My_Computer_Tools_Ⅱ
                 }
                 catch (Exception)
                 {
-                    UpFormData(CWdata, $"IP城市获取失败",Log_Type.Warning);
+                    UpFormData(CWdata, $"IP城市获取失败", Log_Type.Warning);
                 }
             }
             else
@@ -457,7 +457,7 @@ namespace My_Computer_Tools_Ⅱ
             int id = -1;
             if (ListBox_Name.IsHandleCreated)
                 id = Convert.ToInt32(ListBox_Name.SelectedItem.ToString().Split(' ')[0]);
-            
+
             //控制任务显示指定输出
             if (this.IsHandleCreated && data.id == id)
                 this.Invoke(new Action(() =>
@@ -474,10 +474,10 @@ namespace My_Computer_Tools_Ⅱ
         {
             ListBox_Name.Items.Clear();
             List<string> ListTaskName = new List<string>();
-            
-            if (CBox_ThreadGrade.Text=="系统")
+
+            if (CBox_ThreadGrade.Text == "系统")
                 ListTaskName = Program._Main.Get_ListTaskNames(Thread_Grade.system);
-            else if(CBox_ThreadGrade.Text=="用户")
+            else if (CBox_ThreadGrade.Text == "用户")
                 ListTaskName = Program._Main.Get_ListTaskNames(Thread_Grade.user);
 
             foreach (string TaskName in ListTaskName)
@@ -486,7 +486,7 @@ namespace My_Computer_Tools_Ⅱ
             if (ListBox_Name.Items.Count > 0)
                 ListBox_Name.SelectedIndex = 0;
         }
-        
+
         /// <summary>
         /// 刷新显示任务信息
         /// </summary>
@@ -504,23 +504,28 @@ namespace My_Computer_Tools_Ⅱ
                 case Thread_RunMode.timer:
                     Tbox_TaskMode.Text = "定时执行模式";
                     break;
+
                 case Thread_RunMode.thread:
                     Tbox_TaskMode.Text = "循环执行模式";
                     break;
+
                 case Thread_RunMode.OnlyOne:
                     Tbox_TaskMode.Text = "延迟执行模式";
                     break;
+
                 default:
                     break;
             }
             switch (data.Grade)
             {
                 case Thread_Grade.user:
-                    Tbox_TaskGrade.Text = "用户级";    
+                    Tbox_TaskGrade.Text = "用户级";
                     break;
+
                 case Thread_Grade.system:
                     Tbox_TaskGrade.Text = "系统级";
                     break;
+
                 default:
                     break;
             }
@@ -537,9 +542,8 @@ namespace My_Computer_Tools_Ⅱ
             List<string> list = Program.logmain.GetPathLog(Logdata);
             foreach (var item in list)
             {
-                TBox_Tip.Text += item+"\r\n";
+                TBox_Tip.Text += item + "\r\n";
             }
-            
         }
 
         /// <summary>
@@ -591,8 +595,5 @@ namespace My_Computer_Tools_Ⅱ
                 i++;
             }
         }
-        
-        
-        
     }
 }
