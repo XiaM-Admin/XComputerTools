@@ -131,6 +131,9 @@ namespace My_Computer_Tools_Ⅱ
         public static List<string> File_GetList(string path)
         {
             List<string> list = new List<string>();
+            if (File.Exists(path))
+                return list;
+
             DirectoryInfo dir = new DirectoryInfo(path);
             FileInfo[] files = dir.GetFiles();
             foreach (FileInfo file in files)

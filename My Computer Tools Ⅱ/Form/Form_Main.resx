@@ -121,8 +121,22 @@
     <value>17, 17</value>
   </metadata>
   <metadata name="Timer_STrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>134, 17</value>
+    <value>138, 17</value>
   </metadata>
+  <data name="lab_MySaid.Text" xml:space="preserve">
+    <value>编程目的：方便快捷使用电脑，基于兴趣。
+本程序不会对用户计算机系统造成任何伤害。
+本程序完全免费。
+更新频率：看心情。
+编程语言：C Sharp -C#
+
+------------------------------------------
+程序使用到的外部资源：
+1.心知天气 的免费天气获取api
+2.七牛云 官方的C# SDK
+3.外网ip获取
+4.淘宝的外网ip地址获取api</value>
+  </data>
   <metadata name="NotifyIconBack.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>255, 17</value>
   </metadata>
@@ -154,6 +168,9 @@
         AAD4HwAA//8AAA==
 </value>
   </data>
+  <metadata name="backgroundWorker.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>453, 17</value>
+  </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>75</value>
   </metadata>

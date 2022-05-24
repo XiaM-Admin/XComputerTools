@@ -31,6 +31,8 @@ namespace My_Computer_Tools_Ⅱ
             tip.SetToolTip(PicBox_TipFileCheck, "开启项功能后，你的每一次上传任务\r\n" +
                 "都将会进行文件对比，将云存储的文件和当前文件对比，\r\n" +
                 "如果文件不一致，才会进行上传操作。");
+            tip.SetToolTip(Number_weather, "刷新更新天气的间隔，设置为0时不更新天气。");
+            CBox_UpEnd.Text = settings.Default.qnUpEnd;
 
             //初始化配置
             if (settings.Default.City != "")
@@ -57,6 +59,7 @@ namespace My_Computer_Tools_Ⅱ
                 settings.Default.OpenStartRun = CBox_OpenStartRun.Checked;
                 SetMeStart(CBox_OpenStartRun.Checked);
             }
+
             if (CBox_ShowAccinCMBS.Checked != settings.Default.ShowAccinCMBS)
                 settings.Default.ShowAccinCMBS = CBox_ShowAccinCMBS.Checked;
 
@@ -66,6 +69,12 @@ namespace My_Computer_Tools_Ⅱ
                     settings.Default.City = CBox_City.Text + "|" + CBox_GeographyPos.Text;
                     UpDateWeather = true;
                 }
+
+            if (settings.Default.qnUpEnd is null)
+            {
+                settings.Default.qnUpEnd = "MarkDown格式";
+            }
+
             settings.Default.Save();
         }
 
@@ -197,7 +206,43 @@ namespace My_Computer_Tools_Ⅱ
         private void CBox_UpFileCheck_CheckedChanged(object sender, EventArgs e)
         {
             settings.Default.qnUpFileCheck = CBox_qnUpFileCheck.Checked;
-            settings.Default.Save();
+        }
+
+        private void CheackFileNumber_ValueChanged(object sender, EventArgs e)
+        {
+            settings.Default.CheckFileNumber = CheackFileNumber.Value;
+        }
+
+        private void CBox_qnShowMesg_CheckedChanged(object sender, EventArgs e)
+        {
+            settings.Default.qnShowMesg = CBox_qnShowMesg.Checked;
+        }
+
+        private void CBox_UpEnd_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            settings.Default.qnUpEnd = CBox_UpEnd.Text;
+        }
+
+        private void Number_weather_ValueChanged(object sender, EventArgs e)
+        {
+            settings.Default.WeatherNumber = Number_weather.Value;
+        }
+
+        private void Tbox_ImgUpPath_TextChanged(object sender, EventArgs e)
+        {
+            settings.Default.qnImgPath = Tbox_ImgUpPath.Text;
+        }
+
+        private void but_ReSetIni_Click(object sender, EventArgs e)
+        {
+            DialogResult but = MessageBox.Show("我还不会自动恢复配置哦~\r\n" +
+                "1.打开路径：\"C:\\Users\\Administrator\\AppData\\Local\\My_Computer_Tools_Ⅱ\"\r\n" +
+                "路径中用户名等自己查找自己的\r\n" +
+                "2.删除里面的所有文件夹" +
+                "3.重启此程序即可！\r\n" +
+                "选择\"确定\"，打开默认的路径！如果路径不正确，请手动寻找！", "注意：", MessageBoxButtons.OKCancel);
+            if (but == DialogResult.OK)
+                Process.Start("explorer.exe", "C:\\Users\\Administrator\\AppData\\Local\\My_Computer_Tools_Ⅱ\\");
         }
     }
 }

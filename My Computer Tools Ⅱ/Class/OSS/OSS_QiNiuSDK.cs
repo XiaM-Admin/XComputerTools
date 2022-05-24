@@ -9,7 +9,7 @@ namespace My_Computer_Tools_Ⅱ
 {
     internal class OSS_QiNiuSDK : Qiniu_OSS
     {
-        private bool is_init = true;
+        public bool is_init = true;
 
         public OSS_QiNiuSDK(string Bucket, string AccessKey, string SecretKey, string ZoneID, string Domain) : base(Bucket, AccessKey, SecretKey, ZoneID, Domain)
         {
@@ -121,6 +121,7 @@ namespace My_Computer_Tools_Ⅱ
         public bool UploadFileTest2()
         {
             if (!is_init) return false;
+
             Mac mac = new Mac(AccessKey, SecretKey);
             Random rand = new Random();
             string key = string.Format("UploadFileTest_{0}.dat", rand.Next());
@@ -162,6 +163,11 @@ namespace My_Computer_Tools_Ⅱ
                 return false;
         }
 
+        /// <summary>
+        /// 获取七牛云Key的文件校验码
+        /// </summary>
+        /// <param name="Key"></param>
+        /// <returns></returns>
         private string GetFileQhash(string Key)
         {
             Mac mac = new Mac(AccessKey, SecretKey);
@@ -178,11 +184,6 @@ namespace My_Computer_Tools_Ⅱ
                 Console.WriteLine("stat error: " + statRet.ToString());
                 return "";
             }
-            //Console.WriteLine(statRet.Result.Hash);
-            //Console.WriteLine(statRet.Result.MimeType);
-            //Console.WriteLine(statRet.Result.Fsize);
-            //Console.WriteLine(statRet.Result.MimeType);
-            //Console.WriteLine(statRet.Result.FileType);
             return statRet.Result.Hash;
         }
 
@@ -202,7 +203,7 @@ namespace My_Computer_Tools_Ⅱ
             if (Properties.Settings.Default.qnUpFileCheck)
             {
                 string FileQhash_Online = GetFileQhash(key);
-                string FileQhash_Local = calcETag(path);
+                string FileQhash_Local = CalcETag(path);
                 Console.WriteLine($"文件信息比对 O:{FileQhash_Online} L:{FileQhash_Local}");
                 if (FileQhash_Online == FileQhash_Local)
                 {
@@ -235,6 +236,80 @@ namespace My_Computer_Tools_Ⅱ
                 return "1";
             else
                 return $"{result.Code}";
+        }
+
+        /// <summary>
+        /// 上传一个图片文件 后删除图片
+        /// </summary>
+        /// <param name="imgpath">图片地址</param>
+        /// <param name="keypath">上传位置</param>
+        /// <returns>返回文件直链链接</returns>
+        public string UpLoadFile_One(string imgpath, string keypath)
+        {
+            Mac mac = new Mac(AccessKey, SecretKey);
+            DateTime time = DateTime.Now;
+            TimeSpan ts = DateTime.Now - new DateTime(time.Year, time.Month, time.Day, 0, 0, 0, 0);
+
+            string key = keypath + $"/{time.Year}{time.Month}{time.Day}" + Convert.ToInt64(ts.TotalMilliseconds).ToString() + ".png";
+            key = key.Replace("//", "/");
+
+            //生成凭证
+            PutPolicy putPolicy = new PutPolicy
+            {
+                Scope = Bucket + ":" + key
+            };
+            //putPolicy.SetExpires(3600);
+            string token = Auth.CreateUploadToken(mac, putPolicy.ToJsonString());
+            //设置上传配置
+            Config config = new Config
+            {
+                Zone = dicZone[ZoneID],
+                UseHttps = false,
+                UseCdnDomains = true,
+                ChunkSize = ChunkUnit.U512K
+            };
+            FormUploader target = new FormUploader(config);
+            PutExtra extra = new PutExtra
+            {
+                Version = "v1",
+                PartSize = 4 * 1024 * 1024
+            };
+            HttpResult result = target.UploadFile(imgpath, key, token, extra);
+
+            if (result.Code == 200)
+            {
+                /*MarkDown格式
+                普通直链链接
+                Html格式*/
+                File.Delete(imgpath);
+                switch (Properties.Settings.Default.qnUpEnd)
+                {
+                    case "MarkDown格式":
+                        return result.Code + $"|![](http://{GetKeyDownloadUrl(key)})";
+
+                    case "普通直链链接":
+                        return result.Code + $"|http://{GetKeyDownloadUrl(key)}";
+
+                    case "Html格式":
+                        return result.Code + $"|<img scr=\"http://{GetKeyDownloadUrl(key)}\">";
+
+                    default:
+                        return result.Code + $"|http://{GetKeyDownloadUrl(key)}";
+                }
+            }
+            else
+                return $"{result.Code}|";
+        }
+
+        /// <summary>
+        /// 获取Key下载链接
+        /// </summary>
+        /// <returns></returns>
+        public string GetKeyDownloadUrl(string key)
+        {
+            string publicUrl = DownloadManager.CreatePublishUrl(Domain, key);
+            Console.WriteLine(publicUrl);
+            return publicUrl;
         }
     }
 }

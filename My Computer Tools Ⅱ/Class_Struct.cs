@@ -1,5 +1,4 @@
 ﻿using Qiniu.Storage;
-using Qiniu;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -79,21 +78,21 @@ namespace My_Computer_Tools_Ⅱ
 
         #region 七牛云hash算法
 
-        private int CHUNK_SIZE = 1 << 22;
+        private readonly int CHUNK_SIZE = 1 << 22;
 
-        public byte[] sha1(byte[] data)
+        public byte[] Sha1(byte[] data)
         {
             return System.Security.Cryptography.SHA1.Create().ComputeHash(data);
         }
 
-        public string urlSafeBase64Encode(byte[] data)
+        public string UrlSafeBase64Encode(byte[] data)
         {
             string encodedString = Convert.ToBase64String(data);
             encodedString = encodedString.Replace('+', '-').Replace('/', '_');
             return encodedString;
         }
 
-        public string calcETag(string path)
+        public string CalcETag(string path)
         {
             path = path.Replace("|", "");
             FileStream fs;
@@ -104,13 +103,13 @@ namespace My_Computer_Tools_Ⅱ
             {
                 byte[] fileData = new byte[(int)fileLength];
                 fs.Read(fileData, 0, (int)fileLength);
-                byte[] sha1Data = sha1(fileData);
+                byte[] sha1Data = Sha1(fileData);
                 int sha1DataLen = sha1Data.Length;
                 byte[] hashData = new byte[sha1DataLen + 1];
 
                 System.Array.Copy(sha1Data, 0, hashData, 1, sha1DataLen);
                 hashData[0] = 0x16;
-                etag = urlSafeBase64Encode(hashData);
+                etag = UrlSafeBase64Encode(hashData);
             }
             else
             {
@@ -126,7 +125,7 @@ namespace My_Computer_Tools_Ⅱ
                     int bytesReadLen = fs.Read(chunkData, 0, CHUNK_SIZE);
                     byte[] bytesRead = new byte[bytesReadLen];
                     System.Array.Copy(chunkData, 0, bytesRead, 0, bytesReadLen);
-                    byte[] chunkDataSha1 = sha1(bytesRead);
+                    byte[] chunkDataSha1 = Sha1(bytesRead);
                     byte[] newAllSha1Data = new byte[chunkDataSha1.Length
                             + allSha1Data.Length];
                     System.Array.Copy(allSha1Data, 0, newAllSha1Data, 0,
@@ -135,12 +134,12 @@ namespace My_Computer_Tools_Ⅱ
                             allSha1Data.Length, chunkDataSha1.Length);
                     allSha1Data = newAllSha1Data;
                 }
-                byte[] allSha1DataSha1 = sha1(allSha1Data);
+                byte[] allSha1DataSha1 = Sha1(allSha1Data);
                 byte[] hashData = new byte[allSha1DataSha1.Length + 1];
                 System.Array.Copy(allSha1DataSha1, 0, hashData, 1,
                         allSha1DataSha1.Length);
                 hashData[0] = (byte)0x96;
-                etag = urlSafeBase64Encode(hashData);
+                etag = UrlSafeBase64Encode(hashData);
             }
             fs.Close();
             return etag;
@@ -210,14 +209,29 @@ namespace My_Computer_Tools_Ⅱ
         /// <summary>
         /// 监控线程的日志输出
         /// </summary>
-        private Fun_delegate Main_CW;
+        private readonly Fun_delegate Main_CW;
 
-        private List<ThreadData> threadDatas = new List<ThreadData>();
+        /// <summary>
+        /// 主动刷新线程池信息
+        /// </summary>
+        private readonly Fun_delegate UpThreadFormData;
 
-        public Thread_Main(Fun_delegate fun)
+        /// <summary>
+        /// 任务队列，不包括时间任务
+        /// </summary>
+        private readonly List<ThreadData> threadDatas = new List<ThreadData>();
+
+        /// <summary>
+        /// 定时时间任务队列
+        /// </summary>
+        private List<ThreadData> TimerDatas = new List<ThreadData>();
+
+        public Thread_Main(Fun_delegate fun, Fun_delegate UpThreadChiForm)
         {
             Count = 1;
             this.Main_CW = fun;
+            this.UpThreadFormData = UpThreadChiForm;
+
             ThreadFormData CWdata = new ThreadFormData()
             {
                 text = "系统监控线程启动",
@@ -228,8 +242,10 @@ namespace My_Computer_Tools_Ⅱ
             };
 
             Main_CW(CWdata);
-            Thread thread = new Thread(new ThreadStart(ThreadMain));
-            thread.IsBackground = true;
+            Thread thread = new Thread(new ThreadStart(ThreadMain))
+            {
+                IsBackground = true
+            };
             thread.Start();
         }
 
@@ -246,8 +262,7 @@ namespace My_Computer_Tools_Ⅱ
                     if (threadData.State == Thread_State.stop || threadData.State == Thread_State.exit)
                         continue;
 
-                    Console.WriteLine($"任务名:{threadData.Name} id:{threadData.ID} 状态:{threadData.thread.ThreadState}");//检查失效线程
-
+                    Console.WriteLine($"当前总线程{Count} 任务名:{threadData.Name} id:{threadData.ID} 状态:{threadData.thread?.ThreadState}");//检查失效线程
                     //运行模式为延迟执行，并且线程状态为终止count-- 线程状态设置为抛弃
                     if (threadData.RunMode == Thread_RunMode.OnlyOne && threadData.thread.ThreadState == ThreadState.Stopped)
                     {
@@ -255,10 +270,9 @@ namespace My_Computer_Tools_Ⅱ
                         threadData.State = Thread_State.exit;
                     }
                 }
-
+                CheckTimerThread();
                 CheckExitThread();
-                Console.WriteLine($"当前总线程{Count}");
-                Thread.Sleep(1000);
+                Thread.Sleep(999);
             }
         }
 
@@ -269,11 +283,49 @@ namespace My_Computer_Tools_Ⅱ
         {
             for (int i = 0; i < threadDatas.Count; i++)
             {
-                if (threadDatas[i].State == Thread_State.exit && threadDatas[i].thread.ThreadState == ThreadState.Stopped)
+                //抛弃的任务，如果在运行，抛出异常让其暂停
+                if (threadDatas[i].State == Thread_State.exit && threadDatas[i].thread.ThreadState == (ThreadState.WaitSleepJoin | ThreadState.Background))
+                {
+                    threadDatas[i].thread.Abort();
+                    return;
+                }
+
+                //如果线程状态为抛弃 并且线程已经结束 或者异常中断 就删除这个list
+                if (threadDatas[i].State == Thread_State.exit && (threadDatas[i].thread.ThreadState == ThreadState.Stopped || threadDatas[i].thread.ThreadState == ThreadState.Aborted))
                 {
                     Console.WriteLine($"废弃的任务{threadDatas[i].Name} id:{threadDatas[i].ID}已经移除");
                     threadDatas.Remove(threadDatas[i]);
                     Count--;
+                    UpThreadFormData(null);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 扫描执行定时任务
+        /// </summary>
+        private void CheckTimerThread()
+        {
+            foreach (ThreadData TimerDataTask in TimerDatas)
+            {
+                if (Program.DateTime.ToString("HH:mm:ss") == TimerDataTask.ModePar)
+                {
+                    ThreadFormData CWdata = new ThreadFormData()
+                    {
+                        name = TimerDataTask.Name,
+                        id = TimerDataTask.ID,
+                        grade = TimerDataTask.Grade,
+                    };
+                    Console.WriteLine($"定时任务 {TimerDataTask.Name} id:{TimerDataTask.ID} 开始执行");
+                    //开启线程执行
+                    CWdata.text = $"定时任务 {TimerDataTask.Name} id:{TimerDataTask.ID} 开始执行";
+                    Main_CW(CWdata);
+
+                    TimerDataTask.thread = new Thread(new ParameterizedThreadStart(TimerDataTask.Fun))
+                    {
+                        IsBackground = true//后台线程
+                    };
+                    TimerDataTask.thread.Start(TimerDataTask);
                 }
             }
         }
@@ -326,30 +378,49 @@ namespace My_Computer_Tools_Ⅱ
                 Fundata = data.Fundata,
                 Fun = data.Fun,
 
-                State = Thread_State.stop,
+                State = Thread_State.run,
                 ID = idnum++,
             };
-            threadData.State = Thread_State.run;
-
+            ThreadFormData CWdata = new ThreadFormData()
+            {
+                name = threadData.Name,
+                id = threadData.ID,
+                grade = threadData.Grade,
+            };
             //分析模式和参数
             switch (data.RunMode)
             {
                 case Thread_RunMode.timer:
-                    //DateTime dt = DateTime.ParseExact(threadData.ModePar, "mmss", System.Globalization.CultureInfo.CurrentCulture);
+                    //将字符串格式化为DateTime
+                    DateTime dt = DateTime.ParseExact(data.ModePar.Trim(), "HH:mm:ss", null);
+                    Console.WriteLine($"{DateTime.Now}：任务{threadData.Name}  开始定时等待 触发时间 {dt:HH:mm:ss}");
+                    CWdata.text = $"任务{threadData.Name}  开始定时等待 触发时间 {dt:HH:mm:ss}";
+                    this.Main_CW(CWdata);
+                    TimerDatas.Add(threadData);
                     break;
 
                 case Thread_RunMode.thread:
                     Console.WriteLine($"{DateTime.Now}：任务{threadData.Name}  开始循环执行 循环间隔{threadData.ModePar}毫秒");
-                    threadData.thread = new Thread(new ParameterizedThreadStart(Thread_while));
-                    threadData.thread.IsBackground = true;//后台线程
+                    CWdata.text = $"任务{threadData.Name}  开始循环执行 循环间隔{threadData.ModePar}毫秒";
+                    this.Main_CW(CWdata);
+
+                    threadData.thread = new Thread(new ParameterizedThreadStart(Thread_while))
+                    {
+                        IsBackground = true//后台线程
+                    };
                     threadData.thread.Start(threadData);
                     break;
 
                 case Thread_RunMode.OnlyOne:
                     Console.WriteLine($"{DateTime.Now}：任务{threadData.Name}  等待{threadData.ModePar}毫秒");
-                    threadData.thread = new Thread(new ParameterizedThreadStart(threadData.Fun));
-                    threadData.thread.IsBackground = true;//后台线程
-                    Task.Delay(Convert.ToInt16(threadData.ModePar)).ContinueWith(t =>
+                    CWdata.text = $"任务{threadData.Name}  等待{threadData.ModePar}毫秒";
+                    this.Main_CW(CWdata);
+
+                    threadData.thread = new Thread(new ParameterizedThreadStart(threadData.Fun))
+                    {
+                        IsBackground = true//后台线程
+                    };
+                    Task.Delay(Convert.ToInt32(threadData.ModePar)).ContinueWith(t =>
                     {
                         Console.WriteLine($"{DateTime.Now}：任务{threadData.Name}启动了，任务状态 {threadData.thread.ThreadState}");
                         threadData.thread.Start(threadData);

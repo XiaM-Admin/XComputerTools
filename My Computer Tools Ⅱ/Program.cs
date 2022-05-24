@@ -13,6 +13,11 @@ namespace My_Computer_Tools_Ⅱ
     /// </summary>
     public delegate void Fun_delegate(object data);
 
+    /// <summary>
+    /// 空参委托
+    /// </summary>
+    public delegate void Fun_delegate_void();
+
     internal static class Program
     {
         /// <summary>
@@ -34,11 +39,14 @@ namespace My_Computer_Tools_Ⅱ
 
         //程序变量
         public const string xmlname = "Account.xml";//账号的存储名字
+
         public static bool backWindows_State = false;//现在是否处于后台状态
         public static bool FirstRunArg = false;//是不是自启动的程序
         public static WindowsCommands WinCommand = new WindowsCommands();//自定义消息提示类
         public static Log logmain = new Log();//全局日志类
         public static Thread_Main _Main;//全局多线程控制
+        public static Form_ProgressBar _ProgressBar;//等待ui
+        public static DateTime DateTime;//统一定时时间
 
         /// <summary>
         /// 创建一个操作xml的对象

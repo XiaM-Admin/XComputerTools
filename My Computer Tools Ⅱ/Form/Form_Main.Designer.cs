@@ -35,6 +35,7 @@
             this.StaLab_Spilt1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.StaLab_LoginState = new System.Windows.Forms.ToolStripStatusLabel();
             this.StaLab_State = new System.Windows.Forms.ToolStripStatusLabel();
+            this.ProgressBarinTool = new System.Windows.Forms.ToolStripProgressBar();
             this.Timer_STrip = new System.Windows.Forms.Timer(this.components);
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabP_Home = new System.Windows.Forms.TabPage();
@@ -44,7 +45,6 @@
             this.lab_isAdmin = new System.Windows.Forms.Label();
             this.but_SetPro = new System.Windows.Forms.Button();
             this.lab_TimeDate = new System.Windows.Forms.Label();
-            this.lab_MAC = new System.Windows.Forms.Label();
             this.lab_SizeMeo = new System.Windows.Forms.Label();
             this.lab_Ip = new System.Windows.Forms.Label();
             this.lab_ComputerName = new System.Windows.Forms.Label();
@@ -71,6 +71,7 @@
             this.tabC_FileSynClass = new System.Windows.Forms.TabControl();
             this.tabP_qiniu = new System.Windows.Forms.TabPage();
             this.GBox_FolderWatcher = new System.Windows.Forms.GroupBox();
+            this.but_qnclipboard = new System.Windows.Forms.Button();
             this.But_qnDelItem = new System.Windows.Forms.Button();
             this.But_UpLoadFile = new System.Windows.Forms.Button();
             this.But_qnStart = new System.Windows.Forms.Button();
@@ -78,6 +79,8 @@
             this.But_qnAddFolder = new System.Windows.Forms.Button();
             this.LBox_FolderList = new System.Windows.Forms.ListBox();
             this.GBox_Folderfrom = new System.Windows.Forms.GroupBox();
+            this.But_GetFileDownloadurl = new System.Windows.Forms.Button();
+            this.But_DownloadFile = new System.Windows.Forms.Button();
             this.listView_FileList = new System.Windows.Forms.ListView();
             this.ColumnHeader_Name = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader_Location = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -97,35 +100,47 @@
             this.label_SK = new System.Windows.Forms.Label();
             this.label_AK = new System.Windows.Forms.Label();
             this.tabP_Tasks = new System.Windows.Forms.TabPage();
-            this.button3 = new System.Windows.Forms.Button();
+            this.label8 = new System.Windows.Forms.Label();
             this.TBox_Tip = new System.Windows.Forms.TextBox();
             this.CBox_ThreadGrade = new System.Windows.Forms.ComboBox();
             this.ListBox_Name = new System.Windows.Forms.ListBox();
             this.GBox_ThreadData = new System.Windows.Forms.GroupBox();
+            this.TBox_TaskExplain = new System.Windows.Forms.TextBox();
+            this.TBox_TaskModePar = new System.Windows.Forms.TextBox();
+            this.Tbox_TaskGrade = new System.Windows.Forms.TextBox();
+            this.Tbox_TaskMode = new System.Windows.Forms.TextBox();
+            this.Tbox_TaskID = new System.Windows.Forms.TextBox();
+            this.Tbox_TaskName = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.tabP_About = new System.Windows.Forms.TabPage();
+            this.but_Set = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.But_ClearLog = new System.Windows.Forms.Button();
+            this.But_OpenLogEx = new System.Windows.Forms.Button();
             this.lab_MySaid = new System.Windows.Forms.Label();
             this.GBox_Target = new System.Windows.Forms.GroupBox();
             this.RText_target = new System.Windows.Forms.RichTextBox();
             this.NotifyIconBack = new System.Windows.Forms.NotifyIcon(this.components);
             this.CMBS = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripqiniu = new System.Windows.Forms.ToolStripMenuItem();
+            this.手动上传ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.剪贴板上传ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AcctoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.显示ShowtoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.设置toolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.退出ExitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.Tbox_TaskName = new System.Windows.Forms.TextBox();
-            this.Tbox_TaskID = new System.Windows.Forms.TextBox();
-            this.Tbox_TaskMode = new System.Windows.Forms.TextBox();
-            this.Tbox_TaskGrade = new System.Windows.Forms.TextBox();
-            this.TBox_TaskModePar = new System.Windows.Forms.TextBox();
-            this.TBox_TaskExplain = new System.Windows.Forms.TextBox();
+            this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
+            this.linkLabel_WeatherLink = new System.Windows.Forms.LinkLabel();
+            this.linkLabel_QNSDKLink = new System.Windows.Forms.LinkLabel();
+            this.linkLabel_TaoBaoAPILink = new System.Windows.Forms.LinkLabel();
+            this.linkLabel_WaiIpLink = new System.Windows.Forms.LinkLabel();
+            this.linkLabel_BLogLink = new System.Windows.Forms.LinkLabel();
             this.STrip_Main.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabP_Home.SuspendLayout();
@@ -141,6 +156,7 @@
             this.tabP_Tasks.SuspendLayout();
             this.GBox_ThreadData.SuspendLayout();
             this.tabP_About.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.GBox_Target.SuspendLayout();
             this.CMBS.SuspendLayout();
             this.SuspendLayout();
@@ -151,7 +167,8 @@
             this.StaLab_Time,
             this.StaLab_Spilt1,
             this.StaLab_LoginState,
-            this.StaLab_State});
+            this.StaLab_State,
+            this.ProgressBarinTool});
             this.STrip_Main.Location = new System.Drawing.Point(0, 460);
             this.STrip_Main.Name = "STrip_Main";
             this.STrip_Main.Size = new System.Drawing.Size(825, 22);
@@ -181,8 +198,13 @@
             // 
             this.StaLab_State.Name = "StaLab_State";
             this.StaLab_State.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.StaLab_State.Size = new System.Drawing.Size(731, 17);
+            this.StaLab_State.Size = new System.Drawing.Size(579, 17);
             this.StaLab_State.Spring = true;
+            // 
+            // ProgressBarinTool
+            // 
+            this.ProgressBarinTool.Name = "ProgressBarinTool";
+            this.ProgressBarinTool.Size = new System.Drawing.Size(150, 16);
             // 
             // Timer_STrip
             // 
@@ -211,7 +233,6 @@
             this.tabP_Home.Controls.Add(this.lab_isAdmin);
             this.tabP_Home.Controls.Add(this.but_SetPro);
             this.tabP_Home.Controls.Add(this.lab_TimeDate);
-            this.tabP_Home.Controls.Add(this.lab_MAC);
             this.tabP_Home.Controls.Add(this.lab_SizeMeo);
             this.tabP_Home.Controls.Add(this.lab_Ip);
             this.tabP_Home.Controls.Add(this.lab_ComputerName);
@@ -230,7 +251,7 @@
             // 
             this.lab_WaiIP.AutoSize = true;
             this.lab_WaiIP.Font = new System.Drawing.Font("微软雅黑", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lab_WaiIP.Location = new System.Drawing.Point(92, 302);
+            this.lab_WaiIP.Location = new System.Drawing.Point(92, 334);
             this.lab_WaiIP.Name = "lab_WaiIP";
             this.lab_WaiIP.Size = new System.Drawing.Size(90, 27);
             this.lab_WaiIP.TabIndex = 14;
@@ -240,8 +261,8 @@
             // 
             this.PBox_Data.Location = new System.Drawing.Point(6, 117);
             this.PBox_Data.Name = "PBox_Data";
-            this.PBox_Data.Size = new System.Drawing.Size(94, 70);
-            this.PBox_Data.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PBox_Data.Size = new System.Drawing.Size(94, 85);
+            this.PBox_Data.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PBox_Data.TabIndex = 13;
             this.PBox_Data.TabStop = false;
             // 
@@ -260,7 +281,7 @@
             // 
             this.lab_isAdmin.AutoSize = true;
             this.lab_isAdmin.Font = new System.Drawing.Font("微软雅黑", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lab_isAdmin.Location = new System.Drawing.Point(92, 194);
+            this.lab_isAdmin.Location = new System.Drawing.Point(92, 205);
             this.lab_isAdmin.Name = "lab_isAdmin";
             this.lab_isAdmin.Size = new System.Drawing.Size(132, 27);
             this.lab_isAdmin.TabIndex = 11;
@@ -288,21 +309,11 @@
             this.lab_TimeDate.TabIndex = 9;
             this.lab_TimeDate.Text = "日期：";
             // 
-            // lab_MAC
-            // 
-            this.lab_MAC.AutoSize = true;
-            this.lab_MAC.Font = new System.Drawing.Font("微软雅黑", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lab_MAC.Location = new System.Drawing.Point(92, 374);
-            this.lab_MAC.Name = "lab_MAC";
-            this.lab_MAC.Size = new System.Drawing.Size(79, 27);
-            this.lab_MAC.TabIndex = 8;
-            this.lab_MAC.Text = "MAC：";
-            // 
             // lab_SizeMeo
             // 
             this.lab_SizeMeo.AutoSize = true;
             this.lab_SizeMeo.Font = new System.Drawing.Font("微软雅黑", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lab_SizeMeo.Location = new System.Drawing.Point(92, 338);
+            this.lab_SizeMeo.Location = new System.Drawing.Point(92, 377);
             this.lab_SizeMeo.Name = "lab_SizeMeo";
             this.lab_SizeMeo.Size = new System.Drawing.Size(112, 27);
             this.lab_SizeMeo.TabIndex = 7;
@@ -312,7 +323,7 @@
             // 
             this.lab_Ip.AutoSize = true;
             this.lab_Ip.Font = new System.Drawing.Font("微软雅黑", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lab_Ip.Location = new System.Drawing.Point(92, 266);
+            this.lab_Ip.Location = new System.Drawing.Point(92, 291);
             this.lab_Ip.Name = "lab_Ip";
             this.lab_Ip.Size = new System.Drawing.Size(90, 27);
             this.lab_Ip.TabIndex = 6;
@@ -322,7 +333,7 @@
             // 
             this.lab_ComputerName.AutoSize = true;
             this.lab_ComputerName.Font = new System.Drawing.Font("微软雅黑", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lab_ComputerName.Location = new System.Drawing.Point(92, 230);
+            this.lab_ComputerName.Location = new System.Drawing.Point(92, 248);
             this.lab_ComputerName.Name = "lab_ComputerName";
             this.lab_ComputerName.Size = new System.Drawing.Size(152, 27);
             this.lab_ComputerName.TabIndex = 5;
@@ -428,7 +439,7 @@
             this.but_exportAcc.Name = "but_exportAcc";
             this.but_exportAcc.Size = new System.Drawing.Size(70, 23);
             this.but_exportAcc.TabIndex = 11;
-            this.but_exportAcc.Text = "导出";
+            this.but_exportAcc.Text = "本地导出";
             this.but_exportAcc.UseVisualStyleBackColor = true;
             this.but_exportAcc.Click += new System.EventHandler(this.But_exportAcc_Click);
             // 
@@ -438,7 +449,7 @@
             this.but_ImportAcc.Name = "but_ImportAcc";
             this.but_ImportAcc.Size = new System.Drawing.Size(70, 23);
             this.but_ImportAcc.TabIndex = 10;
-            this.but_ImportAcc.Text = "导入";
+            this.but_ImportAcc.Text = "本地导入";
             this.but_ImportAcc.UseVisualStyleBackColor = true;
             this.but_ImportAcc.Click += new System.EventHandler(this.But_ImportAcc_Click);
             // 
@@ -577,6 +588,7 @@
             // 
             // GBox_FolderWatcher
             // 
+            this.GBox_FolderWatcher.Controls.Add(this.but_qnclipboard);
             this.GBox_FolderWatcher.Controls.Add(this.But_qnDelItem);
             this.GBox_FolderWatcher.Controls.Add(this.But_UpLoadFile);
             this.GBox_FolderWatcher.Controls.Add(this.But_qnStart);
@@ -590,11 +602,21 @@
             this.GBox_FolderWatcher.TabStop = false;
             this.GBox_FolderWatcher.Text = "文件夹同步设置";
             // 
+            // but_qnclipboard
+            // 
+            this.but_qnclipboard.Location = new System.Drawing.Point(350, 157);
+            this.but_qnclipboard.Name = "but_qnclipboard";
+            this.but_qnclipboard.Size = new System.Drawing.Size(82, 23);
+            this.but_qnclipboard.TabIndex = 7;
+            this.but_qnclipboard.Text = "剪贴板上传";
+            this.but_qnclipboard.UseVisualStyleBackColor = true;
+            this.but_qnclipboard.Click += new System.EventHandler(this.but_qnclipboard_Click);
+            // 
             // But_qnDelItem
             // 
-            this.But_qnDelItem.Location = new System.Drawing.Point(350, 54);
+            this.But_qnDelItem.Location = new System.Drawing.Point(353, 52);
             this.But_qnDelItem.Name = "But_qnDelItem";
-            this.But_qnDelItem.Size = new System.Drawing.Size(82, 23);
+            this.But_qnDelItem.Size = new System.Drawing.Size(75, 23);
             this.But_qnDelItem.TabIndex = 6;
             this.But_qnDelItem.Text = "选中删除";
             this.But_qnDelItem.UseVisualStyleBackColor = true;
@@ -602,9 +624,9 @@
             // 
             // But_UpLoadFile
             // 
-            this.But_UpLoadFile.Location = new System.Drawing.Point(350, 155);
+            this.But_UpLoadFile.Location = new System.Drawing.Point(353, 130);
             this.But_UpLoadFile.Name = "But_UpLoadFile";
-            this.But_UpLoadFile.Size = new System.Drawing.Size(82, 23);
+            this.But_UpLoadFile.Size = new System.Drawing.Size(75, 23);
             this.But_UpLoadFile.TabIndex = 5;
             this.But_UpLoadFile.Text = "手动上传";
             this.But_UpLoadFile.UseVisualStyleBackColor = true;
@@ -612,9 +634,9 @@
             // 
             // But_qnStart
             // 
-            this.But_qnStart.Location = new System.Drawing.Point(350, 127);
+            this.But_qnStart.Location = new System.Drawing.Point(353, 103);
             this.But_qnStart.Name = "But_qnStart";
-            this.But_qnStart.Size = new System.Drawing.Size(82, 23);
+            this.But_qnStart.Size = new System.Drawing.Size(75, 23);
             this.But_qnStart.TabIndex = 4;
             this.But_qnStart.Text = "开启监控";
             this.But_qnStart.UseVisualStyleBackColor = true;
@@ -625,7 +647,7 @@
             this.CBox_qnAutoStart.AutoSize = true;
             this.CBox_qnAutoStart.Checked = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.qnStartFolderW;
             this.CBox_qnAutoStart.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "qnStartFolderW", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.CBox_qnAutoStart.Location = new System.Drawing.Point(353, 104);
+            this.CBox_qnAutoStart.Location = new System.Drawing.Point(353, 80);
             this.CBox_qnAutoStart.Name = "CBox_qnAutoStart";
             this.CBox_qnAutoStart.Size = new System.Drawing.Size(75, 21);
             this.CBox_qnAutoStart.TabIndex = 3;
@@ -635,9 +657,9 @@
             // 
             // But_qnAddFolder
             // 
-            this.But_qnAddFolder.Location = new System.Drawing.Point(350, 23);
+            this.But_qnAddFolder.Location = new System.Drawing.Point(351, 23);
             this.But_qnAddFolder.Name = "But_qnAddFolder";
-            this.But_qnAddFolder.Size = new System.Drawing.Size(82, 23);
+            this.But_qnAddFolder.Size = new System.Drawing.Size(78, 23);
             this.But_qnAddFolder.TabIndex = 2;
             this.But_qnAddFolder.Text = "添加文件夹";
             this.But_qnAddFolder.UseVisualStyleBackColor = true;
@@ -655,6 +677,8 @@
             // 
             // GBox_Folderfrom
             // 
+            this.GBox_Folderfrom.Controls.Add(this.But_GetFileDownloadurl);
+            this.GBox_Folderfrom.Controls.Add(this.But_DownloadFile);
             this.GBox_Folderfrom.Controls.Add(this.listView_FileList);
             this.GBox_Folderfrom.Controls.Add(this.But_qnSubfolder);
             this.GBox_Folderfrom.Location = new System.Drawing.Point(3, 201);
@@ -663,6 +687,26 @@
             this.GBox_Folderfrom.TabIndex = 2;
             this.GBox_Folderfrom.TabStop = false;
             this.GBox_Folderfrom.Text = "七牛云存储文件";
+            // 
+            // But_GetFileDownloadurl
+            // 
+            this.But_GetFileDownloadurl.Location = new System.Drawing.Point(686, 48);
+            this.But_GetFileDownloadurl.Name = "But_GetFileDownloadurl";
+            this.But_GetFileDownloadurl.Size = new System.Drawing.Size(72, 23);
+            this.But_GetFileDownloadurl.TabIndex = 4;
+            this.But_GetFileDownloadurl.Text = "获取直链";
+            this.But_GetFileDownloadurl.UseVisualStyleBackColor = true;
+            this.But_GetFileDownloadurl.Click += new System.EventHandler(this.But_GetFileDownloadurl_Click);
+            // 
+            // But_DownloadFile
+            // 
+            this.But_DownloadFile.Location = new System.Drawing.Point(686, 76);
+            this.But_DownloadFile.Name = "But_DownloadFile";
+            this.But_DownloadFile.Size = new System.Drawing.Size(72, 23);
+            this.But_DownloadFile.TabIndex = 3;
+            this.But_DownloadFile.Text = "下载文件";
+            this.But_DownloadFile.UseVisualStyleBackColor = true;
+            this.But_DownloadFile.Click += new System.EventHandler(this.But_DownloadFile_Click);
             // 
             // listView_FileList
             // 
@@ -729,7 +773,7 @@
             this.GBox_AKkey.Size = new System.Drawing.Size(320, 189);
             this.GBox_AKkey.TabIndex = 0;
             this.GBox_AKkey.TabStop = false;
-            this.GBox_AKkey.Text = "七牛秘钥设置";
+            this.GBox_AKkey.Text = "七牛秘钥设置 - 回车保存";
             // 
             // TBox_Domain
             // 
@@ -763,6 +807,7 @@
             // CBox_qiniuZoneID
             // 
             this.CBox_qiniuZoneID.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "qiniuZoneID", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.CBox_qiniuZoneID.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CBox_qiniuZoneID.FormattingEnabled = true;
             this.CBox_qiniuZoneID.Items.AddRange(new object[] {
             "华东",
@@ -847,13 +892,11 @@
             // 
             // tabP_Tasks
             // 
-            this.tabP_Tasks.Controls.Add(this.button3);
+            this.tabP_Tasks.Controls.Add(this.label8);
             this.tabP_Tasks.Controls.Add(this.TBox_Tip);
             this.tabP_Tasks.Controls.Add(this.CBox_ThreadGrade);
             this.tabP_Tasks.Controls.Add(this.ListBox_Name);
             this.tabP_Tasks.Controls.Add(this.GBox_ThreadData);
-            this.tabP_Tasks.Controls.Add(this.button2);
-            this.tabP_Tasks.Controls.Add(this.button1);
             this.tabP_Tasks.Location = new System.Drawing.Point(4, 26);
             this.tabP_Tasks.Name = "tabP_Tasks";
             this.tabP_Tasks.Size = new System.Drawing.Size(793, 415);
@@ -861,15 +904,16 @@
             this.tabP_Tasks.Text = "任务池";
             this.tabP_Tasks.UseVisualStyleBackColor = true;
             // 
-            // button3
+            // label8
             // 
-            this.button3.Location = new System.Drawing.Point(689, 68);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(101, 23);
-            this.button3.TabIndex = 6;
-            this.button3.Text = "释放循环任务";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label8.ForeColor = System.Drawing.Color.LightSalmon;
+            this.label8.Location = new System.Drawing.Point(683, 76);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(107, 60);
+            this.label8.TabIndex = 6;
+            this.label8.Text = "这里是用户\r\n任务停止的\r\n地方，还未动工";
             // 
             // TBox_Tip
             // 
@@ -885,6 +929,7 @@
             // 
             // CBox_ThreadGrade
             // 
+            this.CBox_ThreadGrade.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CBox_ThreadGrade.FormattingEnabled = true;
             this.CBox_ThreadGrade.Items.AddRange(new object[] {
             "系统",
@@ -893,7 +938,6 @@
             this.CBox_ThreadGrade.Name = "CBox_ThreadGrade";
             this.CBox_ThreadGrade.Size = new System.Drawing.Size(157, 25);
             this.CBox_ThreadGrade.TabIndex = 4;
-            this.CBox_ThreadGrade.Text = "系统";
             this.CBox_ThreadGrade.SelectedValueChanged += new System.EventHandler(this.CBox_ThreadGrade_SelectedValueChanged);
             // 
             // ListBox_Name
@@ -926,6 +970,92 @@
             this.GBox_ThreadData.TabIndex = 2;
             this.GBox_ThreadData.TabStop = false;
             this.GBox_ThreadData.Text = "任务信息";
+            // 
+            // TBox_TaskExplain
+            // 
+            this.TBox_TaskExplain.BackColor = System.Drawing.Color.White;
+            this.TBox_TaskExplain.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.TBox_TaskExplain.Location = new System.Drawing.Point(300, 24);
+            this.TBox_TaskExplain.Multiline = true;
+            this.TBox_TaskExplain.Name = "TBox_TaskExplain";
+            this.TBox_TaskExplain.ReadOnly = true;
+            this.TBox_TaskExplain.Size = new System.Drawing.Size(211, 172);
+            this.TBox_TaskExplain.TabIndex = 11;
+            // 
+            // TBox_TaskModePar
+            // 
+            this.TBox_TaskModePar.BackColor = System.Drawing.Color.White;
+            this.TBox_TaskModePar.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.TBox_TaskModePar.Location = new System.Drawing.Point(88, 169);
+            this.TBox_TaskModePar.Name = "TBox_TaskModePar";
+            this.TBox_TaskModePar.ReadOnly = true;
+            this.TBox_TaskModePar.Size = new System.Drawing.Size(139, 26);
+            this.TBox_TaskModePar.TabIndex = 10;
+            this.TBox_TaskModePar.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // Tbox_TaskGrade
+            // 
+            this.Tbox_TaskGrade.BackColor = System.Drawing.Color.White;
+            this.Tbox_TaskGrade.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Tbox_TaskGrade.Location = new System.Drawing.Point(88, 133);
+            this.Tbox_TaskGrade.Name = "Tbox_TaskGrade";
+            this.Tbox_TaskGrade.ReadOnly = true;
+            this.Tbox_TaskGrade.Size = new System.Drawing.Size(139, 26);
+            this.Tbox_TaskGrade.TabIndex = 9;
+            this.Tbox_TaskGrade.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // Tbox_TaskMode
+            // 
+            this.Tbox_TaskMode.BackColor = System.Drawing.Color.White;
+            this.Tbox_TaskMode.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Tbox_TaskMode.Location = new System.Drawing.Point(88, 97);
+            this.Tbox_TaskMode.Name = "Tbox_TaskMode";
+            this.Tbox_TaskMode.ReadOnly = true;
+            this.Tbox_TaskMode.Size = new System.Drawing.Size(139, 26);
+            this.Tbox_TaskMode.TabIndex = 8;
+            this.Tbox_TaskMode.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // Tbox_TaskID
+            // 
+            this.Tbox_TaskID.BackColor = System.Drawing.Color.White;
+            this.Tbox_TaskID.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Tbox_TaskID.Location = new System.Drawing.Point(88, 61);
+            this.Tbox_TaskID.Name = "Tbox_TaskID";
+            this.Tbox_TaskID.ReadOnly = true;
+            this.Tbox_TaskID.Size = new System.Drawing.Size(139, 26);
+            this.Tbox_TaskID.TabIndex = 7;
+            this.Tbox_TaskID.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // Tbox_TaskName
+            // 
+            this.Tbox_TaskName.BackColor = System.Drawing.Color.White;
+            this.Tbox_TaskName.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Tbox_TaskName.Location = new System.Drawing.Point(88, 24);
+            this.Tbox_TaskName.Name = "Tbox_TaskName";
+            this.Tbox_TaskName.ReadOnly = true;
+            this.Tbox_TaskName.Size = new System.Drawing.Size(139, 26);
+            this.Tbox_TaskName.TabIndex = 6;
+            this.Tbox_TaskName.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label7.Location = new System.Drawing.Point(56, 61);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(38, 20);
+            this.label7.TabIndex = 5;
+            this.label7.Text = "ID：";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label6.Location = new System.Drawing.Point(15, 169);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(79, 20);
+            this.label6.TabIndex = 4;
+            this.label6.Text = "任务参数：";
             // 
             // label5
             // 
@@ -967,28 +1097,15 @@
             this.label2.TabIndex = 0;
             this.label2.Text = "任务名：";
             // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(689, 39);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(101, 23);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "添加一个线程";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(689, 10);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(101, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "开启监控线程";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // tabP_About
             // 
+            this.tabP_About.Controls.Add(this.linkLabel_BLogLink);
+            this.tabP_About.Controls.Add(this.linkLabel_WaiIpLink);
+            this.tabP_About.Controls.Add(this.linkLabel_TaoBaoAPILink);
+            this.tabP_About.Controls.Add(this.linkLabel_QNSDKLink);
+            this.tabP_About.Controls.Add(this.linkLabel_WeatherLink);
+            this.tabP_About.Controls.Add(this.but_Set);
+            this.tabP_About.Controls.Add(this.groupBox1);
             this.tabP_About.Controls.Add(this.lab_MySaid);
             this.tabP_About.Controls.Add(this.GBox_Target);
             this.tabP_About.Location = new System.Drawing.Point(4, 26);
@@ -999,16 +1116,56 @@
             this.tabP_About.Text = "关于";
             this.tabP_About.UseVisualStyleBackColor = true;
             // 
+            // but_Set
+            // 
+            this.but_Set.Location = new System.Drawing.Point(209, 375);
+            this.but_Set.Name = "but_Set";
+            this.but_Set.Size = new System.Drawing.Size(75, 23);
+            this.but_Set.TabIndex = 8;
+            this.but_Set.Text = "程序设置";
+            this.but_Set.UseVisualStyleBackColor = true;
+            this.but_Set.Click += new System.EventHandler(this.but_Set_Click);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.But_ClearLog);
+            this.groupBox1.Controls.Add(this.But_OpenLogEx);
+            this.groupBox1.Location = new System.Drawing.Point(290, 353);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(195, 56);
+            this.groupBox1.TabIndex = 7;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "日志";
+            // 
+            // But_ClearLog
+            // 
+            this.But_ClearLog.Location = new System.Drawing.Point(114, 22);
+            this.But_ClearLog.Name = "But_ClearLog";
+            this.But_ClearLog.Size = new System.Drawing.Size(75, 23);
+            this.But_ClearLog.TabIndex = 1;
+            this.But_ClearLog.Text = "清空日志";
+            this.But_ClearLog.UseVisualStyleBackColor = true;
+            this.But_ClearLog.Click += new System.EventHandler(this.But_ClearLog_Click);
+            // 
+            // But_OpenLogEx
+            // 
+            this.But_OpenLogEx.Location = new System.Drawing.Point(6, 22);
+            this.But_OpenLogEx.Name = "But_OpenLogEx";
+            this.But_OpenLogEx.Size = new System.Drawing.Size(102, 23);
+            this.But_OpenLogEx.TabIndex = 0;
+            this.But_OpenLogEx.Text = "打开日志文件夹";
+            this.But_OpenLogEx.UseVisualStyleBackColor = true;
+            this.But_OpenLogEx.Click += new System.EventHandler(this.But_OpenLogEx_Click);
+            // 
             // lab_MySaid
             // 
             this.lab_MySaid.AutoSize = true;
             this.lab_MySaid.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lab_MySaid.Location = new System.Drawing.Point(23, 73);
+            this.lab_MySaid.Location = new System.Drawing.Point(30, 28);
             this.lab_MySaid.Name = "lab_MySaid";
-            this.lab_MySaid.Size = new System.Drawing.Size(380, 240);
+            this.lab_MySaid.Size = new System.Drawing.Size(289, 240);
             this.lab_MySaid.TabIndex = 6;
-            this.lab_MySaid.Text = "编程目的：方便快捷使用电脑，基于兴趣。\r\n\r\n登陆功能声明：本程序用到的api，其他产品的激活码等本人\r\n存放至云端只有注册登陆后才能获取使用相关功能。\r\n\r\n本" +
-    "程序不会对用户计算机系统造成任何伤害。\r\n\r\n本程序完全免费。\r\n\r\n更新频率：看心情。\r\n\r\n编程语言：C Sharp -C#";
+            this.lab_MySaid.Text = resources.GetString("lab_MySaid.Text");
             this.lab_MySaid.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // GBox_Target
@@ -1046,123 +1203,143 @@
             // CMBS
             // 
             this.CMBS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripqiniu,
             this.AcctoolStripMenuItem,
             this.toolStripSeparator1,
             this.显示ShowtoolStripMenuItem,
+            this.设置toolStripMenuItem,
             this.退出ExitToolStripMenuItem});
             this.CMBS.Name = "ContextMenuBackStrip";
-            this.CMBS.Size = new System.Drawing.Size(136, 76);
+            this.CMBS.Size = new System.Drawing.Size(137, 120);
+            // 
+            // toolStripqiniu
+            // 
+            this.toolStripqiniu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.手动上传ToolStripMenuItem,
+            this.剪贴板上传ToolStripMenuItem});
+            this.toolStripqiniu.Name = "toolStripqiniu";
+            this.toolStripqiniu.Size = new System.Drawing.Size(136, 22);
+            this.toolStripqiniu.Text = "七牛云同步";
+            // 
+            // 手动上传ToolStripMenuItem
+            // 
+            this.手动上传ToolStripMenuItem.Name = "手动上传ToolStripMenuItem";
+            this.手动上传ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.手动上传ToolStripMenuItem.Text = "手动上传";
+            this.手动上传ToolStripMenuItem.Click += new System.EventHandler(this.手动上传ToolStripMenuItem_Click);
+            // 
+            // 剪贴板上传ToolStripMenuItem
+            // 
+            this.剪贴板上传ToolStripMenuItem.Name = "剪贴板上传ToolStripMenuItem";
+            this.剪贴板上传ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.剪贴板上传ToolStripMenuItem.Text = "剪贴板上传";
+            this.剪贴板上传ToolStripMenuItem.Click += new System.EventHandler(this.剪贴板上传ToolStripMenuItem_Click);
             // 
             // AcctoolStripMenuItem
             // 
             this.AcctoolStripMenuItem.Name = "AcctoolStripMenuItem";
-            this.AcctoolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.AcctoolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.AcctoolStripMenuItem.Text = "账号本本";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(132, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(133, 6);
             // 
             // 显示ShowtoolStripMenuItem
             // 
             this.显示ShowtoolStripMenuItem.Name = "显示ShowtoolStripMenuItem";
-            this.显示ShowtoolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.显示ShowtoolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.显示ShowtoolStripMenuItem.Text = "显示 Show";
             this.显示ShowtoolStripMenuItem.Click += new System.EventHandler(this.显示ShowtoolStripMenuItem_Click);
+            // 
+            // 设置toolStripMenuItem
+            // 
+            this.设置toolStripMenuItem.Name = "设置toolStripMenuItem";
+            this.设置toolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.设置toolStripMenuItem.Text = "设置 Set";
+            this.设置toolStripMenuItem.Click += new System.EventHandler(this.设置toolStripMenuItem_Click);
             // 
             // 退出ExitToolStripMenuItem
             // 
             this.退出ExitToolStripMenuItem.Name = "退出ExitToolStripMenuItem";
-            this.退出ExitToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.退出ExitToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.退出ExitToolStripMenuItem.Text = "退出 Exit";
             this.退出ExitToolStripMenuItem.Click += new System.EventHandler(this.退出ExitToolStripMenuItem_Click);
             // 
-            // label6
+            // backgroundWorker
             // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label6.Location = new System.Drawing.Point(15, 169);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(79, 20);
-            this.label6.TabIndex = 4;
-            this.label6.Text = "任务参数：";
+            this.backgroundWorker.WorkerReportsProgress = true;
             // 
-            // label7
+            // linkLabel_WeatherLink
             // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label7.Location = new System.Drawing.Point(56, 61);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(38, 20);
-            this.label7.TabIndex = 5;
-            this.label7.Text = "ID：";
+            this.linkLabel_WeatherLink.ActiveLinkColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.linkLabel_WeatherLink.AutoSize = true;
+            this.linkLabel_WeatherLink.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.linkLabel_WeatherLink.LinkColor = System.Drawing.SystemColors.MenuHighlight;
+            this.linkLabel_WeatherLink.Location = new System.Drawing.Point(235, 187);
+            this.linkLabel_WeatherLink.Name = "linkLabel_WeatherLink";
+            this.linkLabel_WeatherLink.Size = new System.Drawing.Size(65, 20);
+            this.linkLabel_WeatherLink.TabIndex = 9;
+            this.linkLabel_WeatherLink.TabStop = true;
+            this.linkLabel_WeatherLink.Text = "心知天气";
+            this.linkLabel_WeatherLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_WeatherLink_LinkClicked);
             // 
-            // Tbox_TaskName
+            // linkLabel_QNSDKLink
             // 
-            this.Tbox_TaskName.BackColor = System.Drawing.Color.White;
-            this.Tbox_TaskName.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Tbox_TaskName.Location = new System.Drawing.Point(88, 24);
-            this.Tbox_TaskName.Name = "Tbox_TaskName";
-            this.Tbox_TaskName.ReadOnly = true;
-            this.Tbox_TaskName.Size = new System.Drawing.Size(139, 26);
-            this.Tbox_TaskName.TabIndex = 6;
-            this.Tbox_TaskName.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.linkLabel_QNSDKLink.ActiveLinkColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.linkLabel_QNSDKLink.AutoSize = true;
+            this.linkLabel_QNSDKLink.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.linkLabel_QNSDKLink.LinkColor = System.Drawing.SystemColors.MenuHighlight;
+            this.linkLabel_QNSDKLink.Location = new System.Drawing.Point(220, 209);
+            this.linkLabel_QNSDKLink.Name = "linkLabel_QNSDKLink";
+            this.linkLabel_QNSDKLink.Size = new System.Drawing.Size(96, 20);
+            this.linkLabel_QNSDKLink.TabIndex = 10;
+            this.linkLabel_QNSDKLink.TabStop = true;
+            this.linkLabel_QNSDKLink.Text = "七牛云C#SDk";
+            this.linkLabel_QNSDKLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_QNSDKLink_LinkClicked);
             // 
-            // Tbox_TaskID
+            // linkLabel_TaoBaoAPILink
             // 
-            this.Tbox_TaskID.BackColor = System.Drawing.Color.White;
-            this.Tbox_TaskID.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Tbox_TaskID.Location = new System.Drawing.Point(88, 61);
-            this.Tbox_TaskID.Name = "Tbox_TaskID";
-            this.Tbox_TaskID.ReadOnly = true;
-            this.Tbox_TaskID.Size = new System.Drawing.Size(139, 26);
-            this.Tbox_TaskID.TabIndex = 7;
-            this.Tbox_TaskID.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.linkLabel_TaoBaoAPILink.ActiveLinkColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.linkLabel_TaoBaoAPILink.AutoSize = true;
+            this.linkLabel_TaoBaoAPILink.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.linkLabel_TaoBaoAPILink.LinkColor = System.Drawing.SystemColors.MenuHighlight;
+            this.linkLabel_TaoBaoAPILink.Location = new System.Drawing.Point(222, 249);
+            this.linkLabel_TaoBaoAPILink.Name = "linkLabel_TaoBaoAPILink";
+            this.linkLabel_TaoBaoAPILink.Size = new System.Drawing.Size(92, 20);
+            this.linkLabel_TaoBaoAPILink.TabIndex = 11;
+            this.linkLabel_TaoBaoAPILink.TabStop = true;
+            this.linkLabel_TaoBaoAPILink.Text = "淘宝ip地址库";
+            this.linkLabel_TaoBaoAPILink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_TaoBaoAPILink_LinkClicked);
             // 
-            // Tbox_TaskMode
+            // linkLabel_WaiIpLink
             // 
-            this.Tbox_TaskMode.BackColor = System.Drawing.Color.White;
-            this.Tbox_TaskMode.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Tbox_TaskMode.Location = new System.Drawing.Point(88, 97);
-            this.Tbox_TaskMode.Name = "Tbox_TaskMode";
-            this.Tbox_TaskMode.ReadOnly = true;
-            this.Tbox_TaskMode.Size = new System.Drawing.Size(139, 26);
-            this.Tbox_TaskMode.TabIndex = 8;
-            this.Tbox_TaskMode.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.linkLabel_WaiIpLink.ActiveLinkColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.linkLabel_WaiIpLink.AutoSize = true;
+            this.linkLabel_WaiIpLink.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.linkLabel_WaiIpLink.LinkColor = System.Drawing.SystemColors.MenuHighlight;
+            this.linkLabel_WaiIpLink.Location = new System.Drawing.Point(225, 230);
+            this.linkLabel_WaiIpLink.Name = "linkLabel_WaiIpLink";
+            this.linkLabel_WaiIpLink.Size = new System.Drawing.Size(86, 20);
+            this.linkLabel_WaiIpLink.TabIndex = 12;
+            this.linkLabel_WaiIpLink.TabStop = true;
+            this.linkLabel_WaiIpLink.Text = "我的api文章";
+            this.linkLabel_WaiIpLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_WaiIpLink_LinkClicked);
             // 
-            // Tbox_TaskGrade
+            // linkLabel_BLogLink
             // 
-            this.Tbox_TaskGrade.BackColor = System.Drawing.Color.White;
-            this.Tbox_TaskGrade.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Tbox_TaskGrade.Location = new System.Drawing.Point(88, 133);
-            this.Tbox_TaskGrade.Name = "Tbox_TaskGrade";
-            this.Tbox_TaskGrade.ReadOnly = true;
-            this.Tbox_TaskGrade.Size = new System.Drawing.Size(139, 26);
-            this.Tbox_TaskGrade.TabIndex = 9;
-            this.Tbox_TaskGrade.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // TBox_TaskModePar
-            // 
-            this.TBox_TaskModePar.BackColor = System.Drawing.Color.White;
-            this.TBox_TaskModePar.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.TBox_TaskModePar.Location = new System.Drawing.Point(88, 169);
-            this.TBox_TaskModePar.Name = "TBox_TaskModePar";
-            this.TBox_TaskModePar.ReadOnly = true;
-            this.TBox_TaskModePar.Size = new System.Drawing.Size(139, 26);
-            this.TBox_TaskModePar.TabIndex = 10;
-            this.TBox_TaskModePar.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // TBox_TaskExplain
-            // 
-            this.TBox_TaskExplain.BackColor = System.Drawing.Color.White;
-            this.TBox_TaskExplain.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.TBox_TaskExplain.Location = new System.Drawing.Point(300, 24);
-            this.TBox_TaskExplain.Multiline = true;
-            this.TBox_TaskExplain.Name = "TBox_TaskExplain";
-            this.TBox_TaskExplain.ReadOnly = true;
-            this.TBox_TaskExplain.Size = new System.Drawing.Size(211, 172);
-            this.TBox_TaskExplain.TabIndex = 11;
+            this.linkLabel_BLogLink.ActiveLinkColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.linkLabel_BLogLink.AutoSize = true;
+            this.linkLabel_BLogLink.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.linkLabel_BLogLink.LinkColor = System.Drawing.SystemColors.MenuHighlight;
+            this.linkLabel_BLogLink.Location = new System.Drawing.Point(30, 132);
+            this.linkLabel_BLogLink.Name = "linkLabel_BLogLink";
+            this.linkLabel_BLogLink.Size = new System.Drawing.Size(65, 20);
+            this.linkLabel_BLogLink.TabIndex = 13;
+            this.linkLabel_BLogLink.TabStop = true;
+            this.linkLabel_BLogLink.Text = "我的博客";
+            this.linkLabel_BLogLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_BLogLink_LinkClicked);
             // 
             // Form_Main
             // 
@@ -1175,6 +1352,8 @@
             this.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
+            this.MaximumSize = new System.Drawing.Size(841, 521);
+            this.MinimumSize = new System.Drawing.Size(841, 521);
             this.Name = "Form_Main";
             this.Text = "Computer Tools Main";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_Main_FormClosing);
@@ -1204,6 +1383,7 @@
             this.GBox_ThreadData.PerformLayout();
             this.tabP_About.ResumeLayout(false);
             this.tabP_About.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
             this.GBox_Target.ResumeLayout(false);
             this.CMBS.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -1231,7 +1411,6 @@
         private System.Windows.Forms.Label lab_ComputerName;
         private System.Windows.Forms.Label lab_Ip;
         private System.Windows.Forms.Label lab_SizeMeo;
-        private System.Windows.Forms.Label lab_MAC;
         public System.Windows.Forms.ToolStripStatusLabel StaLab_State;
         private System.Windows.Forms.TextBox Text_NewTip;
         private System.Windows.Forms.NotifyIcon NotifyIconBack;
@@ -1290,13 +1469,10 @@
         private System.Windows.Forms.Button But_UpLoadFile;
         private System.Windows.Forms.Button But_qnDelItem;
         private System.Windows.Forms.TabPage tabP_Tasks;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.ComboBox CBox_ThreadGrade;
         private System.Windows.Forms.ListBox ListBox_Name;
         private System.Windows.Forms.GroupBox GBox_ThreadData;
         private System.Windows.Forms.TextBox TBox_Tip;
-        private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
@@ -1309,5 +1485,24 @@
         private System.Windows.Forms.TextBox Tbox_TaskMode;
         private System.Windows.Forms.TextBox Tbox_TaskID;
         private System.Windows.Forms.TextBox TBox_TaskExplain;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button But_DownloadFile;
+        private System.Windows.Forms.Button But_GetFileDownloadurl;
+        public System.Windows.Forms.ToolStripProgressBar ProgressBarinTool;
+        private System.ComponentModel.BackgroundWorker backgroundWorker;
+        private System.Windows.Forms.ToolStripMenuItem 设置toolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripqiniu;
+        private System.Windows.Forms.ToolStripMenuItem 手动上传ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 剪贴板上传ToolStripMenuItem;
+        private System.Windows.Forms.Button but_qnclipboard;
+        private System.Windows.Forms.Button but_Set;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button But_ClearLog;
+        private System.Windows.Forms.Button But_OpenLogEx;
+        private System.Windows.Forms.LinkLabel linkLabel_WeatherLink;
+        private System.Windows.Forms.LinkLabel linkLabel_QNSDKLink;
+        private System.Windows.Forms.LinkLabel linkLabel_TaoBaoAPILink;
+        private System.Windows.Forms.LinkLabel linkLabel_WaiIpLink;
+        private System.Windows.Forms.LinkLabel linkLabel_BLogLink;
     }
 }

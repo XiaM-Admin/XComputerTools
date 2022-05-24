@@ -1,8 +1,9 @@
 ﻿using My_Computer_Tools_Ⅱ.Properties;
 using System;
-using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace My_Computer_Tools_Ⅱ
@@ -26,26 +27,14 @@ namespace My_Computer_Tools_Ⅱ
 
         private void Form_Main_Load(object sender, EventArgs e)
         {
-            Program._Main = new Thread_Main(new Fun_delegate(UpFormData));
-
+            Program._Main = new Thread_Main(new Fun_delegate(UpFormData), new Fun_delegate(RefreshTaskUI));
+            Program._ProgressBar = new Form_ProgressBar("初始化", "正在初始化，请耐心等待。", 100, this);
             STrip_Main_init();
             Control_Init();
             Command_Init();
 
             //处理完毕
             WinCommand.ChangeTips("初始化完毕");
-
-            if (Program.FirstRunArg)//如果是开机自启，就最小化主界面
-                Program._Main.CreateThread(new CreateThread()
-                {
-                    Grade = Thread_Grade.system,
-                    Fun = new Fun_delegate(VoidFirstOpen),
-                    RunMode = Thread_RunMode.OnlyOne,
-                    ModePar = "1500",
-                    Explain = "检测是否为开机自启的程序，\r\n如果是则最小化到托盘菜单。",
-                    Name = "系统最小化",
-                    Fundata = "123123"
-                });
         }
 
         /// <summary>
@@ -145,31 +134,7 @@ namespace My_Computer_Tools_Ⅱ
         /// <param name="e"></param>
         private void But_SetPro_Click(object sender, EventArgs e)
         {
-            Form_SetPm form = new Form_SetPm();
-            form.ShowDialog();
-            if (form.UpDateWeather)
-            {
-                Program._Main.CreateThread(new CreateThread()
-                {
-                    Grade = Thread_Grade.system,
-                    Fun = new Fun_delegate(Net_init),
-                    RunMode = Thread_RunMode.OnlyOne,
-                    ModePar = "100",
-                    Explain = "暂时用于初始化天气信息、公网ip。",
-                    Name = "网络刷新",
-                    Fundata = "123123"
-                });
-                form.UpDateWeather = !form.UpDateWeather;
-            }
-
-            //检查ShowAccinCMBS的值
-            if (Settings.Default.ShowAccinCMBS)
-                ShowAccinCMBS();//显示账号到托盘菜单
-            else
-                HideAccinCMBS();//不显示账号
-
-            //释放form
-            form.Dispose();
+            OpenSetting();
         }
 
         /// <summary>
@@ -195,7 +160,7 @@ namespace My_Computer_Tools_Ⅱ
                     break;
 
                 case 3:
-                    RefreshTaskUI();//刷新任务列表
+                    RefreshTaskUI(null);//刷新任务列表
                     break;
 
                 default:
@@ -343,7 +308,7 @@ namespace My_Computer_Tools_Ⅱ
                         continue;
                     if (vs[0].Contains(FindStr) || vs[1].Contains(FindStr) || str.Contains(FindStr))
                     {
-                        Control_Show control_Show = new Control_Show(item.ToString(), str, vs[0], vs[1]);
+                        Control_Show control_Show = new Control_Show(item.ToString(), str, vs[0], vs[1], new Fun_delegate(AccCMBSinit));
                         tlp.RowCount++;
                         tlp.RowStyles.Add(new RowStyle(SizeType.Absolute, control_Show.Size.Height + 5));
                         tlp.Controls.Add(control_Show, 0, 0);
@@ -515,62 +480,12 @@ namespace My_Computer_Tools_Ⅱ
         /// <param name="e"></param>
         private void But_UpLoadFile_Click(object sender, EventArgs e)
         {
-            if (But_qnStart.Text == "关闭监控")
+            if (But_qnStart.Text == "停止监控")
             {
                 MessageBox.Show("自动监控中···\r\n两种操作不可同时进行！", "ERROR：");
                 return;
             }
-            List<string> files = new List<string>();
-            string[] strs = Settings.Default.qnwatcherstr.Split('^');
-            foreach (var item in strs)
-            {
-                if (Commands.File_IsDir(item))
-                {
-                    files.AddRange(Commands.File_GetList(item));
-                }
-                else if (!string.IsNullOrWhiteSpace(item))
-                    files.Add(item);
-            }
-            //处理文件开始分割位置
-            for (int i = 0; i < files.Count; i++)
-            {
-                foreach (var item in strs)
-                {
-                    if (Commands.File_IsDir(item))
-                    {
-                        string[] vs = item.Split('\\');
-                        files[i] = files[i].Replace(vs[vs.Length - 1], "|" + vs[vs.Length - 1]);
-                        //再进行分割判断 '|'
-                        string[] vs2 = files[i].Split('|');
-                        if (vs2.Length > 2)
-                        {
-                            //重新拼接
-                            files[i] = vs2[0] + "|" + vs2[1];
-                            for (int j = 2; j < vs2.Length; j++)
-                            {
-                                files[i] += vs2[j];
-                            }
-                        }
-                    }
-                }
-            }
-
-            Fun_delegate fun_Delegate = new Fun_delegate(UpLoad);
-            CreateThread thread1 = new CreateThread()
-            {
-                Grade = Thread_Grade.user,
-                Fun = fun_Delegate,
-                RunMode = Thread_RunMode.OnlyOne,
-                ModePar = "10000",
-                Explain = "七牛云手动同步文件",
-                Name = "手动同步",
-                Fundata = files
-            };
-
-            Program._Main.CreateThread(thread1);
-            /*
-            Thread thread = new Thread(new ParameterizedThreadStart(UpLoad));
-            thread.Start(files);*/
+            UpLoad(Get_qnFileList());
         }
 
         /// <summary>
@@ -580,35 +495,27 @@ namespace My_Computer_Tools_Ⅱ
         /// <param name="e"></param>
         private void But_qnStart_Click(object sender, EventArgs e)
         {
-        }
-
-        /// <summary>
-        /// 测试
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void button1_Click(object sender, EventArgs e)
-        {
-        }
-
-        /// <summary>
-        /// 测试2
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void button2_Click(object sender, EventArgs e)
-        {
-        }
-
-        /// <summary>
-        /// 测试3
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void button3_Click(object sender, EventArgs e)
-        {
-            //UpFormData((object)"asdasdasdasd");
-            Program._Main.Set_ThreadExit(1);
+            But_qnStart.Enabled = false;
+            if (But_qnStart.Text == "开启监控")
+            {
+                CheckQnFileUpLoadTask(true);
+                But_qnStart.Text = "停止监控";
+            }
+            else
+            {
+                CheckQnFileUpLoadTask(false);
+                But_qnStart.Text = "开启监控";
+            }
+            //异步执行
+            Task.Delay(1500).ContinueWith(t =>
+            {
+                Application.DoEvents();
+                if (this.IsHandleCreated)
+                    this.Invoke(new Action(() =>
+                    {
+                        But_qnStart.Enabled = true;
+                    }));
+            });
         }
 
         /// <summary>
@@ -618,7 +525,7 @@ namespace My_Computer_Tools_Ⅱ
         /// <param name="e"></param>
         private void CBox_ThreadGrade_SelectedValueChanged(object sender, EventArgs e)
         {
-            RefreshTaskUI();//刷新任务列表
+            RefreshTaskUI(null);//刷新任务列表
         }
 
         /// <summary>
@@ -629,6 +536,253 @@ namespace My_Computer_Tools_Ⅱ
         private void ListBox_Name_SelectedValueChanged(object sender, EventArgs e)
         {
             RefreshTaskini();
+        }
+
+        /// <summary>
+        /// 七牛云下载文件按钮事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void But_DownloadFile_Click(object sender, EventArgs e)
+        {
+            if (backgroundWorker.IsBusy)
+                return;
+
+            if (listView_FileList.SelectedIndices?.Count == 0)
+                return;
+            string key = listView_FileList.SelectedItems[0].SubItems[1].Text + listView_FileList.SelectedItems[0].Text;
+            OSS_QiNiuSDK oSS_QiNiu = new OSS_QiNiuSDK(Settings.Default.qiniuBucket, Settings.Default.qiniuAK, Settings.Default.qiniuSK, Settings.Default.qiniuZoneID, Settings.Default.qiniuDomain);
+            string returl = oSS_QiNiu.GetKeyDownloadUrl(key);
+            if (returl != "")
+            {
+                if (MessageBox.Show("使用此软件单线程下载速度较慢，目前仅适合小文件下载！\r\n请使用获取直链后使用心仪的下载器下载\r\n或浏览器打开此链接，是否使用浏览器进行下载？", "提示：", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    string Url = "http://" + returl;
+                    //在浏览器打开链接
+                    System.Diagnostics.Process.Start(Url);
+                    return;
+                }
+                //gBgwDownload = new BackgroundWorker();
+                backgroundWorker = new System.ComponentModel.BackgroundWorker()
+                {
+                    WorkerReportsProgress = true,
+                    WorkerSupportsCancellation = false,
+                };
+
+                WebPost.Downdata downdata = new WebPost.Downdata()
+                {
+                    Url = "http://" + returl,
+                    path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\" + listView_FileList.SelectedItems[0].Text,
+                    OpenProg = true,
+                    backgroundWorker = backgroundWorker,
+                };
+
+                backgroundWorker.ProgressChanged += BackgroundWorker_ProgressChanged;
+                backgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(WebPost.IThreadDownloadFile);
+                backgroundWorker.RunWorkerCompleted += (o, ea) =>
+                {
+                    //如果任务异常结束 使用动态匿名对象 如果解析是不存在 则报错
+                    dynamic res = ea.Result;
+                    if ((bool)res?.retbool != true)
+                    {
+                        MessageBox.Show("下载失败！" + res?.msg, "发生了错误");
+                        return;
+                    }
+                    else
+                    {
+                        MessageBox.Show("下载完成！", "提示：");
+                        return;
+                    }
+                };
+
+                backgroundWorker.RunWorkerAsync(downdata);
+            }
+            else
+            {
+                MessageBox.Show("下载失败！\n获取直链出错！", "ERROR：");
+            }
+        }
+
+        /// <summary>
+        /// 第一个参数 是进度条百分比 第二个是自定义参数
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        private void BackgroundWorker_ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
+        {
+            WinCommand.ChangeTips(e.UserState.ToString());
+            ProgressBarinTool.Value = Convert.ToInt32(e.ProgressPercentage);
+        }
+
+        /// <summary>
+        /// 七牛云获取直链
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void But_GetFileDownloadurl_Click(object sender, EventArgs e)
+        {
+            if (listView_FileList.SelectedIndices?.Count == 0)
+                return;
+
+            string key = listView_FileList.SelectedItems[0].SubItems[1].Text + listView_FileList.SelectedItems[0].Text;
+
+            OSS_QiNiuSDK oSS_QiNiu = new OSS_QiNiuSDK(Settings.Default.qiniuBucket, Settings.Default.qiniuAK, Settings.Default.qiniuSK, Settings.Default.qiniuZoneID, Settings.Default.qiniuDomain);
+            string returl = oSS_QiNiu.GetKeyDownloadUrl(key);
+            Clipboard.SetDataObject(returl);
+            MessageBox.Show("直链获取完毕：\r\n" +
+                $"Key:{key}\r\n" +
+                $"Url:{returl}\r\n\n" +
+                "已复制到剪贴板中，如有异常请重试，或者提交bug。", "提示：");
+        }
+
+        /// <summary>
+        /// 托盘菜单打开设置
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void 设置toolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenSetting();
+        }
+
+        /// <summary>
+        /// 托盘菜单手动上传
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void 手动上传ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            But_UpLoadFile_Click(null, null);
+        }
+
+        /// <summary>
+        /// 剪贴板上传
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void but_qnclipboard_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Image img = Clipboard.GetImage();
+                if (img == null)
+                {
+                    if (!File.Exists("Temp.png"))
+                    {
+                        WinCommand.ChangeTips("上传失败", "剪贴板没有图片信息！多试几次吧~", 3);
+                        return;
+                    }
+                }
+                else
+                    img.Save("Temp.png");
+
+                OSS_QiNiuSDK oSS_QiNiu = new OSS_QiNiuSDK(Settings.Default.qiniuBucket, Settings.Default.qiniuAK, Settings.Default.qiniuSK, Settings.Default.qiniuZoneID, Settings.Default.qiniuDomain);
+                string retstr = oSS_QiNiu.UpLoadFile_One(Application.StartupPath + "\\Temp.png", Settings.Default.qnImgPath);
+                string[] vs = retstr.Split('|');
+                if (vs[0] == "200")
+                {
+                    WinCommand.ChangeTips("上传完成", $"{vs[1]}已置剪贴板", 3);
+                    Clipboard.SetText(vs[1]);
+                }
+                else
+                    WinCommand.ChangeTips("上传失败", "剪贴板有图但是失败可能是网络问题！多试几次吧~", 3);
+            }
+            catch (Exception er)
+            {
+                MessageBox.Show($"错误信息：{er}", "剪贴板上传出错");
+            }
+        }
+
+        /// <summary>
+        /// 调用剪贴板上传
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void 剪贴板上传ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            but_qnclipboard_Click(null, null);
+        }
+
+        /// <summary>
+        /// 关于里面的设置按钮
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void but_Set_Click(object sender, EventArgs e)
+        {
+            OpenSetting();
+        }
+
+        /// <summary>
+        /// 打开Log文件夹
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void But_OpenLogEx_Click(object sender, EventArgs e)
+        {
+            Process.Start("explorer.exe", Application.StartupPath + "\\Log\\");
+        }
+
+        /// <summary>
+        /// 清理Log文件夹，清理非当天的日志文件夹
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void But_ClearLog_Click(object sender, EventArgs e)
+        {
+            int ret = Program.logmain.ClearOver();
+            MessageBox.Show($"清理完成！\r\n共清理{ret}个Log文件夹！", "处理完成");
+        }
+
+        /// <summary>
+        /// 打开外链 七牛C#SDK
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void linkLabel_QNSDKLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://developer.qiniu.com/kodo/1237/csharp");
+        }
+
+        /// <summary>
+        /// 打开外链 心知天气
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void linkLabel_WeatherLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://www.seniverse.com/");
+        }
+
+        /// <summary>
+        /// 打开外链 淘宝ip地址库
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void linkLabel_TaoBaoAPILink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://ip.taobao.com/instructions");
+        }
+
+        /// <summary>
+        /// 打开外链 我的api文章
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void linkLabel_WaiIpLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://blog.x-tools.top/index.php/archives/15/");
+        }
+
+        /// <summary>
+        /// 打开外链 我的博客
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void linkLabel_BLogLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://blog.x-tools.top");
         }
     }
 }

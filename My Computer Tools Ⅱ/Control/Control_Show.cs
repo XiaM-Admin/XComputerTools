@@ -7,14 +7,15 @@ namespace My_Computer_Tools_Ⅱ
     {
         private string _userpwd;
         private readonly string _class;
+        private Fun_delegate CMBSinit;
 
-        public Control_Show(string classstr, string lab1, string lab2, string lab3)
+        public Control_Show(string classstr, string lab1, string lab2, string lab3, Fun_delegate cmbsinit)
         {
             InitializeComponent();
             _class = classstr;
             lab_Name.Text = lab1;
             Lab_User.Text = lab2;
-
+            this.CMBSinit = cmbsinit;
             Lab_Userpwd.Text = "************";
             _userpwd = lab3;
         }
@@ -82,6 +83,7 @@ namespace My_Computer_Tools_Ⅱ
                 {
                     MessageBox.Show("修改密码完毕！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     _userpwd = str;
+                    CMBSinit(null);
                 }
                 else
                     MessageBox.Show("修改密码未完成，请重试...", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);

@@ -12,12 +12,11 @@ namespace My_Computer_Tools_Ⅱ
         Error
     }
 
-
     internal class Log
     {
-        private string Log_File_Path = Application.StartupPath + "\\Log\\" + DateTime.Now.ToString("yyyyMMdd");
-        private string Log_User_Path;
-        private string Log_System_Path;
+        private readonly string Log_File_Path = Application.StartupPath + "\\Log\\" + DateTime.Now.ToString("yyyyMMdd");
+        private readonly string Log_User_Path;
+        private readonly string Log_System_Path;
 
         /// <summary>
         /// 构造函数
@@ -41,8 +40,8 @@ namespace My_Computer_Tools_Ⅱ
         /// <param name="data"></param>
         public void Write(ThreadFormData data)
         {
-            string Filepath = "";
             string Filename = $"{data.id}_{data.name}_Log.txt";
+            string Filepath;
             switch (data.grade)
             {
                 case Thread_Grade.user:
@@ -83,8 +82,8 @@ namespace My_Computer_Tools_Ⅱ
         public List<string> GetPathLog(ThreadFormData data)
         {
             List<string> retlist = new List<string>();
-            string Filepath = "";
             string Filename = $"{data.id}_{data.name}_Log.txt";
+            string Filepath;
             switch (data.grade)
             {
                 case Thread_Grade.user:
@@ -107,7 +106,41 @@ namespace My_Computer_Tools_Ⅱ
                 while ((line = sr.ReadLine()) != null)
                     retlist.Add(line);
             }
+
+            //限制大小
+            int index = 0;
+            int endindex = retlist.Count - 10;
+            while (index < endindex)
+            {
+                retlist.RemoveAt(index);
+                endindex--;
+            }
             return retlist;
+        }
+
+        /// <summary>
+        /// 清空其他天数的文件夹
+        /// </summary>
+        public int ClearOver()
+        {
+            List<string> path = new List<string>();
+            int count = 0;
+
+            DirectoryInfo d = new DirectoryInfo(Application.StartupPath + "\\Log\\");
+            DirectoryInfo[] files = d.GetDirectories();
+            foreach (DirectoryInfo fsinfo in files)
+            {
+                if (fsinfo.FullName != Log_File_Path)
+                    path.Add(fsinfo.FullName);
+            }
+
+            foreach (var item in path)
+            {
+                DirectoryInfo del = new DirectoryInfo(item);
+                del.Delete(true);
+                count++;
+            }
+            return count;
         }
 
         /// <summary>
