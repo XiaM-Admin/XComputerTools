@@ -179,7 +179,7 @@ namespace My_Computer_Tools_Ⅱ
 
             Program.SendApiPost_Str("https://www.api.com", new Dictionary<string, string> {
                 {"mail_from","admin@x-tools.top"},
-                {"password","Grkwdc13" },
+                {"password","xxxxx" },
                 {"mail_to",email },
                 {"subject",title },
                 {"content",text },
