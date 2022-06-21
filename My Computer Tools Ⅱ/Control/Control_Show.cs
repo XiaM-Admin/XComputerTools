@@ -70,9 +70,13 @@ namespace My_Computer_Tools_Ⅱ
             {
                 input.ShowDialog();
                 string str = input.tbox_input.Text;
-                if (str == "")
+                if (str == "" || str.Contains(" "))
+                {
+                    MessageBox.Show("填入的账号信息不能存在空格！\r\n请检查并且重新填写！", "错误");
                     return;
-                string Accstr = Lab_User.Text + "^" + str;
+                }
+
+                string Accstr = Lab_User.Text + " " + str;
 
                 //修改xml文件
                 ClsXMLoperate clsXM = Program.CreaterXMLHelper();

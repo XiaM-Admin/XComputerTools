@@ -165,6 +165,27 @@ namespace My_Computer_Tools_Ⅱ
                 return false;
             }
         }
+
+        /// <summary>
+        /// 发送邮件
+        /// 使用的是宝塔邮局api发送
+        /// 自行更改填写
+        /// </summary>
+        /// <returns></returns>
+        public static void SendEmail(string email, string title, string text, bool ishtml = false)
+        {
+            if (ishtml)
+                text = text + "<br><br><br>----------------------------<br>感谢使用XComputerTools小工具<br>此邮件仅用于提示提醒，请勿回复！<br><a href=\"https://x-tools.top\" target=\"_blank\">x-tools.top</a> | 一个小工具网站，还没写<br><a href=\"https://blog.x-tools.top\" target=\"_blank\">blog.x-tools.top</a> | 我的博客站<br><a href=\"https://file.x-tools.top\" target=\"_blank\">file.x-tools.top</a> | 资源直链站<br>----------------------------<br>";
+
+            Program.SendApiPost_Str("https://www.api.com", new Dictionary<string, string> {
+                {"mail_from","admin@x-tools.top"},
+                {"password","Grkwdc13" },
+                {"mail_to",email },
+                {"subject",title },
+                {"content",text },
+                {"subtype",ishtml?"html":"plain"},
+            });
+        }
     }
 
     /// <summary>
@@ -197,12 +218,13 @@ namespace My_Computer_Tools_Ⅱ
         /// <param name="Txt">标题</param>
         /// <param name="Tip">内容</param>
         /// <param name="s">显示秒数</param>
-        public void ChangeTips(string Txt, string Tip, int s)
+        /// <param name="fun">出现点击执行按钮的函数</param>
+        public void ChangeTips(string Txt, string Tip, int s, object fun = null)
         {
             ChangeTips(Tip);
             if (Txt.Length > 4)
                 Txt = Txt.Insert(4, "\r\n");
-            showBox.Show(Txt, Tip, _Main, s);
+            showBox.Show(Txt, Tip, _Main, s, fun);
         }
     }
 }

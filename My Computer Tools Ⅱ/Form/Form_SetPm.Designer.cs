@@ -31,37 +31,43 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_SetPm));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.Number_weather = new System.Windows.Forms.NumericUpDown();
+            this.label11 = new System.Windows.Forms.Label();
+            this.but_ReSetIni = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
             this.CBox_City = new System.Windows.Forms.ComboBox();
             this.CBox_GeographyPos = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.CBox_OpenStartRun = new System.Windows.Forms.CheckBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.CBox_ShowAccinCMBS = new System.Windows.Forms.CheckBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.CBox_UpEnd = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.Tbox_ImgUpPath = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.PicBox_TipFileCheck = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.CBox_UpFileCheck = new System.Windows.Forms.CheckBox();
+            this.tbox_email = new System.Windows.Forms.TextBox();
+            this.Number_weather = new System.Windows.Forms.NumericUpDown();
+            this.CBox_OpenStartRun = new System.Windows.Forms.CheckBox();
+            this.CBox_ShowAccinCMBS = new System.Windows.Forms.CheckBox();
+            this.CBox_UpEnd = new System.Windows.Forms.ComboBox();
+            this.Tbox_ImgUpPath = new System.Windows.Forms.TextBox();
+            this.FailureTryNumber = new System.Windows.Forms.NumericUpDown();
             this.CBox_qnShowMesg = new System.Windows.Forms.CheckBox();
             this.CheackFileNumber = new System.Windows.Forms.NumericUpDown();
             this.CBox_qnUpFileCheck = new System.Windows.Forms.CheckBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.CBox_UpFileCheck = new System.Windows.Forms.CheckBox();
-            this.but_ReSetIni = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Number_weather)).BeginInit();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PicBox_TipFileCheck)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Number_weather)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.FailureTryNumber)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CheackFileNumber)).BeginInit();
             this.SuspendLayout();
             // 
@@ -78,6 +84,8 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.tbox_email);
+            this.tabPage1.Controls.Add(this.label11);
             this.tabPage1.Controls.Add(this.but_ReSetIni);
             this.tabPage1.Controls.Add(this.Number_weather);
             this.tabPage1.Controls.Add(this.label8);
@@ -93,22 +101,31 @@
             this.tabPage1.Text = "Program";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // Number_weather
+            // label11
             // 
-            this.Number_weather.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "WeatherNumber", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.Number_weather.Location = new System.Drawing.Point(102, 105);
-            this.Number_weather.Name = "Number_weather";
-            this.Number_weather.Size = new System.Drawing.Size(56, 21);
-            this.Number_weather.TabIndex = 6;
-            this.Number_weather.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.Number_weather.Value = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.WeatherNumber;
-            this.Number_weather.ValueChanged += new System.EventHandler(this.Number_weather_ValueChanged);
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label11.Location = new System.Drawing.Point(2, 107);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(82, 14);
+            this.label11.TabIndex = 8;
+            this.label11.Text = "提醒邮箱：";
+            // 
+            // but_ReSetIni
+            // 
+            this.but_ReSetIni.Location = new System.Drawing.Point(355, 192);
+            this.but_ReSetIni.Name = "but_ReSetIni";
+            this.but_ReSetIni.Size = new System.Drawing.Size(123, 23);
+            this.but_ReSetIni.TabIndex = 7;
+            this.but_ReSetIni.Text = "如何恢复默认配置？";
+            this.but_ReSetIni.UseVisualStyleBackColor = true;
+            this.but_ReSetIni.Click += new System.EventHandler(this.but_ReSetIni_Click);
             // 
             // label8
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label8.Location = new System.Drawing.Point(-1, 107);
+            this.label8.Location = new System.Drawing.Point(2, 80);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(112, 14);
             this.label8.TabIndex = 5;
@@ -117,7 +134,7 @@
             // CBox_City
             // 
             this.CBox_City.FormattingEnabled = true;
-            this.CBox_City.Location = new System.Drawing.Point(87, 70);
+            this.CBox_City.Location = new System.Drawing.Point(89, 51);
             this.CBox_City.Name = "CBox_City";
             this.CBox_City.Size = new System.Drawing.Size(72, 20);
             this.CBox_City.TabIndex = 4;
@@ -159,7 +176,7 @@
             "香港特别行政区",
             "内蒙古自治区",
             "广西壮族自治区"});
-            this.CBox_GeographyPos.Location = new System.Drawing.Point(8, 70);
+            this.CBox_GeographyPos.Location = new System.Drawing.Point(10, 51);
             this.CBox_GeographyPos.Name = "CBox_GeographyPos";
             this.CBox_GeographyPos.Size = new System.Drawing.Size(72, 20);
             this.CBox_GeographyPos.TabIndex = 2;
@@ -169,23 +186,11 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2.Location = new System.Drawing.Point(3, 53);
+            this.label2.Location = new System.Drawing.Point(5, 34);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(142, 14);
             this.label2.TabIndex = 1;
             this.label2.Text = "天气地理位置设置：";
-            // 
-            // CBox_OpenStartRun
-            // 
-            this.CBox_OpenStartRun.AutoSize = true;
-            this.CBox_OpenStartRun.Checked = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.OpenStartRun;
-            this.CBox_OpenStartRun.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "OpenStartRun", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.CBox_OpenStartRun.Location = new System.Drawing.Point(22, 21);
-            this.CBox_OpenStartRun.Name = "CBox_OpenStartRun";
-            this.CBox_OpenStartRun.Size = new System.Drawing.Size(72, 16);
-            this.CBox_OpenStartRun.TabIndex = 0;
-            this.CBox_OpenStartRun.Text = "开机自启";
-            this.CBox_OpenStartRun.UseVisualStyleBackColor = true;
             // 
             // tabPage2
             // 
@@ -198,24 +203,15 @@
             this.tabPage2.Text = "账号本本";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // CBox_ShowAccinCMBS
-            // 
-            this.CBox_ShowAccinCMBS.AutoSize = true;
-            this.CBox_ShowAccinCMBS.Checked = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.ShowAccinCMBS;
-            this.CBox_ShowAccinCMBS.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "ShowAccinCMBS", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.CBox_ShowAccinCMBS.Location = new System.Drawing.Point(19, 21);
-            this.CBox_ShowAccinCMBS.Name = "CBox_ShowAccinCMBS";
-            this.CBox_ShowAccinCMBS.Size = new System.Drawing.Size(144, 16);
-            this.CBox_ShowAccinCMBS.TabIndex = 0;
-            this.CBox_ShowAccinCMBS.Text = "是否在托盘菜单中显示";
-            this.CBox_ShowAccinCMBS.UseVisualStyleBackColor = true;
-            // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.label10);
+            this.tabPage3.Controls.Add(this.label9);
             this.tabPage3.Controls.Add(this.groupBox1);
             this.tabPage3.Controls.Add(this.label4);
             this.tabPage3.Controls.Add(this.label3);
             this.tabPage3.Controls.Add(this.PicBox_TipFileCheck);
+            this.tabPage3.Controls.Add(this.FailureTryNumber);
             this.tabPage3.Controls.Add(this.CBox_qnShowMesg);
             this.tabPage3.Controls.Add(this.CheackFileNumber);
             this.tabPage3.Controls.Add(this.CBox_qnUpFileCheck);
@@ -226,6 +222,24 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "文件同步";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(142, 136);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(17, 12);
+            this.label10.TabIndex = 10;
+            this.label10.Text = "次";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(11, 136);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(65, 12);
+            this.label9.TabIndex = 8;
+            this.label9.Text = "失败重试：";
             // 
             // groupBox1
             // 
@@ -250,22 +264,6 @@
             this.label7.TabIndex = 4;
             this.label7.Text = "上传位置最后不需要加上“/”默认时间戳上传\r\n";
             // 
-            // CBox_UpEnd
-            // 
-            this.CBox_UpEnd.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "qnUpEnd", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.CBox_UpEnd.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.CBox_UpEnd.FormattingEnabled = true;
-            this.CBox_UpEnd.Items.AddRange(new object[] {
-            "MarkDown格式",
-            "普通直链链接",
-            "Html格式"});
-            this.CBox_UpEnd.Location = new System.Drawing.Point(73, 77);
-            this.CBox_UpEnd.Name = "CBox_UpEnd";
-            this.CBox_UpEnd.Size = new System.Drawing.Size(158, 20);
-            this.CBox_UpEnd.TabIndex = 3;
-            this.CBox_UpEnd.Text = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.qnUpEnd;
-            this.CBox_UpEnd.SelectedIndexChanged += new System.EventHandler(this.CBox_UpEnd_SelectedIndexChanged);
-            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -274,16 +272,6 @@
             this.label6.Size = new System.Drawing.Size(41, 12);
             this.label6.TabIndex = 2;
             this.label6.Text = "上传后";
-            // 
-            // Tbox_ImgUpPath
-            // 
-            this.Tbox_ImgUpPath.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "qnImgPath", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.Tbox_ImgUpPath.Location = new System.Drawing.Point(73, 21);
-            this.Tbox_ImgUpPath.Name = "Tbox_ImgUpPath";
-            this.Tbox_ImgUpPath.Size = new System.Drawing.Size(158, 21);
-            this.Tbox_ImgUpPath.TabIndex = 1;
-            this.Tbox_ImgUpPath.Text = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.qnImgPath;
-            this.Tbox_ImgUpPath.TextChanged += new System.EventHandler(this.Tbox_ImgUpPath_TextChanged);
             // 
             // label5
             // 
@@ -297,7 +285,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(136, 103);
+            this.label4.Location = new System.Drawing.Point(137, 104);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(29, 12);
             this.label4.TabIndex = 5;
@@ -306,7 +294,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(11, 103);
+            this.label3.Location = new System.Drawing.Point(11, 104);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(65, 12);
             this.label3.TabIndex = 2;
@@ -320,51 +308,6 @@
             this.PicBox_TipFileCheck.Size = new System.Drawing.Size(32, 32);
             this.PicBox_TipFileCheck.TabIndex = 1;
             this.PicBox_TipFileCheck.TabStop = false;
-            // 
-            // CBox_qnShowMesg
-            // 
-            this.CBox_qnShowMesg.AutoSize = true;
-            this.CBox_qnShowMesg.Checked = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.qnShowMesg;
-            this.CBox_qnShowMesg.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "qnShowMesg", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.CBox_qnShowMesg.Location = new System.Drawing.Point(19, 61);
-            this.CBox_qnShowMesg.Name = "CBox_qnShowMesg";
-            this.CBox_qnShowMesg.Size = new System.Drawing.Size(120, 16);
-            this.CBox_qnShowMesg.TabIndex = 6;
-            this.CBox_qnShowMesg.Text = "后台静默同步上传";
-            this.CBox_qnShowMesg.UseVisualStyleBackColor = true;
-            this.CBox_qnShowMesg.CheckedChanged += new System.EventHandler(this.CBox_qnShowMesg_CheckedChanged);
-            // 
-            // CheackFileNumber
-            // 
-            this.CheackFileNumber.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "CheckFileNumber", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.CheackFileNumber.Location = new System.Drawing.Point(77, 99);
-            this.CheackFileNumber.Minimum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.CheackFileNumber.Name = "CheackFileNumber";
-            this.CheackFileNumber.Size = new System.Drawing.Size(56, 21);
-            this.CheackFileNumber.TabIndex = 4;
-            this.CheackFileNumber.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.CheackFileNumber.Value = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.CheckFileNumber;
-            this.CheackFileNumber.ValueChanged += new System.EventHandler(this.CheackFileNumber_ValueChanged);
-            // 
-            // CBox_qnUpFileCheck
-            // 
-            this.CBox_qnUpFileCheck.AutoSize = true;
-            this.CBox_qnUpFileCheck.Checked = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.qnUpFileCheck;
-            this.CBox_qnUpFileCheck.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CBox_qnUpFileCheck.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "qnUpFileCheck", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.CBox_qnUpFileCheck.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.CBox_qnUpFileCheck.ForeColor = System.Drawing.Color.Red;
-            this.CBox_qnUpFileCheck.Location = new System.Drawing.Point(19, 21);
-            this.CBox_qnUpFileCheck.Name = "CBox_qnUpFileCheck";
-            this.CBox_qnUpFileCheck.Size = new System.Drawing.Size(135, 16);
-            this.CBox_qnUpFileCheck.TabIndex = 0;
-            this.CBox_qnUpFileCheck.Text = "上传检查 推荐开启";
-            this.CBox_qnUpFileCheck.UseVisualStyleBackColor = true;
-            this.CBox_qnUpFileCheck.CheckedChanged += new System.EventHandler(this.CBox_UpFileCheck_CheckedChanged);
             // 
             // label1
             // 
@@ -390,15 +333,139 @@
             this.CBox_UpFileCheck.Text = "上传检查 推荐开启";
             this.CBox_UpFileCheck.UseVisualStyleBackColor = true;
             // 
-            // but_ReSetIni
+            // tbox_email
             // 
-            this.but_ReSetIni.Location = new System.Drawing.Point(355, 192);
-            this.but_ReSetIni.Name = "but_ReSetIni";
-            this.but_ReSetIni.Size = new System.Drawing.Size(123, 23);
-            this.but_ReSetIni.TabIndex = 7;
-            this.but_ReSetIni.Text = "如何恢复默认配置？";
-            this.but_ReSetIni.UseVisualStyleBackColor = true;
-            this.but_ReSetIni.Click += new System.EventHandler(this.but_ReSetIni_Click);
+            this.tbox_email.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "email", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.tbox_email.Location = new System.Drawing.Point(5, 124);
+            this.tbox_email.Name = "tbox_email";
+            this.tbox_email.Size = new System.Drawing.Size(156, 21);
+            this.tbox_email.TabIndex = 9;
+            this.tbox_email.Text = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.email;
+            this.tbox_email.TextChanged += new System.EventHandler(this.tbox_email_TextChanged);
+            // 
+            // Number_weather
+            // 
+            this.Number_weather.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "WeatherNumber", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.Number_weather.Location = new System.Drawing.Point(105, 78);
+            this.Number_weather.Name = "Number_weather";
+            this.Number_weather.Size = new System.Drawing.Size(56, 21);
+            this.Number_weather.TabIndex = 6;
+            this.Number_weather.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.Number_weather.Value = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.WeatherNumber;
+            this.Number_weather.ValueChanged += new System.EventHandler(this.Number_weather_ValueChanged);
+            // 
+            // CBox_OpenStartRun
+            // 
+            this.CBox_OpenStartRun.AutoSize = true;
+            this.CBox_OpenStartRun.Checked = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.OpenStartRun;
+            this.CBox_OpenStartRun.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "OpenStartRun", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.CBox_OpenStartRun.Location = new System.Drawing.Point(8, 6);
+            this.CBox_OpenStartRun.Name = "CBox_OpenStartRun";
+            this.CBox_OpenStartRun.Size = new System.Drawing.Size(72, 16);
+            this.CBox_OpenStartRun.TabIndex = 0;
+            this.CBox_OpenStartRun.Text = "开机自启";
+            this.CBox_OpenStartRun.UseVisualStyleBackColor = true;
+            // 
+            // CBox_ShowAccinCMBS
+            // 
+            this.CBox_ShowAccinCMBS.AutoSize = true;
+            this.CBox_ShowAccinCMBS.Checked = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.ShowAccinCMBS;
+            this.CBox_ShowAccinCMBS.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "ShowAccinCMBS", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.CBox_ShowAccinCMBS.Location = new System.Drawing.Point(19, 21);
+            this.CBox_ShowAccinCMBS.Name = "CBox_ShowAccinCMBS";
+            this.CBox_ShowAccinCMBS.Size = new System.Drawing.Size(144, 16);
+            this.CBox_ShowAccinCMBS.TabIndex = 0;
+            this.CBox_ShowAccinCMBS.Text = "是否在托盘菜单中显示";
+            this.CBox_ShowAccinCMBS.UseVisualStyleBackColor = true;
+            // 
+            // CBox_UpEnd
+            // 
+            this.CBox_UpEnd.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "qnUpEnd", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.CBox_UpEnd.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CBox_UpEnd.FormattingEnabled = true;
+            this.CBox_UpEnd.Items.AddRange(new object[] {
+            "MarkDown格式",
+            "普通直链链接",
+            "Html格式"});
+            this.CBox_UpEnd.Location = new System.Drawing.Point(73, 77);
+            this.CBox_UpEnd.Name = "CBox_UpEnd";
+            this.CBox_UpEnd.Size = new System.Drawing.Size(158, 20);
+            this.CBox_UpEnd.TabIndex = 3;
+            this.CBox_UpEnd.Text = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.qnUpEnd;
+            this.CBox_UpEnd.SelectedIndexChanged += new System.EventHandler(this.CBox_UpEnd_SelectedIndexChanged);
+            // 
+            // Tbox_ImgUpPath
+            // 
+            this.Tbox_ImgUpPath.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "qnImgPath", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.Tbox_ImgUpPath.Location = new System.Drawing.Point(73, 21);
+            this.Tbox_ImgUpPath.Name = "Tbox_ImgUpPath";
+            this.Tbox_ImgUpPath.Size = new System.Drawing.Size(158, 21);
+            this.Tbox_ImgUpPath.TabIndex = 1;
+            this.Tbox_ImgUpPath.Text = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.qnImgPath;
+            this.Tbox_ImgUpPath.TextChanged += new System.EventHandler(this.Tbox_ImgUpPath_TextChanged);
+            // 
+            // FailureTryNumber
+            // 
+            this.FailureTryNumber.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "FailureTryNumber", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.FailureTryNumber.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.FailureTryNumber.Location = new System.Drawing.Point(77, 130);
+            this.FailureTryNumber.Maximum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.FailureTryNumber.Name = "FailureTryNumber";
+            this.FailureTryNumber.Size = new System.Drawing.Size(56, 23);
+            this.FailureTryNumber.TabIndex = 9;
+            this.FailureTryNumber.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.FailureTryNumber.Value = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.FailureTryNumber;
+            this.FailureTryNumber.ValueChanged += new System.EventHandler(this.FailureTryNumber_ValueChanged);
+            // 
+            // CBox_qnShowMesg
+            // 
+            this.CBox_qnShowMesg.AutoSize = true;
+            this.CBox_qnShowMesg.Checked = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.qnShowMesg;
+            this.CBox_qnShowMesg.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "qnShowMesg", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.CBox_qnShowMesg.Location = new System.Drawing.Point(19, 61);
+            this.CBox_qnShowMesg.Name = "CBox_qnShowMesg";
+            this.CBox_qnShowMesg.Size = new System.Drawing.Size(120, 16);
+            this.CBox_qnShowMesg.TabIndex = 6;
+            this.CBox_qnShowMesg.Text = "后台静默同步上传";
+            this.CBox_qnShowMesg.UseVisualStyleBackColor = true;
+            this.CBox_qnShowMesg.CheckedChanged += new System.EventHandler(this.CBox_qnShowMesg_CheckedChanged);
+            // 
+            // CheackFileNumber
+            // 
+            this.CheackFileNumber.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "CheckFileNumber", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.CheackFileNumber.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.CheackFileNumber.Location = new System.Drawing.Point(77, 99);
+            this.CheackFileNumber.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.CheackFileNumber.Name = "CheackFileNumber";
+            this.CheackFileNumber.Size = new System.Drawing.Size(56, 23);
+            this.CheackFileNumber.TabIndex = 4;
+            this.CheackFileNumber.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.CheackFileNumber.Value = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.CheckFileNumber;
+            this.CheackFileNumber.ValueChanged += new System.EventHandler(this.CheackFileNumber_ValueChanged);
+            // 
+            // CBox_qnUpFileCheck
+            // 
+            this.CBox_qnUpFileCheck.AutoSize = true;
+            this.CBox_qnUpFileCheck.Checked = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.qnUpFileCheck;
+            this.CBox_qnUpFileCheck.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.CBox_qnUpFileCheck.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "qnUpFileCheck", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.CBox_qnUpFileCheck.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.CBox_qnUpFileCheck.ForeColor = System.Drawing.Color.Red;
+            this.CBox_qnUpFileCheck.Location = new System.Drawing.Point(19, 21);
+            this.CBox_qnUpFileCheck.Name = "CBox_qnUpFileCheck";
+            this.CBox_qnUpFileCheck.Size = new System.Drawing.Size(135, 16);
+            this.CBox_qnUpFileCheck.TabIndex = 0;
+            this.CBox_qnUpFileCheck.Text = "上传检查 推荐开启";
+            this.CBox_qnUpFileCheck.UseVisualStyleBackColor = true;
+            this.CBox_qnUpFileCheck.CheckedChanged += new System.EventHandler(this.CBox_UpFileCheck_CheckedChanged);
             // 
             // Form_SetPm
             // 
@@ -410,12 +477,11 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form_SetPm";
             this.Text = "程序设置";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form_SetPm_FormClosed);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_SetPm_FormClosing);
             this.Load += new System.EventHandler(this.Form_SetPm_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Number_weather)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             this.tabPage3.ResumeLayout(false);
@@ -423,6 +489,8 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PicBox_TipFileCheck)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Number_weather)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.FailureTryNumber)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CheackFileNumber)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -457,5 +525,10 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.NumericUpDown Number_weather;
         private System.Windows.Forms.Button but_ReSetIni;
+        private System.Windows.Forms.NumericUpDown FailureTryNumber;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox tbox_email;
+        private System.Windows.Forms.Label label11;
     }
 }

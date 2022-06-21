@@ -25,7 +25,7 @@ namespace My_Computer_Tools_Ⅱ.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("T1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("T2")]
         public string ProgramVer {
             get {
                 return ((string)(this["ProgramVer"]));
@@ -166,7 +166,7 @@ namespace My_Computer_Tools_Ⅱ.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
         public decimal CheckFileNumber {
             get {
                 return ((decimal)(this["CheckFileNumber"]));
@@ -190,7 +190,7 @@ namespace My_Computer_Tools_Ⅱ.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("MarkDown格式")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string qnUpEnd {
             get {
                 return ((string)(this["qnUpEnd"]));
@@ -221,6 +221,51 @@ namespace My_Computer_Tools_Ⅱ.Properties {
             }
             set {
                 this["WeatherNumber"] = value;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://api.github.com/repos/XiaM-Admin/XComputerTools/releases/latest")]
+        public string UpDataAPI {
+            get {
+                return ((string)(this["UpDataAPI"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public decimal FailureTryNumber {
+            get {
+                return ((decimal)(this["FailureTryNumber"]));
+            }
+            set {
+                this["FailureTryNumber"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string email {
+            get {
+                return ((string)(this["email"]));
+            }
+            set {
+                this["email"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string RunCmdText {
+            get {
+                return ((string)(this["RunCmdText"]));
+            }
+            set {
+                this["RunCmdText"] = value;
             }
         }
     }

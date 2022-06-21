@@ -125,6 +125,13 @@ namespace My_Computer_Tools_Ⅱ
                 return;
             }
 
+            //如果存在空格弹出提示
+            if (Text_User.Text.Contains(" ") || Text_Username.Text.Contains(" ") || Text_UserPwd.Text.Contains(" "))
+            {
+                MessageBox.Show("填入的账号信息不能存在空格！\r\n请检查并且重新填写！", "错误");
+                return;
+            }
+
             //检查Text_Username.Text是否符合xml命名规则
             if (!Check_XmlName(Text_Username.Text))
             {
@@ -132,7 +139,7 @@ namespace My_Computer_Tools_Ⅱ
                 return;
             }
 
-            string Accuserpwd = Text_User.Text + "^" + Text_UserPwd.Text;
+            string Accuserpwd = Text_User.Text + " " + Text_UserPwd.Text;
             //检查账号名字是否存在
             var ret = AccountStrs.ContainsKey(Text_Username.Text);
 
@@ -215,26 +222,9 @@ namespace My_Computer_Tools_Ⅱ
             {
                 if (i == BackVs.Count || BackVs.Count != Vs.Count || item != BackVs[i])
                 {
-                    //提示保存
-                    DialogResult dr = MessageBox.Show("账号数据已经更改，是否保存？", "提示", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-                    if (dr == DialogResult.Yes)
-                    {
-                        SaveAccountList();
-                        return;
-                    }
-                    else if (dr == DialogResult.No)
-                    {
-                        //不保存
-                        break;
-                    }
-                    else if (dr == DialogResult.Cancel)
-                    {
-                        //取消
-                        e.Cancel = true;
-                        break;
-                    }
+                    SaveAccountList();
+                    return;
                 }
-
                 i++;
             }
         }

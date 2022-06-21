@@ -66,6 +66,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -133,6 +134,12 @@
     <Compile Include="Form\Form_ProgressBar.Designer.cs">
       <DependentUpon>Form_ProgressBar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Form\imageShow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\imageShow.Designer.cs">
+      <DependentUpon>imageShow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Main_Fun.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -169,6 +176,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Form_input.resx">
       <DependentUpon>Form_input.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\imageShow.resx">
+      <DependentUpon>imageShow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

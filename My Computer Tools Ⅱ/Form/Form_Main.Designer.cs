@@ -39,6 +39,7 @@
             this.Timer_STrip = new System.Windows.Forms.Timer(this.components);
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabP_Home = new System.Windows.Forms.TabPage();
+            this.but_DownloadDATA = new System.Windows.Forms.Button();
             this.lab_WaiIP = new System.Windows.Forms.Label();
             this.PBox_Data = new System.Windows.Forms.PictureBox();
             this.lab_HyperData = new System.Windows.Forms.Label();
@@ -53,6 +54,8 @@
             this.GBox_NewTip = new System.Windows.Forms.GroupBox();
             this.Text_NewTip = new System.Windows.Forms.TextBox();
             this.tabP_UorP = new System.Windows.Forms.TabPage();
+            this.label_AccStical = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             this.but_Find = new System.Windows.Forms.Button();
             this.Tbox_Find = new System.Windows.Forms.TextBox();
             this.lab_Find = new System.Windows.Forms.Label();
@@ -75,10 +78,10 @@
             this.But_qnDelItem = new System.Windows.Forms.Button();
             this.But_UpLoadFile = new System.Windows.Forms.Button();
             this.But_qnStart = new System.Windows.Forms.Button();
-            this.CBox_qnAutoStart = new System.Windows.Forms.CheckBox();
             this.But_qnAddFolder = new System.Windows.Forms.Button();
             this.LBox_FolderList = new System.Windows.Forms.ListBox();
             this.GBox_Folderfrom = new System.Windows.Forms.GroupBox();
+            this.But_ImgShow = new System.Windows.Forms.Button();
             this.But_GetFileDownloadurl = new System.Windows.Forms.Button();
             this.But_DownloadFile = new System.Windows.Forms.Button();
             this.listView_FileList = new System.Windows.Forms.ListView();
@@ -88,19 +91,34 @@
             this.columnHeader_type = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.But_qnSubfolder = new System.Windows.Forms.Button();
             this.GBox_AKkey = new System.Windows.Forms.GroupBox();
-            this.TBox_Domain = new System.Windows.Forms.TextBox();
             this.But_qnUpTest = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.CBox_qiniuZoneID = new System.Windows.Forms.ComboBox();
             this.lab_zoneId = new System.Windows.Forms.Label();
-            this.Tbox_qiniuBucket = new System.Windows.Forms.TextBox();
             this.lab_Bucket = new System.Windows.Forms.Label();
-            this.Tbox_qiniuSK = new System.Windows.Forms.TextBox();
-            this.Tbox_qiniuAK = new System.Windows.Forms.TextBox();
             this.label_SK = new System.Windows.Forms.Label();
             this.label_AK = new System.Windows.Forms.Label();
+            this.tabP_CustomTask = new System.Windows.Forms.TabPage();
+            this.TaskTab = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.Button_cmdStart = new System.Windows.Forms.Button();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.numbe_cmdtimesecc = new System.Windows.Forms.NumericUpDown();
+            this.numbe_cmdtimemin = new System.Windows.Forms.NumericUpDown();
+            this.radio_cmdOnlyOne = new System.Windows.Forms.RadioButton();
+            this.radio_cmdThread = new System.Windows.Forms.RadioButton();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.cbox_shoutdown = new System.Windows.Forms.CheckBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.numbersec = new System.Windows.Forms.NumericUpDown();
+            this.numbermin = new System.Windows.Forms.NumericUpDown();
+            this.But_shoutdown = new System.Windows.Forms.Button();
             this.tabP_Tasks = new System.Windows.Forms.TabPage();
-            this.label8 = new System.Windows.Forms.Label();
+            this.Button_OpenLog = new System.Windows.Forms.Button();
+            this.Button_StopTask = new System.Windows.Forms.Button();
             this.TBox_Tip = new System.Windows.Forms.TextBox();
             this.CBox_ThreadGrade = new System.Windows.Forms.ComboBox();
             this.ListBox_Name = new System.Windows.Forms.ListBox();
@@ -118,6 +136,11 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.tabP_About = new System.Windows.Forms.TabPage();
+            this.linkLabel_BLogLink = new System.Windows.Forms.LinkLabel();
+            this.linkLabel_WaiIpLink = new System.Windows.Forms.LinkLabel();
+            this.linkLabel_TaoBaoAPILink = new System.Windows.Forms.LinkLabel();
+            this.linkLabel_QNSDKLink = new System.Windows.Forms.LinkLabel();
+            this.linkLabel_WeatherLink = new System.Windows.Forms.LinkLabel();
             this.but_Set = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.But_ClearLog = new System.Windows.Forms.Button();
@@ -127,20 +150,24 @@
             this.RText_target = new System.Windows.Forms.RichTextBox();
             this.NotifyIconBack = new System.Windows.Forms.NotifyIcon(this.components);
             this.CMBS = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.toolStripqiniu = new System.Windows.Forms.ToolStripMenuItem();
-            this.手动上传ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.剪贴板上传ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.TBFile = new System.Windows.Forms.ToolStripMenuItem();
+            this.七牛云ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.图片ShowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.剪贴板上传ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.手动上传ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.AcctoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.显示ShowtoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.设置toolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.退出ExitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
-            this.linkLabel_WeatherLink = new System.Windows.Forms.LinkLabel();
-            this.linkLabel_QNSDKLink = new System.Windows.Forms.LinkLabel();
-            this.linkLabel_TaoBaoAPILink = new System.Windows.Forms.LinkLabel();
-            this.linkLabel_WaiIpLink = new System.Windows.Forms.LinkLabel();
-            this.linkLabel_BLogLink = new System.Windows.Forms.LinkLabel();
+            this.CBox_qnAutoStart = new System.Windows.Forms.CheckBox();
+            this.TBox_Domain = new System.Windows.Forms.TextBox();
+            this.CBox_qiniuZoneID = new System.Windows.Forms.ComboBox();
+            this.Tbox_qiniuBucket = new System.Windows.Forms.TextBox();
+            this.Tbox_qiniuSK = new System.Windows.Forms.TextBox();
+            this.Tbox_qiniuAK = new System.Windows.Forms.TextBox();
+            this.tbox_cmdtxt = new System.Windows.Forms.TextBox();
             this.STrip_Main.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabP_Home.SuspendLayout();
@@ -153,6 +180,15 @@
             this.GBox_FolderWatcher.SuspendLayout();
             this.GBox_Folderfrom.SuspendLayout();
             this.GBox_AKkey.SuspendLayout();
+            this.tabP_CustomTask.SuspendLayout();
+            this.TaskTab.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numbe_cmdtimesecc)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numbe_cmdtimemin)).BeginInit();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numbersec)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numbermin)).BeginInit();
             this.tabP_Tasks.SuspendLayout();
             this.GBox_ThreadData.SuspendLayout();
             this.tabP_About.SuspendLayout();
@@ -216,6 +252,7 @@
             this.tabControl1.Controls.Add(this.tabP_Home);
             this.tabControl1.Controls.Add(this.tabP_UorP);
             this.tabControl1.Controls.Add(this.tabP_FileSyn);
+            this.tabControl1.Controls.Add(this.tabP_CustomTask);
             this.tabControl1.Controls.Add(this.tabP_Tasks);
             this.tabControl1.Controls.Add(this.tabP_About);
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
@@ -227,6 +264,7 @@
             // 
             // tabP_Home
             // 
+            this.tabP_Home.Controls.Add(this.but_DownloadDATA);
             this.tabP_Home.Controls.Add(this.lab_WaiIP);
             this.tabP_Home.Controls.Add(this.PBox_Data);
             this.tabP_Home.Controls.Add(this.lab_HyperData);
@@ -246,6 +284,18 @@
             this.tabP_Home.TabIndex = 0;
             this.tabP_Home.Text = "首页";
             this.tabP_Home.UseVisualStyleBackColor = true;
+            // 
+            // but_DownloadDATA
+            // 
+            this.but_DownloadDATA.ForeColor = System.Drawing.Color.Red;
+            this.but_DownloadDATA.Location = new System.Drawing.Point(389, 357);
+            this.but_DownloadDATA.Name = "but_DownloadDATA";
+            this.but_DownloadDATA.Size = new System.Drawing.Size(78, 23);
+            this.but_DownloadDATA.TabIndex = 15;
+            this.but_DownloadDATA.Text = "去更新";
+            this.but_DownloadDATA.UseVisualStyleBackColor = true;
+            this.but_DownloadDATA.Visible = false;
+            this.but_DownloadDATA.Click += new System.EventHandler(this.but_DownloadDATA_Click);
             // 
             // lab_WaiIP
             // 
@@ -289,7 +339,7 @@
             // 
             // but_SetPro
             // 
-            this.but_SetPro.Location = new System.Drawing.Point(412, 386);
+            this.but_SetPro.Location = new System.Drawing.Point(389, 386);
             this.but_SetPro.Name = "but_SetPro";
             this.but_SetPro.Size = new System.Drawing.Size(78, 23);
             this.but_SetPro.TabIndex = 10;
@@ -355,21 +405,22 @@
             this.lab_ProName.AutoSize = true;
             this.lab_ProName.Font = new System.Drawing.Font("微软雅黑", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.lab_ProName.ForeColor = System.Drawing.Color.DarkViolet;
-            this.lab_ProName.Location = new System.Drawing.Point(487, 19);
+            this.lab_ProName.Location = new System.Drawing.Point(479, 21);
             this.lab_ProName.Name = "lab_ProName";
             this.lab_ProName.Size = new System.Drawing.Size(298, 39);
             this.lab_ProName.TabIndex = 1;
             this.lab_ProName.Text = " Computer Tools Ⅱ";
+            this.lab_ProName.Click += new System.EventHandler(this.lab_ProName_Click);
             // 
             // GBox_NewTip
             // 
             this.GBox_NewTip.Controls.Add(this.Text_NewTip);
-            this.GBox_NewTip.Location = new System.Drawing.Point(496, 71);
+            this.GBox_NewTip.Location = new System.Drawing.Point(473, 71);
             this.GBox_NewTip.Name = "GBox_NewTip";
-            this.GBox_NewTip.Size = new System.Drawing.Size(291, 338);
+            this.GBox_NewTip.Size = new System.Drawing.Size(314, 338);
             this.GBox_NewTip.TabIndex = 0;
             this.GBox_NewTip.TabStop = false;
-            this.GBox_NewTip.Text = "测试告示";
+            this.GBox_NewTip.Text = "版本公告";
             // 
             // Text_NewTip
             // 
@@ -379,11 +430,14 @@
             this.Text_NewTip.Multiline = true;
             this.Text_NewTip.Name = "Text_NewTip";
             this.Text_NewTip.ReadOnly = true;
-            this.Text_NewTip.Size = new System.Drawing.Size(279, 310);
+            this.Text_NewTip.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.Text_NewTip.Size = new System.Drawing.Size(302, 310);
             this.Text_NewTip.TabIndex = 0;
             // 
             // tabP_UorP
             // 
+            this.tabP_UorP.Controls.Add(this.label_AccStical);
+            this.tabP_UorP.Controls.Add(this.label9);
             this.tabP_UorP.Controls.Add(this.but_Find);
             this.tabP_UorP.Controls.Add(this.Tbox_Find);
             this.tabP_UorP.Controls.Add(this.lab_Find);
@@ -406,9 +460,29 @@
             this.tabP_UorP.Text = "账号本本";
             this.tabP_UorP.UseVisualStyleBackColor = true;
             // 
+            // label_AccStical
+            // 
+            this.label_AccStical.AutoSize = true;
+            this.label_AccStical.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label_AccStical.ForeColor = System.Drawing.Color.Blue;
+            this.label_AccStical.Location = new System.Drawing.Point(12, 269);
+            this.label_AccStical.Name = "label_AccStical";
+            this.label_AccStical.Size = new System.Drawing.Size(56, 17);
+            this.label_AccStical.TabIndex = 16;
+            this.label_AccStical.Text = "统计标签";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(12, 241);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(49, 17);
+            this.label9.TabIndex = 15;
+            this.label9.Text = "— 统计";
+            // 
             // but_Find
             // 
-            this.but_Find.Location = new System.Drawing.Point(124, 266);
+            this.but_Find.Location = new System.Drawing.Point(124, 199);
             this.but_Find.Name = "but_Find";
             this.but_Find.Size = new System.Drawing.Size(24, 27);
             this.but_Find.TabIndex = 14;
@@ -418,7 +492,7 @@
             // 
             // Tbox_Find
             // 
-            this.Tbox_Find.Location = new System.Drawing.Point(10, 268);
+            this.Tbox_Find.Location = new System.Drawing.Point(10, 201);
             this.Tbox_Find.Name = "Tbox_Find";
             this.Tbox_Find.Size = new System.Drawing.Size(111, 23);
             this.Tbox_Find.TabIndex = 13;
@@ -427,7 +501,7 @@
             // lab_Find
             // 
             this.lab_Find.AutoSize = true;
-            this.lab_Find.Location = new System.Drawing.Point(12, 248);
+            this.lab_Find.Location = new System.Drawing.Point(12, 181);
             this.lab_Find.Name = "lab_Find";
             this.lab_Find.Size = new System.Drawing.Size(49, 17);
             this.lab_Find.TabIndex = 12;
@@ -435,7 +509,7 @@
             // 
             // but_exportAcc
             // 
-            this.but_exportAcc.Location = new System.Drawing.Point(10, 188);
+            this.but_exportAcc.Location = new System.Drawing.Point(10, 147);
             this.but_exportAcc.Name = "but_exportAcc";
             this.but_exportAcc.Size = new System.Drawing.Size(70, 23);
             this.but_exportAcc.TabIndex = 11;
@@ -445,7 +519,7 @@
             // 
             // but_ImportAcc
             // 
-            this.but_ImportAcc.Location = new System.Drawing.Point(81, 188);
+            this.but_ImportAcc.Location = new System.Drawing.Point(81, 147);
             this.but_ImportAcc.Name = "but_ImportAcc";
             this.but_ImportAcc.Size = new System.Drawing.Size(70, 23);
             this.but_ImportAcc.TabIndex = 10;
@@ -456,7 +530,7 @@
             // lab_SGTip
             // 
             this.lab_SGTip.AutoSize = true;
-            this.lab_SGTip.Location = new System.Drawing.Point(12, 168);
+            this.lab_SGTip.Location = new System.Drawing.Point(12, 127);
             this.lab_SGTip.Name = "lab_SGTip";
             this.lab_SGTip.Size = new System.Drawing.Size(73, 17);
             this.lab_SGTip.TabIndex = 9;
@@ -466,11 +540,11 @@
             // 
             this.lab_UserTip.AutoSize = true;
             this.lab_UserTip.ForeColor = System.Drawing.Color.Red;
-            this.lab_UserTip.Location = new System.Drawing.Point(3, 341);
+            this.lab_UserTip.Location = new System.Drawing.Point(3, 323);
             this.lab_UserTip.Name = "lab_UserTip";
-            this.lab_UserTip.Size = new System.Drawing.Size(152, 68);
+            this.lab_UserTip.Size = new System.Drawing.Size(152, 85);
             this.lab_UserTip.TabIndex = 8;
-            this.lab_UserTip.Text = "注意：\r\n此程序不会将用户账号\r\n进行上传，修改等！\r\n不放心可以不使用此功能！";
+            this.lab_UserTip.Text = "注意：\r\n此程序不会将用户账号\r\n进行上传，修改等！\r\n代码开源！\r\n不放心可以不使用此功能！";
             this.lab_UserTip.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // lab_Sptil
@@ -485,7 +559,7 @@
             // 
             // but_ShowAccC
             // 
-            this.but_ShowAccC.Location = new System.Drawing.Point(12, 110);
+            this.but_ShowAccC.Location = new System.Drawing.Point(12, 90);
             this.but_ShowAccC.Name = "but_ShowAccC";
             this.but_ShowAccC.Size = new System.Drawing.Size(133, 29);
             this.but_ShowAccC.TabIndex = 6;
@@ -496,7 +570,7 @@
             // lab_AccountTip
             // 
             this.lab_AccountTip.AutoSize = true;
-            this.lab_AccountTip.Location = new System.Drawing.Point(12, 90);
+            this.lab_AccountTip.Location = new System.Drawing.Point(12, 70);
             this.lab_AccountTip.Name = "lab_AccountTip";
             this.lab_AccountTip.Size = new System.Drawing.Size(73, 17);
             this.lab_AccountTip.TabIndex = 5;
@@ -642,19 +716,6 @@
             this.But_qnStart.UseVisualStyleBackColor = true;
             this.But_qnStart.Click += new System.EventHandler(this.But_qnStart_Click);
             // 
-            // CBox_qnAutoStart
-            // 
-            this.CBox_qnAutoStart.AutoSize = true;
-            this.CBox_qnAutoStart.Checked = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.qnStartFolderW;
-            this.CBox_qnAutoStart.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "qnStartFolderW", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.CBox_qnAutoStart.Location = new System.Drawing.Point(353, 80);
-            this.CBox_qnAutoStart.Name = "CBox_qnAutoStart";
-            this.CBox_qnAutoStart.Size = new System.Drawing.Size(75, 21);
-            this.CBox_qnAutoStart.TabIndex = 3;
-            this.CBox_qnAutoStart.Text = "自动开启";
-            this.CBox_qnAutoStart.UseVisualStyleBackColor = true;
-            this.CBox_qnAutoStart.CheckedChanged += new System.EventHandler(this.CBox_qnAutoStart_CheckedChanged);
-            // 
             // But_qnAddFolder
             // 
             this.But_qnAddFolder.Location = new System.Drawing.Point(351, 23);
@@ -677,6 +738,7 @@
             // 
             // GBox_Folderfrom
             // 
+            this.GBox_Folderfrom.Controls.Add(this.But_ImgShow);
             this.GBox_Folderfrom.Controls.Add(this.But_GetFileDownloadurl);
             this.GBox_Folderfrom.Controls.Add(this.But_DownloadFile);
             this.GBox_Folderfrom.Controls.Add(this.listView_FileList);
@@ -687,6 +749,16 @@
             this.GBox_Folderfrom.TabIndex = 2;
             this.GBox_Folderfrom.TabStop = false;
             this.GBox_Folderfrom.Text = "七牛云存储文件";
+            // 
+            // But_ImgShow
+            // 
+            this.But_ImgShow.Location = new System.Drawing.Point(686, 105);
+            this.But_ImgShow.Name = "But_ImgShow";
+            this.But_ImgShow.Size = new System.Drawing.Size(72, 23);
+            this.But_ImgShow.TabIndex = 5;
+            this.But_ImgShow.Text = "图片Show";
+            this.But_ImgShow.UseVisualStyleBackColor = true;
+            this.But_ImgShow.Click += new System.EventHandler(this.But_ImgShow_Click);
             // 
             // But_GetFileDownloadurl
             // 
@@ -725,6 +797,7 @@
             this.listView_FileList.TabIndex = 2;
             this.listView_FileList.UseCompatibleStateImageBehavior = false;
             this.listView_FileList.View = System.Windows.Forms.View.Details;
+            this.listView_FileList.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listView_FileList_MouseDoubleClick);
             // 
             // ColumnHeader_Name
             // 
@@ -775,16 +848,6 @@
             this.GBox_AKkey.TabStop = false;
             this.GBox_AKkey.Text = "七牛秘钥设置 - 回车保存";
             // 
-            // TBox_Domain
-            // 
-            this.TBox_Domain.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "qiniuDomain", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.TBox_Domain.Location = new System.Drawing.Point(107, 122);
-            this.TBox_Domain.Name = "TBox_Domain";
-            this.TBox_Domain.Size = new System.Drawing.Size(199, 23);
-            this.TBox_Domain.TabIndex = 9;
-            this.TBox_Domain.Text = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.qiniuDomain;
-            this.TBox_Domain.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextEnterSave);
-            // 
             // But_qnUpTest
             // 
             this.But_qnUpTest.Location = new System.Drawing.Point(231, 157);
@@ -804,25 +867,6 @@
             this.label1.TabIndex = 8;
             this.label1.Text = "域名";
             // 
-            // CBox_qiniuZoneID
-            // 
-            this.CBox_qiniuZoneID.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "qiniuZoneID", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.CBox_qiniuZoneID.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.CBox_qiniuZoneID.FormattingEnabled = true;
-            this.CBox_qiniuZoneID.Items.AddRange(new object[] {
-            "华东",
-            "华东-浙江2",
-            "华北",
-            "华南",
-            "北美",
-            "东南亚"});
-            this.CBox_qiniuZoneID.Location = new System.Drawing.Point(108, 156);
-            this.CBox_qiniuZoneID.Name = "CBox_qiniuZoneID";
-            this.CBox_qiniuZoneID.Size = new System.Drawing.Size(117, 25);
-            this.CBox_qiniuZoneID.TabIndex = 7;
-            this.CBox_qiniuZoneID.Text = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.qiniuZoneID;
-            this.CBox_qiniuZoneID.SelectedIndexChanged += new System.EventHandler(this.SelectedIndexChangedSave);
-            // 
             // lab_zoneId
             // 
             this.lab_zoneId.AutoSize = true;
@@ -832,16 +876,6 @@
             this.lab_zoneId.TabIndex = 6;
             this.lab_zoneId.Text = "地区";
             // 
-            // Tbox_qiniuBucket
-            // 
-            this.Tbox_qiniuBucket.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "qiniuBucket", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.Tbox_qiniuBucket.Location = new System.Drawing.Point(107, 88);
-            this.Tbox_qiniuBucket.Name = "Tbox_qiniuBucket";
-            this.Tbox_qiniuBucket.Size = new System.Drawing.Size(199, 23);
-            this.Tbox_qiniuBucket.TabIndex = 5;
-            this.Tbox_qiniuBucket.Text = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.qiniuBucket;
-            this.Tbox_qiniuBucket.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextEnterSave);
-            // 
             // lab_Bucket
             // 
             this.lab_Bucket.AutoSize = true;
@@ -850,27 +884,6 @@
             this.lab_Bucket.Size = new System.Drawing.Size(47, 17);
             this.lab_Bucket.TabIndex = 4;
             this.lab_Bucket.Text = "Bucket";
-            // 
-            // Tbox_qiniuSK
-            // 
-            this.Tbox_qiniuSK.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "qiniuSK", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.Tbox_qiniuSK.Location = new System.Drawing.Point(107, 54);
-            this.Tbox_qiniuSK.Name = "Tbox_qiniuSK";
-            this.Tbox_qiniuSK.PasswordChar = '*';
-            this.Tbox_qiniuSK.Size = new System.Drawing.Size(199, 23);
-            this.Tbox_qiniuSK.TabIndex = 3;
-            this.Tbox_qiniuSK.Text = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.qiniuSK;
-            this.Tbox_qiniuSK.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextEnterSave);
-            // 
-            // Tbox_qiniuAK
-            // 
-            this.Tbox_qiniuAK.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "qiniuAK", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.Tbox_qiniuAK.Location = new System.Drawing.Point(108, 22);
-            this.Tbox_qiniuAK.Name = "Tbox_qiniuAK";
-            this.Tbox_qiniuAK.Size = new System.Drawing.Size(199, 23);
-            this.Tbox_qiniuAK.TabIndex = 2;
-            this.Tbox_qiniuAK.Text = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.qiniuAK;
-            this.Tbox_qiniuAK.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextEnterSave);
             // 
             // label_SK
             // 
@@ -890,9 +903,206 @@
             this.label_AK.TabIndex = 0;
             this.label_AK.Text = "AccessKey/AK";
             // 
+            // tabP_CustomTask
+            // 
+            this.tabP_CustomTask.Controls.Add(this.TaskTab);
+            this.tabP_CustomTask.Location = new System.Drawing.Point(4, 26);
+            this.tabP_CustomTask.Name = "tabP_CustomTask";
+            this.tabP_CustomTask.Size = new System.Drawing.Size(793, 415);
+            this.tabP_CustomTask.TabIndex = 5;
+            this.tabP_CustomTask.Text = "自动化任务";
+            this.tabP_CustomTask.UseVisualStyleBackColor = true;
+            // 
+            // TaskTab
+            // 
+            this.TaskTab.Alignment = System.Windows.Forms.TabAlignment.Bottom;
+            this.TaskTab.Controls.Add(this.tabPage1);
+            this.TaskTab.Location = new System.Drawing.Point(3, 3);
+            this.TaskTab.Multiline = true;
+            this.TaskTab.Name = "TaskTab";
+            this.TaskTab.SelectedIndex = 0;
+            this.TaskTab.Size = new System.Drawing.Size(787, 409);
+            this.TaskTab.TabIndex = 0;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.groupBox3);
+            this.tabPage1.Controls.Add(this.groupBox2);
+            this.tabPage1.Location = new System.Drawing.Point(4, 4);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(779, 379);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "杂项";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.label14);
+            this.groupBox3.Controls.Add(this.Button_cmdStart);
+            this.groupBox3.Controls.Add(this.tbox_cmdtxt);
+            this.groupBox3.Controls.Add(this.label13);
+            this.groupBox3.Controls.Add(this.label12);
+            this.groupBox3.Controls.Add(this.numbe_cmdtimesecc);
+            this.groupBox3.Controls.Add(this.numbe_cmdtimemin);
+            this.groupBox3.Controls.Add(this.radio_cmdOnlyOne);
+            this.groupBox3.Controls.Add(this.radio_cmdThread);
+            this.groupBox3.Location = new System.Drawing.Point(6, 112);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(200, 261);
+            this.groupBox3.TabIndex = 1;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "执行cmd命令";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.ForeColor = System.Drawing.Color.OrangeRed;
+            this.label14.Location = new System.Drawing.Point(40, 234);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(68, 17);
+            this.label14.TabIndex = 8;
+            this.label14.Text = "一行一句！";
+            // 
+            // Button_cmdStart
+            // 
+            this.Button_cmdStart.Location = new System.Drawing.Point(144, 231);
+            this.Button_cmdStart.Name = "Button_cmdStart";
+            this.Button_cmdStart.Size = new System.Drawing.Size(45, 23);
+            this.Button_cmdStart.TabIndex = 7;
+            this.Button_cmdStart.Text = "执行";
+            this.Button_cmdStart.UseVisualStyleBackColor = true;
+            this.Button_cmdStart.Click += new System.EventHandler(this.Button_cmdStart_Click);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(128, 52);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(20, 17);
+            this.label13.TabIndex = 5;
+            this.label13.Text = "秒";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(60, 52);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(20, 17);
+            this.label12.TabIndex = 4;
+            this.label12.Text = "分";
+            // 
+            // numbe_cmdtimesecc
+            // 
+            this.numbe_cmdtimesecc.Location = new System.Drawing.Point(82, 49);
+            this.numbe_cmdtimesecc.Name = "numbe_cmdtimesecc";
+            this.numbe_cmdtimesecc.Size = new System.Drawing.Size(44, 23);
+            this.numbe_cmdtimesecc.TabIndex = 3;
+            this.numbe_cmdtimesecc.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // numbe_cmdtimemin
+            // 
+            this.numbe_cmdtimemin.Location = new System.Drawing.Point(15, 49);
+            this.numbe_cmdtimemin.Name = "numbe_cmdtimemin";
+            this.numbe_cmdtimemin.Size = new System.Drawing.Size(44, 23);
+            this.numbe_cmdtimemin.TabIndex = 2;
+            this.numbe_cmdtimemin.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // radio_cmdOnlyOne
+            // 
+            this.radio_cmdOnlyOne.AutoSize = true;
+            this.radio_cmdOnlyOne.Location = new System.Drawing.Point(99, 22);
+            this.radio_cmdOnlyOne.Name = "radio_cmdOnlyOne";
+            this.radio_cmdOnlyOne.Size = new System.Drawing.Size(74, 21);
+            this.radio_cmdOnlyOne.TabIndex = 1;
+            this.radio_cmdOnlyOne.Text = "延迟执行";
+            this.radio_cmdOnlyOne.UseVisualStyleBackColor = true;
+            // 
+            // radio_cmdThread
+            // 
+            this.radio_cmdThread.AutoSize = true;
+            this.radio_cmdThread.Checked = true;
+            this.radio_cmdThread.Location = new System.Drawing.Point(19, 22);
+            this.radio_cmdThread.Name = "radio_cmdThread";
+            this.radio_cmdThread.Size = new System.Drawing.Size(74, 21);
+            this.radio_cmdThread.TabIndex = 0;
+            this.radio_cmdThread.TabStop = true;
+            this.radio_cmdThread.Text = "循环执行";
+            this.radio_cmdThread.UseVisualStyleBackColor = true;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.cbox_shoutdown);
+            this.groupBox2.Controls.Add(this.label11);
+            this.groupBox2.Controls.Add(this.label10);
+            this.groupBox2.Controls.Add(this.numbersec);
+            this.groupBox2.Controls.Add(this.numbermin);
+            this.groupBox2.Controls.Add(this.But_shoutdown);
+            this.groupBox2.Location = new System.Drawing.Point(6, 6);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(200, 100);
+            this.groupBox2.TabIndex = 0;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "延时关机";
+            // 
+            // cbox_shoutdown
+            // 
+            this.cbox_shoutdown.AutoSize = true;
+            this.cbox_shoutdown.Location = new System.Drawing.Point(15, 71);
+            this.cbox_shoutdown.Name = "cbox_shoutdown";
+            this.cbox_shoutdown.Size = new System.Drawing.Size(111, 21);
+            this.cbox_shoutdown.TabIndex = 5;
+            this.cbox_shoutdown.Text = "关机前邮件提醒";
+            this.cbox_shoutdown.UseVisualStyleBackColor = true;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(128, 35);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(56, 17);
+            this.label11.TabIndex = 4;
+            this.label11.Text = "秒后关机";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(60, 35);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(20, 17);
+            this.label10.TabIndex = 3;
+            this.label10.Text = "分";
+            // 
+            // numbersec
+            // 
+            this.numbersec.Location = new System.Drawing.Point(81, 32);
+            this.numbersec.Name = "numbersec";
+            this.numbersec.Size = new System.Drawing.Size(44, 23);
+            this.numbersec.TabIndex = 2;
+            this.numbersec.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // numbermin
+            // 
+            this.numbermin.Location = new System.Drawing.Point(15, 32);
+            this.numbermin.Name = "numbermin";
+            this.numbermin.Size = new System.Drawing.Size(44, 23);
+            this.numbermin.TabIndex = 1;
+            this.numbermin.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // But_shoutdown
+            // 
+            this.But_shoutdown.Location = new System.Drawing.Point(149, 71);
+            this.But_shoutdown.Name = "But_shoutdown";
+            this.But_shoutdown.Size = new System.Drawing.Size(45, 23);
+            this.But_shoutdown.TabIndex = 0;
+            this.But_shoutdown.Text = "执行";
+            this.But_shoutdown.UseVisualStyleBackColor = true;
+            this.But_shoutdown.Click += new System.EventHandler(this.But_shoutdown_Click);
+            // 
             // tabP_Tasks
             // 
-            this.tabP_Tasks.Controls.Add(this.label8);
+            this.tabP_Tasks.Controls.Add(this.Button_OpenLog);
+            this.tabP_Tasks.Controls.Add(this.Button_StopTask);
             this.tabP_Tasks.Controls.Add(this.TBox_Tip);
             this.tabP_Tasks.Controls.Add(this.CBox_ThreadGrade);
             this.tabP_Tasks.Controls.Add(this.ListBox_Name);
@@ -904,16 +1114,25 @@
             this.tabP_Tasks.Text = "任务池";
             this.tabP_Tasks.UseVisualStyleBackColor = true;
             // 
-            // label8
+            // Button_OpenLog
             // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label8.ForeColor = System.Drawing.Color.LightSalmon;
-            this.label8.Location = new System.Drawing.Point(683, 76);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(107, 60);
-            this.label8.TabIndex = 6;
-            this.label8.Text = "这里是用户\r\n任务停止的\r\n地方，还未动工";
+            this.Button_OpenLog.Location = new System.Drawing.Point(698, 137);
+            this.Button_OpenLog.Name = "Button_OpenLog";
+            this.Button_OpenLog.Size = new System.Drawing.Size(90, 31);
+            this.Button_OpenLog.TabIndex = 7;
+            this.Button_OpenLog.Text = "查看任务日志";
+            this.Button_OpenLog.UseVisualStyleBackColor = true;
+            this.Button_OpenLog.Click += new System.EventHandler(this.Button_OpenLog_Click);
+            // 
+            // Button_StopTask
+            // 
+            this.Button_StopTask.Location = new System.Drawing.Point(698, 174);
+            this.Button_StopTask.Name = "Button_StopTask";
+            this.Button_StopTask.Size = new System.Drawing.Size(90, 31);
+            this.Button_StopTask.TabIndex = 6;
+            this.Button_StopTask.Text = "终止当前任务";
+            this.Button_StopTask.UseVisualStyleBackColor = true;
+            this.Button_StopTask.Click += new System.EventHandler(this.Button_StopTask_Click);
             // 
             // TBox_Tip
             // 
@@ -966,7 +1185,7 @@
             this.GBox_ThreadData.Controls.Add(this.label2);
             this.GBox_ThreadData.Location = new System.Drawing.Point(166, 3);
             this.GBox_ThreadData.Name = "GBox_ThreadData";
-            this.GBox_ThreadData.Size = new System.Drawing.Size(517, 203);
+            this.GBox_ThreadData.Size = new System.Drawing.Size(528, 203);
             this.GBox_ThreadData.TabIndex = 2;
             this.GBox_ThreadData.TabStop = false;
             this.GBox_ThreadData.Text = "任务信息";
@@ -979,7 +1198,7 @@
             this.TBox_TaskExplain.Multiline = true;
             this.TBox_TaskExplain.Name = "TBox_TaskExplain";
             this.TBox_TaskExplain.ReadOnly = true;
-            this.TBox_TaskExplain.Size = new System.Drawing.Size(211, 172);
+            this.TBox_TaskExplain.Size = new System.Drawing.Size(224, 172);
             this.TBox_TaskExplain.TabIndex = 11;
             // 
             // TBox_TaskModePar
@@ -1116,6 +1335,76 @@
             this.tabP_About.Text = "关于";
             this.tabP_About.UseVisualStyleBackColor = true;
             // 
+            // linkLabel_BLogLink
+            // 
+            this.linkLabel_BLogLink.ActiveLinkColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.linkLabel_BLogLink.AutoSize = true;
+            this.linkLabel_BLogLink.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.linkLabel_BLogLink.LinkColor = System.Drawing.SystemColors.MenuHighlight;
+            this.linkLabel_BLogLink.Location = new System.Drawing.Point(30, 132);
+            this.linkLabel_BLogLink.Name = "linkLabel_BLogLink";
+            this.linkLabel_BLogLink.Size = new System.Drawing.Size(65, 20);
+            this.linkLabel_BLogLink.TabIndex = 13;
+            this.linkLabel_BLogLink.TabStop = true;
+            this.linkLabel_BLogLink.Text = "我的博客";
+            this.linkLabel_BLogLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_BLogLink_LinkClicked);
+            // 
+            // linkLabel_WaiIpLink
+            // 
+            this.linkLabel_WaiIpLink.ActiveLinkColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.linkLabel_WaiIpLink.AutoSize = true;
+            this.linkLabel_WaiIpLink.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.linkLabel_WaiIpLink.LinkColor = System.Drawing.SystemColors.MenuHighlight;
+            this.linkLabel_WaiIpLink.Location = new System.Drawing.Point(225, 230);
+            this.linkLabel_WaiIpLink.Name = "linkLabel_WaiIpLink";
+            this.linkLabel_WaiIpLink.Size = new System.Drawing.Size(86, 20);
+            this.linkLabel_WaiIpLink.TabIndex = 12;
+            this.linkLabel_WaiIpLink.TabStop = true;
+            this.linkLabel_WaiIpLink.Text = "我的api文章";
+            this.linkLabel_WaiIpLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_WaiIpLink_LinkClicked);
+            // 
+            // linkLabel_TaoBaoAPILink
+            // 
+            this.linkLabel_TaoBaoAPILink.ActiveLinkColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.linkLabel_TaoBaoAPILink.AutoSize = true;
+            this.linkLabel_TaoBaoAPILink.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.linkLabel_TaoBaoAPILink.LinkColor = System.Drawing.SystemColors.MenuHighlight;
+            this.linkLabel_TaoBaoAPILink.Location = new System.Drawing.Point(222, 249);
+            this.linkLabel_TaoBaoAPILink.Name = "linkLabel_TaoBaoAPILink";
+            this.linkLabel_TaoBaoAPILink.Size = new System.Drawing.Size(92, 20);
+            this.linkLabel_TaoBaoAPILink.TabIndex = 11;
+            this.linkLabel_TaoBaoAPILink.TabStop = true;
+            this.linkLabel_TaoBaoAPILink.Text = "淘宝ip地址库";
+            this.linkLabel_TaoBaoAPILink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_TaoBaoAPILink_LinkClicked);
+            // 
+            // linkLabel_QNSDKLink
+            // 
+            this.linkLabel_QNSDKLink.ActiveLinkColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.linkLabel_QNSDKLink.AutoSize = true;
+            this.linkLabel_QNSDKLink.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.linkLabel_QNSDKLink.LinkColor = System.Drawing.SystemColors.MenuHighlight;
+            this.linkLabel_QNSDKLink.Location = new System.Drawing.Point(220, 209);
+            this.linkLabel_QNSDKLink.Name = "linkLabel_QNSDKLink";
+            this.linkLabel_QNSDKLink.Size = new System.Drawing.Size(96, 20);
+            this.linkLabel_QNSDKLink.TabIndex = 10;
+            this.linkLabel_QNSDKLink.TabStop = true;
+            this.linkLabel_QNSDKLink.Text = "七牛云C#SDk";
+            this.linkLabel_QNSDKLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_QNSDKLink_LinkClicked);
+            // 
+            // linkLabel_WeatherLink
+            // 
+            this.linkLabel_WeatherLink.ActiveLinkColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.linkLabel_WeatherLink.AutoSize = true;
+            this.linkLabel_WeatherLink.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.linkLabel_WeatherLink.LinkColor = System.Drawing.SystemColors.MenuHighlight;
+            this.linkLabel_WeatherLink.Location = new System.Drawing.Point(235, 187);
+            this.linkLabel_WeatherLink.Name = "linkLabel_WeatherLink";
+            this.linkLabel_WeatherLink.Size = new System.Drawing.Size(65, 20);
+            this.linkLabel_WeatherLink.TabIndex = 9;
+            this.linkLabel_WeatherLink.TabStop = true;
+            this.linkLabel_WeatherLink.Text = "心知天气";
+            this.linkLabel_WeatherLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_WeatherLink_LinkClicked);
+            // 
             // but_Set
             // 
             this.but_Set.Location = new System.Drawing.Point(209, 375);
@@ -1190,7 +1479,7 @@
             this.RText_target.Size = new System.Drawing.Size(280, 375);
             this.RText_target.TabIndex = 0;
             this.RText_target.TabStop = false;
-            this.RText_target.Text = "1.账号本本\n2.文件夹同步\n3.截图\n4.Ocr\n5.快捷翻译\n6.软件值守\n7.自动化操作";
+            this.RText_target.Text = "1.账号本本\n2.文件夹同步\n3.自动化操作\n4.截图\n5.快捷翻译\n6.Ocr";
             // 
             // NotifyIconBack
             // 
@@ -1203,67 +1492,83 @@
             // CMBS
             // 
             this.CMBS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripqiniu,
+            this.TBFile,
             this.AcctoolStripMenuItem,
             this.toolStripSeparator1,
             this.显示ShowtoolStripMenuItem,
             this.设置toolStripMenuItem,
             this.退出ExitToolStripMenuItem});
             this.CMBS.Name = "ContextMenuBackStrip";
-            this.CMBS.Size = new System.Drawing.Size(137, 120);
+            this.CMBS.Size = new System.Drawing.Size(136, 120);
             // 
-            // toolStripqiniu
+            // TBFile
             // 
-            this.toolStripqiniu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.手动上传ToolStripMenuItem,
-            this.剪贴板上传ToolStripMenuItem});
-            this.toolStripqiniu.Name = "toolStripqiniu";
-            this.toolStripqiniu.Size = new System.Drawing.Size(136, 22);
-            this.toolStripqiniu.Text = "七牛云同步";
+            this.TBFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.七牛云ToolStripMenuItem});
+            this.TBFile.Name = "TBFile";
+            this.TBFile.Size = new System.Drawing.Size(135, 22);
+            this.TBFile.Text = "文件同步";
             // 
-            // 手动上传ToolStripMenuItem
+            // 七牛云ToolStripMenuItem
             // 
-            this.手动上传ToolStripMenuItem.Name = "手动上传ToolStripMenuItem";
-            this.手动上传ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
-            this.手动上传ToolStripMenuItem.Text = "手动上传";
-            this.手动上传ToolStripMenuItem.Click += new System.EventHandler(this.手动上传ToolStripMenuItem_Click);
+            this.七牛云ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.图片ShowToolStripMenuItem,
+            this.剪贴板上传ToolStripMenuItem1,
+            this.手动上传ToolStripMenuItem1});
+            this.七牛云ToolStripMenuItem.Name = "七牛云ToolStripMenuItem";
+            this.七牛云ToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.七牛云ToolStripMenuItem.Text = "七牛云";
             // 
-            // 剪贴板上传ToolStripMenuItem
+            // 图片ShowToolStripMenuItem
             // 
-            this.剪贴板上传ToolStripMenuItem.Name = "剪贴板上传ToolStripMenuItem";
-            this.剪贴板上传ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
-            this.剪贴板上传ToolStripMenuItem.Text = "剪贴板上传";
-            this.剪贴板上传ToolStripMenuItem.Click += new System.EventHandler(this.剪贴板上传ToolStripMenuItem_Click);
+            this.图片ShowToolStripMenuItem.Name = "图片ShowToolStripMenuItem";
+            this.图片ShowToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.图片ShowToolStripMenuItem.Text = "图片Show";
+            this.图片ShowToolStripMenuItem.Click += new System.EventHandler(this.图片ShowToolStripMenuItem_Click);
+            // 
+            // 剪贴板上传ToolStripMenuItem1
+            // 
+            this.剪贴板上传ToolStripMenuItem1.Name = "剪贴板上传ToolStripMenuItem1";
+            this.剪贴板上传ToolStripMenuItem1.Size = new System.Drawing.Size(136, 22);
+            this.剪贴板上传ToolStripMenuItem1.Text = "剪贴板上传";
+            this.剪贴板上传ToolStripMenuItem1.Click += new System.EventHandler(this.剪贴板上传ToolStripMenuItem_Click);
+            // 
+            // 手动上传ToolStripMenuItem1
+            // 
+            this.手动上传ToolStripMenuItem1.Name = "手动上传ToolStripMenuItem1";
+            this.手动上传ToolStripMenuItem1.Size = new System.Drawing.Size(136, 22);
+            this.手动上传ToolStripMenuItem1.Text = "手动上传";
+            this.手动上传ToolStripMenuItem1.Click += new System.EventHandler(this.手动上传ToolStripMenuItem_Click);
             // 
             // AcctoolStripMenuItem
             // 
             this.AcctoolStripMenuItem.Name = "AcctoolStripMenuItem";
-            this.AcctoolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.AcctoolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.AcctoolStripMenuItem.Text = "账号本本";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(133, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(132, 6);
             // 
             // 显示ShowtoolStripMenuItem
             // 
             this.显示ShowtoolStripMenuItem.Name = "显示ShowtoolStripMenuItem";
-            this.显示ShowtoolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.显示ShowtoolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.显示ShowtoolStripMenuItem.Text = "显示 Show";
             this.显示ShowtoolStripMenuItem.Click += new System.EventHandler(this.显示ShowtoolStripMenuItem_Click);
             // 
             // 设置toolStripMenuItem
             // 
             this.设置toolStripMenuItem.Name = "设置toolStripMenuItem";
-            this.设置toolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.设置toolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.设置toolStripMenuItem.Text = "设置 Set";
             this.设置toolStripMenuItem.Click += new System.EventHandler(this.设置toolStripMenuItem_Click);
             // 
             // 退出ExitToolStripMenuItem
             // 
             this.退出ExitToolStripMenuItem.Name = "退出ExitToolStripMenuItem";
-            this.退出ExitToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.退出ExitToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.退出ExitToolStripMenuItem.Text = "退出 Exit";
             this.退出ExitToolStripMenuItem.Click += new System.EventHandler(this.退出ExitToolStripMenuItem_Click);
             // 
@@ -1271,75 +1576,89 @@
             // 
             this.backgroundWorker.WorkerReportsProgress = true;
             // 
-            // linkLabel_WeatherLink
+            // CBox_qnAutoStart
             // 
-            this.linkLabel_WeatherLink.ActiveLinkColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.linkLabel_WeatherLink.AutoSize = true;
-            this.linkLabel_WeatherLink.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.linkLabel_WeatherLink.LinkColor = System.Drawing.SystemColors.MenuHighlight;
-            this.linkLabel_WeatherLink.Location = new System.Drawing.Point(235, 187);
-            this.linkLabel_WeatherLink.Name = "linkLabel_WeatherLink";
-            this.linkLabel_WeatherLink.Size = new System.Drawing.Size(65, 20);
-            this.linkLabel_WeatherLink.TabIndex = 9;
-            this.linkLabel_WeatherLink.TabStop = true;
-            this.linkLabel_WeatherLink.Text = "心知天气";
-            this.linkLabel_WeatherLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_WeatherLink_LinkClicked);
+            this.CBox_qnAutoStart.AutoSize = true;
+            this.CBox_qnAutoStart.Checked = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.qnStartFolderW;
+            this.CBox_qnAutoStart.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "qnStartFolderW", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.CBox_qnAutoStart.Location = new System.Drawing.Point(353, 80);
+            this.CBox_qnAutoStart.Name = "CBox_qnAutoStart";
+            this.CBox_qnAutoStart.Size = new System.Drawing.Size(75, 21);
+            this.CBox_qnAutoStart.TabIndex = 3;
+            this.CBox_qnAutoStart.Text = "自动开启";
+            this.CBox_qnAutoStart.UseVisualStyleBackColor = true;
+            this.CBox_qnAutoStart.CheckedChanged += new System.EventHandler(this.CBox_qnAutoStart_CheckedChanged);
             // 
-            // linkLabel_QNSDKLink
+            // TBox_Domain
             // 
-            this.linkLabel_QNSDKLink.ActiveLinkColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.linkLabel_QNSDKLink.AutoSize = true;
-            this.linkLabel_QNSDKLink.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.linkLabel_QNSDKLink.LinkColor = System.Drawing.SystemColors.MenuHighlight;
-            this.linkLabel_QNSDKLink.Location = new System.Drawing.Point(220, 209);
-            this.linkLabel_QNSDKLink.Name = "linkLabel_QNSDKLink";
-            this.linkLabel_QNSDKLink.Size = new System.Drawing.Size(96, 20);
-            this.linkLabel_QNSDKLink.TabIndex = 10;
-            this.linkLabel_QNSDKLink.TabStop = true;
-            this.linkLabel_QNSDKLink.Text = "七牛云C#SDk";
-            this.linkLabel_QNSDKLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_QNSDKLink_LinkClicked);
+            this.TBox_Domain.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "qiniuDomain", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.TBox_Domain.Location = new System.Drawing.Point(107, 122);
+            this.TBox_Domain.Name = "TBox_Domain";
+            this.TBox_Domain.Size = new System.Drawing.Size(199, 23);
+            this.TBox_Domain.TabIndex = 9;
+            this.TBox_Domain.Text = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.qiniuDomain;
+            this.TBox_Domain.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextEnterSave);
             // 
-            // linkLabel_TaoBaoAPILink
+            // CBox_qiniuZoneID
             // 
-            this.linkLabel_TaoBaoAPILink.ActiveLinkColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.linkLabel_TaoBaoAPILink.AutoSize = true;
-            this.linkLabel_TaoBaoAPILink.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.linkLabel_TaoBaoAPILink.LinkColor = System.Drawing.SystemColors.MenuHighlight;
-            this.linkLabel_TaoBaoAPILink.Location = new System.Drawing.Point(222, 249);
-            this.linkLabel_TaoBaoAPILink.Name = "linkLabel_TaoBaoAPILink";
-            this.linkLabel_TaoBaoAPILink.Size = new System.Drawing.Size(92, 20);
-            this.linkLabel_TaoBaoAPILink.TabIndex = 11;
-            this.linkLabel_TaoBaoAPILink.TabStop = true;
-            this.linkLabel_TaoBaoAPILink.Text = "淘宝ip地址库";
-            this.linkLabel_TaoBaoAPILink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_TaoBaoAPILink_LinkClicked);
+            this.CBox_qiniuZoneID.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "qiniuZoneID", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.CBox_qiniuZoneID.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CBox_qiniuZoneID.FormattingEnabled = true;
+            this.CBox_qiniuZoneID.Items.AddRange(new object[] {
+            "华东",
+            "华东-浙江2",
+            "华北",
+            "华南",
+            "北美",
+            "东南亚"});
+            this.CBox_qiniuZoneID.Location = new System.Drawing.Point(108, 156);
+            this.CBox_qiniuZoneID.Name = "CBox_qiniuZoneID";
+            this.CBox_qiniuZoneID.Size = new System.Drawing.Size(117, 25);
+            this.CBox_qiniuZoneID.TabIndex = 7;
+            this.CBox_qiniuZoneID.Text = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.qiniuZoneID;
+            this.CBox_qiniuZoneID.SelectedIndexChanged += new System.EventHandler(this.SelectedIndexChangedSave);
             // 
-            // linkLabel_WaiIpLink
+            // Tbox_qiniuBucket
             // 
-            this.linkLabel_WaiIpLink.ActiveLinkColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.linkLabel_WaiIpLink.AutoSize = true;
-            this.linkLabel_WaiIpLink.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.linkLabel_WaiIpLink.LinkColor = System.Drawing.SystemColors.MenuHighlight;
-            this.linkLabel_WaiIpLink.Location = new System.Drawing.Point(225, 230);
-            this.linkLabel_WaiIpLink.Name = "linkLabel_WaiIpLink";
-            this.linkLabel_WaiIpLink.Size = new System.Drawing.Size(86, 20);
-            this.linkLabel_WaiIpLink.TabIndex = 12;
-            this.linkLabel_WaiIpLink.TabStop = true;
-            this.linkLabel_WaiIpLink.Text = "我的api文章";
-            this.linkLabel_WaiIpLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_WaiIpLink_LinkClicked);
+            this.Tbox_qiniuBucket.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "qiniuBucket", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.Tbox_qiniuBucket.Location = new System.Drawing.Point(107, 88);
+            this.Tbox_qiniuBucket.Name = "Tbox_qiniuBucket";
+            this.Tbox_qiniuBucket.Size = new System.Drawing.Size(199, 23);
+            this.Tbox_qiniuBucket.TabIndex = 5;
+            this.Tbox_qiniuBucket.Text = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.qiniuBucket;
+            this.Tbox_qiniuBucket.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextEnterSave);
             // 
-            // linkLabel_BLogLink
+            // Tbox_qiniuSK
             // 
-            this.linkLabel_BLogLink.ActiveLinkColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.linkLabel_BLogLink.AutoSize = true;
-            this.linkLabel_BLogLink.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.linkLabel_BLogLink.LinkColor = System.Drawing.SystemColors.MenuHighlight;
-            this.linkLabel_BLogLink.Location = new System.Drawing.Point(30, 132);
-            this.linkLabel_BLogLink.Name = "linkLabel_BLogLink";
-            this.linkLabel_BLogLink.Size = new System.Drawing.Size(65, 20);
-            this.linkLabel_BLogLink.TabIndex = 13;
-            this.linkLabel_BLogLink.TabStop = true;
-            this.linkLabel_BLogLink.Text = "我的博客";
-            this.linkLabel_BLogLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_BLogLink_LinkClicked);
+            this.Tbox_qiniuSK.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "qiniuSK", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.Tbox_qiniuSK.Location = new System.Drawing.Point(107, 54);
+            this.Tbox_qiniuSK.Name = "Tbox_qiniuSK";
+            this.Tbox_qiniuSK.PasswordChar = '*';
+            this.Tbox_qiniuSK.Size = new System.Drawing.Size(199, 23);
+            this.Tbox_qiniuSK.TabIndex = 3;
+            this.Tbox_qiniuSK.Text = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.qiniuSK;
+            this.Tbox_qiniuSK.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextEnterSave);
+            // 
+            // Tbox_qiniuAK
+            // 
+            this.Tbox_qiniuAK.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "qiniuAK", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.Tbox_qiniuAK.Location = new System.Drawing.Point(108, 22);
+            this.Tbox_qiniuAK.Name = "Tbox_qiniuAK";
+            this.Tbox_qiniuAK.Size = new System.Drawing.Size(199, 23);
+            this.Tbox_qiniuAK.TabIndex = 2;
+            this.Tbox_qiniuAK.Text = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.qiniuAK;
+            this.Tbox_qiniuAK.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextEnterSave);
+            // 
+            // tbox_cmdtxt
+            // 
+            this.tbox_cmdtxt.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "RunCmdText", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.tbox_cmdtxt.Location = new System.Drawing.Point(6, 78);
+            this.tbox_cmdtxt.Multiline = true;
+            this.tbox_cmdtxt.Name = "tbox_cmdtxt";
+            this.tbox_cmdtxt.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.tbox_cmdtxt.Size = new System.Drawing.Size(188, 147);
+            this.tbox_cmdtxt.TabIndex = 6;
+            this.tbox_cmdtxt.Text = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.RunCmdText;
             // 
             // Form_Main
             // 
@@ -1377,6 +1696,17 @@
             this.GBox_Folderfrom.ResumeLayout(false);
             this.GBox_AKkey.ResumeLayout(false);
             this.GBox_AKkey.PerformLayout();
+            this.tabP_CustomTask.ResumeLayout(false);
+            this.TaskTab.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numbe_cmdtimesecc)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numbe_cmdtimemin)).EndInit();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numbersec)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numbermin)).EndInit();
             this.tabP_Tasks.ResumeLayout(false);
             this.tabP_Tasks.PerformLayout();
             this.GBox_ThreadData.ResumeLayout(false);
@@ -1485,15 +1815,11 @@
         private System.Windows.Forms.TextBox Tbox_TaskMode;
         private System.Windows.Forms.TextBox Tbox_TaskID;
         private System.Windows.Forms.TextBox TBox_TaskExplain;
-        private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button But_DownloadFile;
         private System.Windows.Forms.Button But_GetFileDownloadurl;
         public System.Windows.Forms.ToolStripProgressBar ProgressBarinTool;
         private System.ComponentModel.BackgroundWorker backgroundWorker;
         private System.Windows.Forms.ToolStripMenuItem 设置toolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toolStripqiniu;
-        private System.Windows.Forms.ToolStripMenuItem 手动上传ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 剪贴板上传ToolStripMenuItem;
         private System.Windows.Forms.Button but_qnclipboard;
         private System.Windows.Forms.Button but_Set;
         private System.Windows.Forms.GroupBox groupBox1;
@@ -1504,5 +1830,36 @@
         private System.Windows.Forms.LinkLabel linkLabel_TaoBaoAPILink;
         private System.Windows.Forms.LinkLabel linkLabel_WaiIpLink;
         private System.Windows.Forms.LinkLabel linkLabel_BLogLink;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label_AccStical;
+        private System.Windows.Forms.Button but_DownloadDATA;
+        private System.Windows.Forms.TabPage tabP_CustomTask;
+        private System.Windows.Forms.Button But_ImgShow;
+        private System.Windows.Forms.ToolStripMenuItem TBFile;
+        private System.Windows.Forms.ToolStripMenuItem 七牛云ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 图片ShowToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 剪贴板上传ToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem 手动上传ToolStripMenuItem1;
+        private System.Windows.Forms.TabControl TaskTab;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Button But_shoutdown;
+        private System.Windows.Forms.NumericUpDown numbersec;
+        private System.Windows.Forms.NumericUpDown numbermin;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.CheckBox cbox_shoutdown;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.RadioButton radio_cmdOnlyOne;
+        private System.Windows.Forms.RadioButton radio_cmdThread;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.NumericUpDown numbe_cmdtimesecc;
+        private System.Windows.Forms.NumericUpDown numbe_cmdtimemin;
+        private System.Windows.Forms.TextBox tbox_cmdtxt;
+        private System.Windows.Forms.Button Button_cmdStart;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Button Button_StopTask;
+        private System.Windows.Forms.Button Button_OpenLog;
     }
 }

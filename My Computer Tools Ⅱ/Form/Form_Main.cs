@@ -1,8 +1,10 @@
 ﻿using My_Computer_Tools_Ⅱ.Properties;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -27,6 +29,8 @@ namespace My_Computer_Tools_Ⅱ
 
         private void Form_Main_Load(object sender, EventArgs e)
         {
+            Program.IsReadlyNET = Program.CheckNet();
+
             Program._Main = new Thread_Main(new Fun_delegate(UpFormData), new Fun_delegate(RefreshTaskUI));
             Program._ProgressBar = new Form_ProgressBar("初始化", "正在初始化，请耐心等待。", 100, this);
             STrip_Main_init();
@@ -124,6 +128,15 @@ namespace My_Computer_Tools_Ⅱ
             {
                 this.Show();
                 Program.backWindows_State = false;
+                //激活窗口 最前显示一下
+                this.TopMost = true;
+                this.TopMost = false;
+            }
+            else
+            {
+                //激活窗口 最前显示一下
+                this.TopMost = true;
+                this.TopMost = false;
             }
         }
 
@@ -149,14 +162,17 @@ namespace My_Computer_Tools_Ⅱ
                 case 1:
                     //刷新class的items！
                     Commands.CreatFile(Program.xmlname, true);
-
                     ClsXMLoperate clsXM = Program.CreaterXMLHelper();
                     string ret = clsXM.GetNodeContent("UserInfo/Class");
                     string[] vs = ret.Split('|');
-                    Cbox_UserClass.Items.Clear();
-                    foreach (var item in vs)
-                        Cbox_UserClass.Items.Add(item);
-                    Cbox_UserClass.SelectedIndex = UserClassindex;
+                    if (vs.Length != Cbox_UserClass.Items.Count)
+                    {
+                        Cbox_UserClass.Items.Clear();
+                        foreach (var item in vs)
+                            Cbox_UserClass.Items.Add(item);
+                        Cbox_UserClass.SelectedIndex = UserClassindex;
+                        Accstatistical();
+                    }
                     break;
 
                 case 3:
@@ -189,6 +205,7 @@ namespace My_Computer_Tools_Ⅱ
                 foreach (var item in vs)
                     Cbox_UserClass.Items.Add(item);
                 Cbox_UserClass.SelectedIndex = 0;
+                Accstatistical();
             }
         }
 
@@ -199,10 +216,20 @@ namespace My_Computer_Tools_Ⅱ
         /// <param name="e"></param>
         private void But_ShowAccC_Click(object sender, EventArgs e)
         {
+            if (Cbox_UserClass.Text == "defualt")
+            {
+                MessageBox.Show("您当前选择的是默认分类，\r\n不可使用默认分类进行账号存储！\r\n请点击分类后面的'+'按钮，\r\n新增分类，或选择其它分类！", "错误：");
+                return;
+            }
+
             using (Form_AccountControl accform = new Form_AccountControl(Cbox_UserClass.Text))
             {
                 accform.ShowDialog();
-                UpdateUserACC();
+
+                Thread thread = new Thread(UpdateUserACC);
+                thread.Start();
+                Accstatistical();
+                //UpdateUserACC();
             }
         }
 
@@ -213,7 +240,8 @@ namespace My_Computer_Tools_Ⅱ
         /// <param name="e"></param>
         private void Cbox_UserClass_SelectedIndexChanged(object sender, EventArgs e)
         {
-            UpdateUserACC();
+            Thread thread = new Thread(UpdateUserACC);
+            thread.Start();
             UserClassindex = Cbox_UserClass.SelectedIndex;
         }
 
@@ -303,7 +331,7 @@ namespace My_Computer_Tools_Ⅱ
                 foreach (string str in Vsstr)
                 {
                     string userAcc = clsXM.GetNodeContent("UserInfo/" + item.ToString() + "/" + str);//取账号数据
-                    string[] vs = userAcc.Split('^');
+                    string[] vs = userAcc.Split(' ');
                     if (vs.Length == 0)
                         continue;
                     if (vs[0].Contains(FindStr) || vs[1].Contains(FindStr) || str.Contains(FindStr))
@@ -485,6 +513,11 @@ namespace My_Computer_Tools_Ⅱ
                 MessageBox.Show("自动监控中···\r\n两种操作不可同时进行！", "ERROR：");
                 return;
             }
+            if (!Program.IsReadlyNET)
+            {
+                MessageBox.Show("程序当前无法连接至互联网！无法获取任何网络数据！\r\n请重试！");
+                return;
+            }
             UpLoad(Get_qnFileList());
         }
 
@@ -498,8 +531,13 @@ namespace My_Computer_Tools_Ⅱ
             But_qnStart.Enabled = false;
             if (But_qnStart.Text == "开启监控")
             {
-                CheckQnFileUpLoadTask(true);
-                But_qnStart.Text = "停止监控";
+                if (!Program.IsReadlyNET)
+                    MessageBox.Show("程序当前无法连接至互联网！无法获取任何网络数据！\r\n请重试！");
+                else
+                {
+                    CheckQnFileUpLoadTask(true);
+                    But_qnStart.Text = "停止监控";
+                }
             }
             else
             {
@@ -668,29 +706,48 @@ namespace My_Computer_Tools_Ⅱ
                 Image img = Clipboard.GetImage();
                 if (img == null)
                 {
-                    if (!File.Exists("Temp.png"))
+                    if (!File.Exists(@"C:\Temp.png"))
                     {
-                        WinCommand.ChangeTips("上传失败", "剪贴板没有图片信息！多试几次吧~", 3);
+                        WinCommand.ChangeTips("上传失败", "剪贴板没有图片信息！\r\n多试几次吧！", 3);
                         return;
                     }
                 }
                 else
-                    img.Save("Temp.png");
+                    img.Save(@"C:\Temp.png");
 
                 OSS_QiNiuSDK oSS_QiNiu = new OSS_QiNiuSDK(Settings.Default.qiniuBucket, Settings.Default.qiniuAK, Settings.Default.qiniuSK, Settings.Default.qiniuZoneID, Settings.Default.qiniuDomain);
-                string retstr = oSS_QiNiu.UpLoadFile_One(Application.StartupPath + "\\Temp.png", Settings.Default.qnImgPath);
+                string retstr = oSS_QiNiu.UpLoadFile_One(@"C:\Temp.png", Settings.Default.qnImgPath);
                 string[] vs = retstr.Split('|');
                 if (vs[0] == "200")
                 {
-                    WinCommand.ChangeTips("上传完成", $"{vs[1]}已置剪贴板", 3);
+                    WinCommand.ChangeTips("上传完成", $"{vs[1]}\r\n已置剪贴板", 3);
                     Clipboard.SetText(vs[1]);
                 }
                 else
-                    WinCommand.ChangeTips("上传失败", "剪贴板有图但是失败可能是网络问题！多试几次吧~", 3);
+                {
+                    //失败重新上传
+                    int trynumber = 0;
+                    while (trynumber < Settings.Default.FailureTryNumber)
+                    {
+                        Thread.Sleep(100);
+                        retstr = oSS_QiNiu.UpLoadFile_One(@"C:\Temp.png", Settings.Default.qnImgPath);
+                        vs = retstr.Split('|');
+                        if (vs[0] == "200")
+                        {
+                            WinCommand.ChangeTips("上传完成", $"{vs[1]}\r\n已置剪贴板", 3);
+                            Clipboard.SetText(vs[1]);
+                            break;
+                        }
+                        else
+                            trynumber++;
+                    }
+                    if (trynumber == Settings.Default.FailureTryNumber)
+                        WinCommand.ChangeTips("上传失败", "剪贴板存在图片我，但是无法上传！\r\n1.多试几次\r\n2.点击Go按钮重启软件后再试", 3, new Fun_delegate_void(ResRunThis));
+                }
             }
             catch (Exception er)
             {
-                MessageBox.Show($"错误信息：{er}", "剪贴板上传出错");
+                MessageBox.Show($"错误信息：{er}", "剪贴板上传出错！\r\n并且不能重试！");
             }
         }
 
@@ -783,6 +840,183 @@ namespace My_Computer_Tools_Ⅱ
         private void linkLabel_BLogLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start("https://blog.x-tools.top");
+        }
+
+        private void but_DownloadDATA_Click(object sender, EventArgs e)
+        {
+            Process.Start(Program.UpdataURL);
+        }
+
+        /// <summary>
+        /// 七牛云 图片show
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void But_ImgShow_Click(object sender, EventArgs e)
+        {
+            if (listView_FileList.Items.Count == 0)
+            {
+                MessageBox.Show("请点击按钮'刷新列表'后重试！", "错误！");
+                return;
+            }
+            using (imageShow imageShowi = new imageShow(listView_FileList, Settings.Default.qiniuDomain))
+            {
+                imageShowi.ShowDialog();
+            }
+        }
+
+        private void 图片ShowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //刷新列表
+            But_Subfolder_Click(null, null);
+            //打开Show
+            using (imageShow imageShowi = new imageShow(listView_FileList, Settings.Default.qiniuDomain))
+            {
+                imageShowi.ShowDialog();
+            }
+        }
+
+        /// <summary>
+        /// 双击显示图片
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void listView_FileList_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (listView_FileList.SelectedItems is null)
+                return;
+            if (!(listView_FileList.SelectedItems[0].SubItems[0].Text.Contains("png") || listView_FileList.SelectedItems[0].SubItems[0].Text.Contains("jpg") || listView_FileList.SelectedItems[0].SubItems[0].Text.Contains("bmp")))
+                return;
+            string url = $"http://{Settings.Default.qiniuDomain}/{listView_FileList.SelectedItems[0].SubItems[1].Text + listView_FileList.SelectedItems[0].SubItems[0].Text}";
+            using (imageShow imageShowi = new imageShow(null, url))
+            {
+                imageShowi.ShowDialog();
+            }
+        }
+
+        /// <summary>
+        /// 按钮 关机任务
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void But_shoutdown_Click(object sender, EventArgs e)
+        {
+
+            int sec =Convert.ToInt32(numbermin.Value) * 60 + Convert.ToInt32(numbersec.Value);
+            bool isemail = cbox_shoutdown.Checked;
+            if(sec == 0)
+            {
+                MessageBox.Show("延时关机暂不支持0s的关机...\r\n您可以手动关闭机器！","错误！");
+                return;
+            }
+            //加入到任务列表
+            if (Program._Main.Get_ThreadDatainList("延时关机") == null)
+            {
+                Program._Main.CreateThread(new CreateThread()
+                {
+                    Grade = Thread_Grade.user,
+                    Fun = new Fun_delegate(shoutdown),
+                    RunMode = Thread_RunMode.OnlyOne,
+                    ModePar = (sec * 1000).ToString(),
+                    Explain = $"顾名思义，就是延时关机的意思哦...\r\n目的：延时关机\t延时间隔：{sec}秒",
+                    Name = "延时关机",
+                    Fundata = isemail
+                });
+                MessageBox.Show("任务添加完成！在'任务池'-'用户'项中即可查看！","提示");
+            }
+            else
+                MessageBox.Show("已经存在一个延时关机任务，请去任务池结束后重试！","错误");
+        }
+
+        /// <summary>
+        /// 菜单 调试
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void lab_ProName_Click(object sender, EventArgs e)
+        {
+            //其实是我测试函数的.. 不想删了
+            MessageBox.Show("人生没有捷径，就像去二仙桥，就必须要走成华大道...","Boom");
+        }
+
+        private void Button_cmdStart_Click(object sender, EventArgs e)
+        {
+            int sec = Convert.ToInt32(numbe_cmdtimemin.Value) * 60 + Convert.ToInt32(numbe_cmdtimesecc.Value);
+            if (sec == 0)
+            {
+                MessageBox.Show("暂不支持0s的设置...\r\n您可以手动执行cmd指令！", "错误！");
+                return;
+            }
+            if (tbox_cmdtxt.Text.Trim() == "")
+            {
+                MessageBox.Show("请输入要执行的命令！", "错误！");
+                return;
+            }
+            Settings.Default.Save();
+            List<string> listcmd = new List<string>();
+            foreach (string str in tbox_cmdtxt.Lines)
+            {
+                if (str.Trim() != "")
+                    listcmd.Add(str);
+            }
+            Thread_RunMode runmode = radio_cmdThread.Checked ? Thread_RunMode.thread : Thread_RunMode.OnlyOne;
+
+            //加入到任务列表
+            if (Program._Main.Get_ThreadDatainList("CMD执行") == null)
+            {
+                Program._Main.CreateThread(new CreateThread()
+                {
+                    Grade = Thread_Grade.user,
+                    Fun = new Fun_delegate(runcmd),
+                    RunMode = runmode,
+                    ModePar = (sec * 1000).ToString(),
+                    Explain = $"后台自动执行cmd指令\r\n目的：定时执行cmd命令\t延时间隔：{sec}秒",
+                    Name = "CMD执行",
+                    Fundata = listcmd
+                });
+                MessageBox.Show("任务添加完成！在'任务池'-'用户'项中即可查看！", "CMD执行");
+            }
+            else
+                MessageBox.Show("已经存在一个CMD执行任务，请去任务池结束后重试！", "错误");
+        }
+        /// <summary>
+        /// 终止当前选中任务
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Button_StopTask_Click(object sender, EventArgs e)
+        {
+            if(CBox_ThreadGrade.Text=="系统")
+            {
+                MessageBox.Show("很抱歉！\r\n系统任务不能终止！", "错误！");
+                return;
+            }
+            if (Program._Main.Get_ThreadDatainList(Tbox_TaskName.Text) != null)
+            {
+                //结束任务
+                ThreadData data = Program._Main.Get_ThreadDatainList(Tbox_TaskName.Text);
+                Program._Main.Set_ThreadExit(data.ID);
+                //特殊处理下
+                if(Tbox_TaskName.Text== "七牛云同步")
+                    But_qnStart.Text = "开启监控";
+            }
+            MessageBox.Show("任务终止成功！\r\n有些任务需耐心等待一会才会生效！", "提示");
+        }
+
+        private void Button_OpenLog_Click(object sender, EventArgs e)
+        {
+            string Path = "";
+            try
+            {
+                Thread_Grade grade = CBox_ThreadGrade.Text == "系统" ? Thread_Grade.system : Thread_Grade.user;
+                Path = Program.logmain.GetTaskLog(grade, Convert.ToInt32(Tbox_TaskID.Text), Tbox_TaskName.Text);
+                Process.Start(Path);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show($"打开日志错误！可能文件不存在或未找到！\r\n路径：{Path}","错误");
+            }
+
         }
     }
 }

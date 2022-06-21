@@ -34,6 +34,7 @@
             this.lab_Txt = new System.Windows.Forms.Label();
             this.lab_About = new System.Windows.Forms.Label();
             this.ToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.but_Run = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lab_Tip
@@ -47,7 +48,7 @@
             this.lab_Tip.Size = new System.Drawing.Size(50, 26);
             this.lab_Tip.TabIndex = 0;
             this.lab_Tip.Text = "标题";
-            this.lab_Tip.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lab_Tip.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lab_Txt
             // 
@@ -72,6 +73,17 @@
             this.lab_About.Text = "Computer Tools";
             this.lab_About.Click += new System.EventHandler(this.Lab_About_Click);
             // 
+            // but_Run
+            // 
+            this.but_Run.Location = new System.Drawing.Point(392, 2);
+            this.but_Run.Name = "but_Run";
+            this.but_Run.Size = new System.Drawing.Size(37, 27);
+            this.but_Run.TabIndex = 3;
+            this.but_Run.Text = "Go";
+            this.but_Run.UseVisualStyleBackColor = true;
+            this.but_Run.Visible = false;
+            this.but_Run.Click += new System.EventHandler(this.but_Run_Click);
+            // 
             // ShowBox
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -79,6 +91,7 @@
             this.BackColor = System.Drawing.Color.PaleTurquoise;
             this.ClientSize = new System.Drawing.Size(431, 61);
             this.ControlBox = false;
+            this.Controls.Add(this.but_Run);
             this.Controls.Add(this.lab_About);
             this.Controls.Add(this.lab_Txt);
             this.Controls.Add(this.lab_Tip);
@@ -107,5 +120,6 @@
         private System.Windows.Forms.Label lab_Txt;
         private System.Windows.Forms.Label lab_About;
         private System.Windows.Forms.ToolTip ToolTip;
+        private System.Windows.Forms.Button but_Run;
     }
 }

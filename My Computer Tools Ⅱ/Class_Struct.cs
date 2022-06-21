@@ -343,7 +343,7 @@ namespace My_Computer_Tools_Ⅱ
                 text = $"循环任务 {threadData.Name} 启动",
                 name = threadData.Name,
                 id = threadData.ID,
-                grade = Thread_Grade.system,
+                grade = threadData.Grade,
                 type = Log_Type.Info
             };
             Main_CW(CWdata);

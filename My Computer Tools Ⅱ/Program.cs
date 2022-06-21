@@ -38,10 +38,13 @@ namespace My_Computer_Tools_Ⅱ
         }
 
         //程序变量
-        public const string xmlname = "Account.xml";//账号的存储名字
+        public static string UpdataURL = "";
 
+        public const string xmlname = "Account.xml";//账号的存储名字
+        public static string city = "";
         public static bool backWindows_State = false;//现在是否处于后台状态
         public static bool FirstRunArg = false;//是不是自启动的程序
+        public static bool IsReadlyNET = true;//网络连接状态
         public static WindowsCommands WinCommand = new WindowsCommands();//自定义消息提示类
         public static Log logmain = new Log();//全局日志类
         public static Thread_Main _Main;//全局多线程控制
@@ -121,6 +124,18 @@ namespace My_Computer_Tools_Ⅱ
         {
             ResourceManager resourceManager = new ResourceManager(typeof(Resources));
             return (Image)resourceManager.GetObject(imageName);
+        }
+
+        /// <summary>
+        /// 检查网络通讯状态
+        /// </summary>
+        /// <returns></returns>
+        public static bool CheckNet()
+        {
+            string ret = WebPost.ApiGet("https://www.baidu.com", null);
+
+            if (ret == null) return false;
+            else return true;
         }
     }
 }

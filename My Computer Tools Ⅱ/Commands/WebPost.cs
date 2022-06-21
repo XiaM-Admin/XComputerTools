@@ -13,56 +13,70 @@ namespace My_Computer_Tools_Ⅱ
     {
         private static readonly string DefaultUserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36";
 
-        //"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; SV1; .NET CLR 1.1.4322; .NET CLR 2.0.50727)";
         private static bool CheckValidationResult(object sender, X509Certificate certificate, X509Chain chain,
             SslPolicyErrors errors)
         {
             return true; //总是接受
         }
 
-        public static string ApiPost(string url, IDictionary<string, string> parameters)
+        public static string ApiPost(string url, Dictionary<string, string> parameters)
         {
-            try
-            {
-                Encoding charset = Encoding.UTF8;
-                HttpWebRequest request = null;
-                //HTTPSQ请求
-                ServicePointManager.ServerCertificateValidationCallback = CheckValidationResult;
-                request = WebRequest.Create(url.Trim()) as HttpWebRequest;
-                request.ProtocolVersion = HttpVersion.Version10;
-                request.Method = "POST";
-                request.ContentType = "application/json;charset=utf-8";
-                request.UserAgent = DefaultUserAgent;
-
-                //如果需要POST数据
-                if (!(parameters == null || parameters.Count == 0))
+            //重试3次
+            int recount = 0;
+            while (recount < 3)
+                try
                 {
-                    var buffer = new StringBuilder();
-                    foreach (var key in parameters.Keys)
+                    Encoding charset = Encoding.UTF8;
+
+                    HttpWebRequest request = null;
+                    //HTTPSQ请求
+                    ServicePointManager.ServerCertificateValidationCallback = CheckValidationResult;
+                    request = (HttpWebRequest)WebRequest.Create(url.Trim());
+                    request.Method = "POST";
+                    request.ContentType = "application/x-www-form-urlencoded";
+                    request.UserAgent = DefaultUserAgent;
+                    request.Accept = "*/*";
+                    request.Expect = null;
+                    //如果需要POST数据
+                    if (!(parameters == null || parameters.Count == 0))
                     {
-                        buffer.AppendFormat(buffer.Length > 0 ? "&{0}={1}" : "{0}={1}", key, parameters[key]);
+                        var buffer = new StringBuilder();
+                        foreach (var key in parameters.Keys)
+                        {
+                            string str = System.Web.HttpUtility.UrlEncode(parameters[key]);
+                            buffer.AppendFormat(buffer.Length > 0 ? "&{0}={1}" : "{0}={1}", key, str);
+                        }
+
+                        byte[] data = charset.GetBytes(buffer.ToString());
+                        request.ContentLength = data.Length;
+                        request.GetRequestStream().Write(data, 0, data.Length);
                     }
-                    byte[] data = charset.GetBytes(buffer.ToString());
-                    using (var stream = request.GetRequestStream())
+                    HttpWebResponse response;
+                    try
                     {
-                        stream.Write(data, 0, data.Length);
+                        response = (HttpWebResponse)request.GetResponse();
                     }
+                    catch (WebException ex)
+                    {
+                        response = (HttpWebResponse)ex.Response;
+                        recount++;
+                        continue;
+                    }
+                    Stream htmlStream = response.GetResponseStream();
+
+                    StreamReader sr = new StreamReader(htmlStream, Encoding.UTF8);
+
+                    var html = sr.ReadToEnd();
+
+                    return html;
                 }
-                HttpWebResponse response = (request.GetResponse() as HttpWebResponse);
-
-                Stream htmlStream = response.GetResponseStream();
-
-                StreamReader sr = new StreamReader(htmlStream);
-
-                var html = sr.ReadToEnd();
-
-                return html;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"api:{url} 异常：{e.Message}");
-                return null;
-            }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"api:{url} 异常：{e.Message}");
+                    recount++;
+                    continue;
+                }
+            return null;
         }
 
         /// <summary>
@@ -73,10 +87,11 @@ namespace My_Computer_Tools_Ⅱ
             try
             {
                 string data = "";// "UserName=admin&Password=123";
-                foreach (var item in parameters)
-                {
-                    data += $"{item.Key}={item.Value}&";
-                }
+                if (parameters != null)
+                    foreach (var item in parameters)
+                    {
+                        data += $"{item.Key}={item.Value}&";
+                    }
                 if (data.Contains("&"))
                     data = data.Remove(data.Length - 1, 1);
 

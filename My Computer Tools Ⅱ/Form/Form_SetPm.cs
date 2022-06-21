@@ -19,6 +19,11 @@ namespace My_Computer_Tools_Ⅱ
         /// </summary>
         public bool UpDateWeather = false;
 
+        /// <summary>
+        /// 是否保存
+        /// </summary>
+        private bool IsUpdata = false;
+
         private void Form_SetPm_Load(object sender, EventArgs e)
         {
             //PicBox_TipFileCheck
@@ -50,32 +55,6 @@ namespace My_Computer_Tools_Ⅱ
                     settings.Default.Save();
                 }
             }
-        }
-
-        private void Form_SetPm_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            if (CBox_OpenStartRun.Checked != settings.Default.OpenStartRun)
-            {
-                settings.Default.OpenStartRun = CBox_OpenStartRun.Checked;
-                SetMeStart(CBox_OpenStartRun.Checked);
-            }
-
-            if (CBox_ShowAccinCMBS.Checked != settings.Default.ShowAccinCMBS)
-                settings.Default.ShowAccinCMBS = CBox_ShowAccinCMBS.Checked;
-
-            if (CBox_City.Text != "")
-                if (settings.Default.City != CBox_City.Text + "|" + CBox_GeographyPos.Text)
-                {
-                    settings.Default.City = CBox_City.Text + "|" + CBox_GeographyPos.Text;
-                    UpDateWeather = true;
-                }
-
-            if (settings.Default.qnUpEnd is null)
-            {
-                settings.Default.qnUpEnd = "MarkDown格式";
-            }
-
-            settings.Default.Save();
         }
 
         #region 开启自启
@@ -200,37 +179,44 @@ namespace My_Computer_Tools_Ⅱ
 
         private void CBox_GeographyPos_SelectedIndexChanged(object sender, EventArgs e)
         {
-            _ = new SetComonBoxItemCity(CBox_City, CBox_GeographyPos.Text);
+            new SetComonBoxItemCity(CBox_City, CBox_GeographyPos.Text);
+            IsUpdata = true;
         }
 
         private void CBox_UpFileCheck_CheckedChanged(object sender, EventArgs e)
         {
             settings.Default.qnUpFileCheck = CBox_qnUpFileCheck.Checked;
+            IsUpdata = true;
         }
 
         private void CheackFileNumber_ValueChanged(object sender, EventArgs e)
         {
             settings.Default.CheckFileNumber = CheackFileNumber.Value;
+            IsUpdata = true;
         }
 
         private void CBox_qnShowMesg_CheckedChanged(object sender, EventArgs e)
         {
             settings.Default.qnShowMesg = CBox_qnShowMesg.Checked;
+            IsUpdata = true;
         }
 
         private void CBox_UpEnd_SelectedIndexChanged(object sender, EventArgs e)
         {
             settings.Default.qnUpEnd = CBox_UpEnd.Text;
+            IsUpdata = true;
         }
 
         private void Number_weather_ValueChanged(object sender, EventArgs e)
         {
             settings.Default.WeatherNumber = Number_weather.Value;
+            IsUpdata = true;
         }
 
         private void Tbox_ImgUpPath_TextChanged(object sender, EventArgs e)
         {
             settings.Default.qnImgPath = Tbox_ImgUpPath.Text;
+            IsUpdata = true;
         }
 
         private void but_ReSetIni_Click(object sender, EventArgs e)
@@ -243,6 +229,73 @@ namespace My_Computer_Tools_Ⅱ
                 "选择\"确定\"，打开默认的路径！如果路径不正确，请手动寻找！", "注意：", MessageBoxButtons.OKCancel);
             if (but == DialogResult.OK)
                 Process.Start("explorer.exe", "C:\\Users\\Administrator\\AppData\\Local\\My_Computer_Tools_Ⅱ\\");
+        }
+
+        private void FailureTryNumber_ValueChanged(object sender, EventArgs e)
+        {
+            settings.Default.FailureTryNumber = FailureTryNumber.Value;
+            IsUpdata = true;
+        }
+
+        private void tbox_email_TextChanged(object sender, EventArgs e)
+        {
+            IsUpdata = true;
+        }
+
+        private void Form_SetPm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (CBox_OpenStartRun.Checked != settings.Default.OpenStartRun)
+            {
+                settings.Default.OpenStartRun = CBox_OpenStartRun.Checked;
+                IsUpdata = true;
+                SetMeStart(CBox_OpenStartRun.Checked);
+            }
+
+            if (CBox_ShowAccinCMBS.Checked != settings.Default.ShowAccinCMBS)
+            {
+                settings.Default.ShowAccinCMBS = CBox_ShowAccinCMBS.Checked;
+                IsUpdata = true;
+            }
+
+            if (CBox_City.Text != "")
+                if (settings.Default.City != CBox_City.Text + "|" + CBox_GeographyPos.Text)
+                {
+                    settings.Default.City = CBox_City.Text + "|" + CBox_GeographyPos.Text;
+                    UpDateWeather = true;
+                    IsUpdata = true;
+                }
+
+            if (settings.Default.qnUpEnd is null)
+            {
+                IsUpdata = true;
+                settings.Default.qnUpEnd = "MarkDown格式";
+            }
+
+            //校验tbox_email是否符合邮箱格式
+            if (tbox_email.Text.Length > 0)
+            {
+                if (tbox_email.Text.Contains("@") && tbox_email.Text.Contains("."))
+                {
+                    settings.Default.email = tbox_email.Text;
+                    IsUpdata = true;
+                }
+                else
+                {
+                    MessageBox.Show("邮箱格式不正确，请重新输入！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    tabControl1.SelectedIndex = 0;
+                    tbox_email.Focus();
+                    e.Cancel = true;
+                    return;
+                }
+            }
+            else
+            {
+                settings.Default.email = "";
+                IsUpdata = true;
+            }
+
+            if (IsUpdata)
+                settings.Default.Save();
         }
     }
 }

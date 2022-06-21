@@ -89,6 +89,7 @@ namespace My_Computer_Tools_Ⅱ
         private Form_Main _Main;
         private int S = 3;//显示秒
         public bool ShowNow = false;
+        private Fun_delegate_void fun_ = null;
 
         private void ShowBox_Load(object sender, EventArgs e)
         {
@@ -98,8 +99,19 @@ namespace My_Computer_Tools_Ⅱ
 
         private Thread thread;
 
-        public void Show(string Tip, string Txt, Form_Main form_Main, int S)
+        public void Show(string Tip, string Txt, Form_Main form_Main, int S, object fun = null)
         {
+            if (fun != null)
+            {
+                fun_ = (Fun_delegate_void)fun;
+                but_Run.Visible = true;
+            }
+            else
+            {
+                but_Run.Visible = false;
+                fun_ = null;
+            }
+
             if (ShowNow)
             {
                 lab_Tip.Text = Tip;
@@ -128,14 +140,20 @@ namespace My_Computer_Tools_Ⅱ
         /// </summary>
         private void ChangThisSize()
         {
+            int h = 0;
+            if (this.lab_Tip.Size.Height > this.lab_Txt.Size.Height)
+                h = this.lab_Tip.Size.Height;
+            else
+                h = this.lab_Txt.Size.Height;
+
             if (Program.backWindows_State)//主窗口在后台
             {
-                this.Size = new Size(this.Width, this.lab_Txt.Size.Height + 30);
+                this.Size = new Size(this.Width, h + 30);
                 this.Location = new Point(Screen.PrimaryScreen.WorkingArea.Size.Width - this.Width, Screen.PrimaryScreen.WorkingArea.Size.Height - this.Height);
             }
             else
             {
-                this.Size = new Size(this.Width, this.lab_Txt.Size.Height + 30);
+                this.Size = new Size(this.Width, h + 30);
                 this.Location = new Point(_Main.Location.X + (this.Width / 2), _Main.Location.Y + 1);
             }
         }
@@ -172,6 +190,14 @@ namespace My_Computer_Tools_Ⅱ
             this.Hide();
             ShowNow = false;
             thread = null;
+        }
+
+        private void but_Run_Click(object sender, EventArgs e)
+        {
+            if (fun_ != null)
+            {
+                fun_();
+            }
         }
     }
 }

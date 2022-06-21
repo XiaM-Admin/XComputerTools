@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="ProgramVer" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">T1</Value>
+      <Value Profile="(Default)">T2</Value>
     </Setting>
     <Setting Name="OpenStartRun" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -39,19 +39,31 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="CheckFileNumber" Type="System.Decimal" Scope="User">
-      <Value Profile="(Default)">10</Value>
+      <Value Profile="(Default)">2</Value>
     </Setting>
     <Setting Name="qnShowMesg" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="qnUpEnd" Type="System.String" Scope="User">
-      <Value Profile="(Default)">MarkDown格式</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="qnImgPath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="WeatherNumber" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">10</Value>
+    </Setting>
+    <Setting Name="UpDataAPI" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">https://api.github.com/repos/XiaM-Admin/XComputerTools/releases/latest</Value>
+    </Setting>
+    <Setting Name="FailureTryNumber" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">2</Value>
+    </Setting>
+    <Setting Name="email" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="RunCmdText" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

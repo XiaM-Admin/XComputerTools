@@ -109,13 +109,42 @@ namespace My_Computer_Tools_Ⅱ
 
             //限制大小
             int index = 0;
-            int endindex = retlist.Count - 10;
+            int endindex = retlist.Count - 33;
             while (index < endindex)
             {
                 retlist.RemoveAt(index);
                 endindex--;
             }
             return retlist;
+        }
+
+        /// <summary>
+        /// 返回指定任务日志文件路径
+        /// </summary>
+        /// <param name="grade">任务等级</param>
+        /// <param name="id">id</param>
+        /// <param name="taskname">任务名</param>
+        /// <returns></returns>
+        public string GetTaskLog(Thread_Grade grade, int id, string taskname)
+        {
+            string Filename = $"{id}_{taskname}_Log.txt";
+            string Filepath;
+            switch (grade)
+            {
+                case Thread_Grade.user:
+                    PathisExists(Log_User_Path);
+                    Filepath = Log_User_Path + "\\" + Filename;
+                    break;
+
+                case Thread_Grade.system:
+                    PathisExists(Log_System_Path);
+                    Filepath = Log_System_Path + "\\" + Filename;
+                    break;
+
+                default:
+                    return "";
+            }
+            return Filepath;
         }
 
         /// <summary>
