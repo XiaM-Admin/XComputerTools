@@ -60,7 +60,7 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="Qiniu, Version=8.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\Qiniu.dll</HintPath>
+      <HintPath>.\Qiniu.dll</HintPath>
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="System" />
@@ -209,6 +209,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="My Computer Tools.ico" />
+    <Content Include="Qiniu.dll" />
     <None Include="Resources\警告.png" />
     <EmbeddedResource Include="Resources\weather_99.png" />
     <None Include="Resources\weather_38.png" />
