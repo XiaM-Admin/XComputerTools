@@ -25,7 +25,7 @@ namespace My_Computer_Tools_Ⅱ.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("T2")]
+        [global::System.Configuration.DefaultSettingValueAttribute("T3")]
         public string ProgramVer {
             get {
                 return ((string)(this["ProgramVer"]));
@@ -202,7 +202,7 @@ namespace My_Computer_Tools_Ⅱ.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("MarkDownImg")]
         public string qnImgPath {
             get {
                 return ((string)(this["qnImgPath"]));
@@ -266,6 +266,78 @@ namespace My_Computer_Tools_Ⅱ.Properties {
             }
             set {
                 this["RunCmdText"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string BootRunApp {
+            get {
+                return ((string)(this["BootRunApp"]));
+            }
+            set {
+                this["BootRunApp"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool BootRun {
+            get {
+                return ((bool)(this["BootRun"]));
+            }
+            set {
+                this["BootRun"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string BootRunCmd {
+            get {
+                return ((string)(this["BootRunCmd"]));
+            }
+            set {
+                this["BootRunCmd"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public decimal BootNumber {
+            get {
+                return ((decimal)(this["BootNumber"]));
+            }
+            set {
+                this["BootNumber"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string AccEncryptPwd {
+            get {
+                return ((string)(this["AccEncryptPwd"]));
+            }
+            set {
+                this["AccEncryptPwd"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool _HotKey {
+            get {
+                return ((bool)(this["_HotKey"]));
+            }
+            set {
+                this["_HotKey"] = value;
             }
         }
     }

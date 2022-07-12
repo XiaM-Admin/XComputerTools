@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Web;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace My_Computer_Tools_Ⅱ
@@ -19,6 +19,8 @@ namespace My_Computer_Tools_Ⅱ
         /// </summary>
         private void Control_Init()
         {
+            Gbox_encrypt.BringToFront();//将控件放置所有控件最前端
+
             //标签可以单击复制 绑定函数
             this.lab_isAdmin.Click += new EventHandler(LabelClick);
             this.lab_ComputerName.Click += new EventHandler(LabelClick);
@@ -46,17 +48,17 @@ namespace My_Computer_Tools_Ⅱ
             //日月处理显示
             lab_TimeDate.Text += DateTime.Now.ToString("D") + " " + DateTime.Now.ToString("dddd");
 
-            //TODO列表划线变绿设置
+            //目标列表划线变绿设置
             StartStrikeout(1);
             StartStrikeout(2);
             StartStrikeout(3);
 
-            //初始化动态弹窗提示效果
-            WinCommand.ChangeTips("运行提示", "初始化中...", 1);
-
             //设置账号存储分类为首
             Cbox_UserClass.SelectedIndex = 0;
             CBox_ThreadGrade.SelectedIndex = 0;
+            CBox_UpAccNet.SelectedIndex = 0;
+
+            Program.AccXmlEncrypt = Program.CreaterXMLHelper().CheckNode("EncryptedData");
 
             //托盘账号菜单初始化
             AccCMBSinit(null);
@@ -66,6 +68,9 @@ namespace My_Computer_Tools_Ⅱ
                 ShowAccinCMBS();//显示账号到托盘菜单
             else
                 HideAccinCMBS();//不显示账号
+
+            //初始化动态弹窗提示效果
+            WinCommand.ChangeTips("运行提示", "初始化中...", 1);
         }
 
         /// <summary>
@@ -154,6 +159,42 @@ namespace My_Computer_Tools_Ⅱ
                     Fundata = "123123"
                 });
             }
+
+            //开机伴随启动任务
+            if (Program.FirstRunArg && Settings.Default.BootRun)
+            {
+                Console.WriteLine(Settings.Default.BootRunApp);
+                string[] strs = Settings.Default.BootRunApp.Split('\n');
+                List<string> applist = new List<string>(strs);
+                foreach (var item in applist)
+                    item.Trim();
+
+                Console.WriteLine(Settings.Default.BootRunCmd);
+                strs = Settings.Default.BootRunCmd.Split('\n');
+                List<string> cmdlist = new List<string>(strs);
+                foreach (var item in cmdlist)
+                    item.Trim();
+
+                dynamic cc = new
+                {
+                    applist,
+                    cmdlist
+                };
+
+                //添加延时任务
+                Program._Main.CreateThread(new CreateThread()
+                {
+                    Grade = Thread_Grade.user,
+                    Fun = new Fun_delegate(BootRun),
+                    RunMode = Thread_RunMode.OnlyOne,
+                    ModePar = (Settings.Default.BootNumber * 1000).ToString(),
+                    Explain = $"实现开机时自动启动其他程序或执行cmd指令\r\n延迟时间：{Settings.Default.BootNumber}秒",
+                    Name = "开机伴随启动",
+                    Fundata = cc
+                });
+            }
+
+            
         }
 
         /// <summary>
@@ -161,6 +202,16 @@ namespace My_Computer_Tools_Ⅱ
         /// </summary>
         /// <param name="obj"></param>
         private void Net_init(object obj)
+        {
+            UpDataNewTip(obj);//更新天气数据
+            UpDataWeather(obj);//重新获取公告
+        }
+
+        /// <summary>
+        /// 更新天气数据
+        /// </summary>
+        /// <param name="obj"></param>
+        private void UpDataWeather(object obj)
         {
             ThreadData data = (ThreadData)obj;
             ThreadFormData CWdata = new ThreadFormData()
@@ -170,48 +221,24 @@ namespace My_Computer_Tools_Ⅱ
                 grade = data.Grade,
             };
 
-            JObject jo;
-            //暂时没有公告可以读取的
-            string NewGG = "暂时没有想要公告的···\r\n如果想找点东西，去关于看看吧！";
-            try
-            {
-                jo = Program.SendApiGet(Settings.Default.UpDataAPI, null); // 版本信息github地址
-                if (jo is null) jo = Program.SendApiGet("https://api.x-tools.top/xcomputer/ver", null); // 备用版本信息
-               
-                if (jo?["body"] != null)
-                    NewGG = jo["body"].ToString();
-                if (jo?["name"] != null)
-                {
-                    string NewVer = jo["name"].ToString().Replace("XComputerTools ", "");
-                    if (NewVer != Settings.Default.ProgramVer)
-                    {
-                        NewGG += $"程序版本与云端不匹配！请检查是否为最新版本！\r\n当前：{Settings.Default.ProgramVer}\r\n最新：{NewVer}";
-                        Program.UpdataURL = jo["assets"][0]["browser_download_url"].ToString();
-                        Text_NewTip.Invoke(new Action(() =>
-                        {
-                            but_DownloadDATA.Visible = true;
-                        }));
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                NewGG = "获取版本公告失败！请重试~";
-            }
-            Text_NewTip.Invoke(new Action(() =>
-            {
-                Text_NewTip.Text = NewGG;
-            }));
-
-            UpFormData(CWdata, $"公告获取为：{Text_NewTip.Text}");
-
             if (!Program.IsReadlyNET)
             {
                 UpFormData(CWdata, $"程序当前无法连接至互联网！无法获取任何网络数据！");
+                //天气刷新重试
+                if (Program._Main.Get_ThreadDatainList("天气重新获取") == null)
+                    Program._Main.CreateThread(new CreateThread()
+                    {
+                        Grade = Thread_Grade.system,
+                        Fun = new Fun_delegate(UpDataWeather),
+                        RunMode = Thread_RunMode.ReOnline,
+                        ModePar = 1000.ToString(),
+                        Explain = "尝试重新获取ip天气数据",
+                        Name = "天气重新获取",
+                        Fundata = "123123"
+                    });
                 return;
             }
-
-            //取公网ip后获取城市
+            JObject jo;
             string ip = "";
             string City = "";
             if ((ip = GetPublicIp()) != "0")
@@ -246,76 +273,6 @@ namespace My_Computer_Tools_Ⅱ
 
             //如果没获取到城市信息 就用用户设置城市
             Program.city = City = City == "" ? Settings.Default.City?.Split('|')[0] : City;
-
-            if (City == "")
-            {
-                if (this.IsHandleCreated)
-                    this.Invoke(new Action(() =>
-                    {
-                        lab_HyperData.Text = $"暂时没有设置城市哦~\r\n设置后就能看到天气啦~";
-                    }));
-                return;
-            }
-
-            var ret1 = Program.SendApiGet("https://api.seniverse.com/v3/weather/now.json", new Dictionary<string, string> {
-                            { "key","S4kppU2W4Du0Nuw3J"},{"location",City},{"language","zh-Hans" },{ "unit","c"}
-                        });
-            if (ret1?["results"] != null)
-            {
-                if (this.IsHandleCreated)
-                    this.Invoke(new Action(() =>
-                    {
-                        lab_HyperData.Text = $"{City}：{ret1["results"][0]["now"]["text"]} ，温度：{ret1["results"][0]["now"]["temperature"]} ℃\r\n" +
-                                                        $"更新时间：{ret1["results"][0]["last_update"]}";
-                        NotifyIconBack.Text = "Computer Tools\r\n" + lab_HyperData.Text;
-                        PBox_Data.Image = Program.GetResourceImage($"weather_{ret1["results"][0]["now"]["code"]}");
-                    }));
-            }
-            else
-            {
-                if (this.IsHandleCreated)
-                    this.Invoke(new Action(() =>
-                    {
-                        PBox_Data.Image = Program.GetResourceImage("weather_99");
-                        lab_HyperData.Text = $"{City} \r\n暂未查询到天气数据";
-                        NotifyIconBack.Text = "Computer Tools";
-                    }));
-
-                //天气刷新重试
-                if (Program._Main.Get_ThreadDatainList("天气重新获取") == null)
-                    Program._Main.CreateThread(new CreateThread()
-                    {
-                        Grade = Thread_Grade.system,
-                        Fun = new Fun_delegate(UpDataWeather),
-                        RunMode = Thread_RunMode.OnlyOne,
-                        ModePar = (1 * 60 * 1000).ToString(),
-                        Explain = "尝试重新获取ip天气数据",
-                        Name = "天气重新获取",
-                        Fundata = "123123"
-                    });
-            }
-            UpFormData(CWdata, $"天气获取为：{lab_HyperData.Text}");
-        }
-
-        /// <summary>
-        /// 更新天气数据
-        /// </summary>
-        /// <param name="obj"></param>
-        private void UpDataWeather(object obj)
-        {
-            ThreadData data = (ThreadData)obj;
-            ThreadFormData CWdata = new ThreadFormData()
-            {
-                name = data.Name,
-                id = data.ID,
-                grade = data.Grade,
-            };
-
-            if (!Program.IsReadlyNET)
-            {
-                UpFormData(CWdata, $"程序当前无法连接至互联网！无法获取任何网络数据！");
-                return;
-            }
 
             var ret1 = Program.SendApiGet("https://api.seniverse.com/v3/weather/now.json", new Dictionary<string, string> {
                             { "key","S4kppU2W4Du0Nuw3J"},{"location",Program.city},{"language","zh-Hans" },{ "unit","c"}
@@ -355,6 +312,91 @@ namespace My_Computer_Tools_Ⅱ
                     });
             }
             UpFormData(CWdata, $"天气获取为：{lab_HyperData.Text}");
+        }
+
+        /// <summary>
+        /// 重新获取公告
+        /// </summary>
+        private void UpDataNewTip(object obj)
+        {
+            ThreadData data = (ThreadData)obj;
+            ThreadFormData CWdata = new ThreadFormData()
+            {
+                name = data.Name,
+                id = data.ID,
+                grade = data.Grade,
+            };
+
+            if (!Program.IsReadlyNET)
+            {
+                UpFormData(CWdata, $"程序当前无法连接至互联网！无法获取任何网络数据！");
+                Text_NewTip.Invoke(new Action(() =>
+                {
+                    Text_NewTip.Text = "当前无网络连接！";
+                }));
+                //重新获取公告
+                if (Program._Main.Get_ThreadDatainList("公告重新获取") == null)
+                    Program._Main.CreateThread(new CreateThread()
+                    {
+                        Grade = Thread_Grade.system,
+                        Fun = new Fun_delegate(UpDataNewTip),
+                        RunMode = Thread_RunMode.ReOnline,
+                        ModePar = 1000.ToString(),
+                        Explain = "尝试重新获取最新公告",
+                        Name = "公告重新获取",
+                        Fundata = "123123"
+                    });
+                return;
+            }
+
+            JObject jo;
+            string NewGG = "暂时没有想要公告的···\r\n如果想找点东西，去关于看看吧！";
+            try
+            {
+                jo = Program.SendApiGet(Settings.Default.UpDataAPI, null); // 版本信息github地址
+                if (jo is null) jo = Program.SendApiGet("https://api.x-tools.top/xcomputer/ver", null); // 备用版本信息
+
+                if (jo?["body"] != null)
+                    NewGG = jo["body"].ToString();
+                if (jo?["name"] != null)
+                {
+                    string NewVer = jo["name"].ToString().Replace("XComputerTools ", "");
+                    if (NewVer != Settings.Default.ProgramVer)
+                    {
+                        NewGG += $"程序版本与云端不匹配！请检查是否为最新版本！\r\n当前：{Settings.Default.ProgramVer}\r\n最新：{NewVer}";
+                        Program.UpdataURL = jo["assets"][0]["browser_download_url"].ToString();
+                        Text_NewTip.Invoke(new Action(() =>
+                        {
+                            but_DownloadDATA.Visible = true;
+                        }));
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                NewGG = "获取版本公告失败！请重试~";
+            }
+
+            if (NewGG == "暂时没有想要公告的···\r\n如果想找点东西，去关于看看吧！")
+                //重新获取公告
+                if (Program._Main.Get_ThreadDatainList("公告重新获取") == null)
+                    Program._Main.CreateThread(new CreateThread()
+                    {
+                        Grade = Thread_Grade.system,
+                        Fun = new Fun_delegate(UpDataNewTip),
+                        RunMode = Thread_RunMode.OnlyOne,
+                        ModePar = (1 * 60 * 1000).ToString(),
+                        Explain = "尝试重新获取最新公告",
+                        Name = "公告重新获取",
+                        Fundata = "123123"
+                    });
+
+            Text_NewTip.Invoke(new Action(() =>
+            {
+                Text_NewTip.Text = NewGG;
+            }));
+
+            UpFormData(CWdata, $"公告获取为：{Text_NewTip.Text}");
         }
 
         /// <summary>
@@ -427,7 +469,7 @@ namespace My_Computer_Tools_Ⅱ
         }
 
         /// <summary>
-        /// 更新！
+        /// 更新托盘账号本显示数据
         /// </summary>
         private void UpdateUserACC()
         {
@@ -458,7 +500,7 @@ namespace My_Computer_Tools_Ⅱ
         }
 
         /// <summary>
-        /// 更新All，相当于初始化
+        /// 更新托盘账号本显示数据 并且刷新ui数据
         /// </summary>
         private void UpdateUserAcc_All()
         {
@@ -486,35 +528,45 @@ namespace My_Computer_Tools_Ⅱ
                 this.Invoke(new Action(() =>
                 {
                     AcctoolStripMenuItem.DropDownItems.Clear();
+                    if (Program.AccXmlEncrypt)
+                    {
+                        ToolStripMenuItem toolStripMenuItem_user = new ToolStripMenuItem("密码本被加密");
+                        toolStripMenuItem_user.Click += new EventHandler(ToolStripMenuItemCilck);
+                        AcctoolStripMenuItem.DropDownItems.Add(toolStripMenuItem_user);
+                        return;
+                    }
+
                     //遍历所有分类class
                     ClsXMLoperate clsXM = Program.CreaterXMLHelper();
+
                     string ret = clsXM.GetNodeContent("UserInfo/Class");
-                    string[] vs = ret.Split('|');
-                    foreach (var item in vs)
-                    {
-                        //添加分类
-                        ToolStripMenuItem toolStripMenuItem = new ToolStripMenuItem(item);
-                        AcctoolStripMenuItem.DropDownItems.Add(toolStripMenuItem);
-                        //遍历分类下的账号
-                        List<string> Vsstr = clsXM.GetNodeVsStr("UserInfo/" + item);//取所有账号名
-                        foreach (string str in Vsstr)
+                    string[] vs = ret?.Split('|');
+                    if (vs != null)
+                        foreach (var item in vs)
                         {
-                            string userAcc = clsXM.GetNodeContent("UserInfo/" + item + "/" + str);//取账号数据
-                            string[] vs1 = userAcc.Split(' ');
-                            if (vs1.Length == 0)
-                                continue;
-                            ToolStripMenuItem toolStripMenuItem1 = new ToolStripMenuItem(str);
-                            toolStripMenuItem.DropDownItems.Add(toolStripMenuItem1);
+                            //添加分类
+                            ToolStripMenuItem toolStripMenuItem = new ToolStripMenuItem(item);
+                            AcctoolStripMenuItem.DropDownItems.Add(toolStripMenuItem);
+                            //遍历分类下的账号
+                            List<string> Vsstr = clsXM.GetNodeVsStr("UserInfo/" + item);//取所有账号名
+                            foreach (string str in Vsstr)
+                            {
+                                string userAcc = clsXM.GetNodeContent("UserInfo/" + item + "/" + str);//取账号数据
+                                string[] vs1 = userAcc.Split(' ');
+                                if (vs1.Length == 0)
+                                    continue;
+                                ToolStripMenuItem toolStripMenuItem1 = new ToolStripMenuItem(str);
+                                toolStripMenuItem.DropDownItems.Add(toolStripMenuItem1);
 
-                            ToolStripMenuItem toolStripMenuItem_user = new ToolStripMenuItem(vs1[0]);
-                            toolStripMenuItem_user.Click += new EventHandler(ToolStripMenuItemCilck);
-                            toolStripMenuItem1.DropDownItems.Add(toolStripMenuItem_user);
+                                ToolStripMenuItem toolStripMenuItem_user = new ToolStripMenuItem(vs1[0]);
+                                toolStripMenuItem_user.Click += new EventHandler(ToolStripMenuItemCilck);
+                                toolStripMenuItem1.DropDownItems.Add(toolStripMenuItem_user);
 
-                            ToolStripMenuItem toolStripMenuItem_pwd = new ToolStripMenuItem(vs1[1]);
-                            toolStripMenuItem_pwd.Click += new EventHandler(ToolStripMenuItemCilck);
-                            toolStripMenuItem1.DropDownItems.Add(toolStripMenuItem_pwd);
+                                ToolStripMenuItem toolStripMenuItem_pwd = new ToolStripMenuItem(vs1[1]);
+                                toolStripMenuItem_pwd.Click += new EventHandler(ToolStripMenuItemCilck);
+                                toolStripMenuItem1.DropDownItems.Add(toolStripMenuItem_pwd);
+                            }
                         }
-                    }
                 }));
             }
             catch (Exception e)
@@ -530,6 +582,18 @@ namespace My_Computer_Tools_Ⅱ
         /// <param name="e"></param>
         private void ToolStripMenuItemCilck(object sender, EventArgs e)
         {
+            if (Program.AccXmlEncrypt)
+            {
+                this.Show();
+                Program.backWindows_State = false;
+                //激活窗口 最前显示一下
+                this.TopMost = true;
+                this.TopMost = false;
+                tabControl1.SelectedIndex = 1;
+                TBox_EncryptPwd.Focus();
+                WinCommand.ChangeTips("账号本本", "密码本已加密\r\n请解锁！", 3);
+                return;
+            }
             string str = ((ToolStripMenuItem)sender).Text;
             Clipboard.SetText(str);
             WinCommand.ChangeTips($"{str}已复制");
@@ -602,7 +666,6 @@ namespace My_Computer_Tools_Ⅱ
                 default:
                     return;
             }
-            Settings.Default.Save();
         }
 
         /// <summary>
@@ -715,6 +778,10 @@ namespace My_Computer_Tools_Ⅱ
 
                     case Thread_RunMode.OnlyOne:
                         Tbox_TaskMode.Text = "延迟执行模式";
+                        break;
+
+                    case Thread_RunMode.ReOnline:
+                        Tbox_TaskMode.Text = "恢复网络执行模式";
                         break;
 
                     default:
@@ -835,7 +902,12 @@ namespace My_Computer_Tools_Ⅱ
             }
         }
 
+        /// <summary>
+        /// 校验网络连接的时间计数
+        /// </summary>
         private static int checkcount = 0;
+
+        private static int AutoEncryptedData = 0;
 
         /// <summary>
         /// 任务：主窗口控件循环
@@ -843,12 +915,6 @@ namespace My_Computer_Tools_Ⅱ
         /// <param name="obj"></param>
         private void Form_While(object obj)
         {
-            if (checkcount == 30)
-            {
-                Program.IsReadlyNET = Program.CheckNet();
-                checkcount = 0;
-            }
-
             ThreadData data = (ThreadData)obj;
             ThreadFormData CWdata = new ThreadFormData()
             {
@@ -856,6 +922,49 @@ namespace My_Computer_Tools_Ⅱ
                 id = data.ID,
                 grade = data.Grade,
             };
+
+            if (checkcount == 30)
+            {
+                Program.IsReadlyNET = Program.CheckNet();
+                if (Program.IsReadlyNET == false)
+                    NotifyIconBack.Text = "Computer Tools\r\n未连接互联网..";
+
+                if (Program.backWindows_State)//是后台才能累加
+                    AutoEncryptedData++;
+                else
+                    AutoEncryptedData = 0;
+
+                checkcount = 0;
+            }
+
+            if (AutoEncryptedData == 4)
+            {
+                Program.AccXmlEncrypt = Program.CreaterXMLHelper().CheckNode("EncryptedData");
+
+                if (!Program.AccXmlEncrypt && Settings.Default.AccEncryptPwd != "")
+                {
+                    //加密
+                    string retstr = XmlEncrypt.EncryptXml(Application.StartupPath + "\\" + Program.xmlname, Settings.Default.AccEncryptPwd, "UserInfo");
+                    if (retstr == "1")
+                    {
+                        //成功
+                        UpFormData(CWdata, $"账号本本加密成功！时间：{DateTime.Now}");
+                    }
+                    else
+                    {
+                        //失败
+                        UpFormData(CWdata, $"账号本本加密失败：{retstr}");
+                    }
+                }
+                else
+                {
+                    //未执行 或 已加密
+                    UpFormData(CWdata, $"账号本本加密未执行或已加密！");
+                }
+                AutoEncryptedData = 0;
+                Program.AccXmlEncrypt = Program.CreaterXMLHelper().CheckNode("EncryptedData");
+            }
+
             try
             {
                 if (this.IsHandleCreated)
@@ -888,7 +997,7 @@ namespace My_Computer_Tools_Ⅱ
             };
             this.Invoke(new Action(() =>
             {
-                lab_TimeDate.Text += Program.DateTime.ToString("D") + " " + Program.DateTime.ToString("dddd");
+                lab_TimeDate.Text = "日期：" + Program.DateTime.ToString("D") + " " + Program.DateTime.ToString("dddd");
             }));
             UpFormData(CWdata, $"主程序日期已刷新：{Program.DateTime}");
         }
@@ -897,7 +1006,7 @@ namespace My_Computer_Tools_Ⅱ
         /// 任务：手动上传 重试
         /// </summary>
         /// <param name="FileList"></param>
-        private void UpLoad(List<string> FileList)
+        private void UpLoad(List<string> FileList1)
         {
             OSS_QiNiuSDK oSS_QiNiu = new OSS_QiNiuSDK(Settings.Default.qiniuBucket, Settings.Default.qiniuAK, Settings.Default.qiniuSK, Settings.Default.qiniuZoneID, Settings.Default.qiniuDomain);
             if (!oSS_QiNiu.is_init)
@@ -905,87 +1014,129 @@ namespace My_Computer_Tools_Ⅱ
                 MessageBox.Show("您没有填齐相关参数！\n请填完并且上传测试成功后，再次上传！", "错误！", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            Fun_delegate fun = Program._ProgressBar.Show(this);
-            ProgressData data = new ProgressData()
-            {
-                ProgressMaxValue = FileList.Count,
-                ProgressNowValue = 0,
-                FormName = "文件同步",
-                FormPGTip = "",
-                FormText = "正在同步文件，请稍等"
-            };
-            int i = 0;
-            int TrueCount = 0;
-            int FalseCount = 0;
-            int BreakCount = 0;
-            List<string> FailureTryList = new List<string>();//失败重试队列
 
-            fun(data);
-            foreach (var item in FileList)
+            //匿名函数
+            Fun_delegate _Delegate = delegate (object obj)
             {
-                data.FormText = $"进度：{i + 1}/{FileList.Count}";
-                data.FormPGTip = $"上传进度：{i + 1}/{FileList.Count}，{item.Replace("|", "")}";
-                fun(data);
-                string ret = oSS_QiNiu.UpLoadFile(item);
-                if (ret == "1")
-                    TrueCount++;
-                else if (ret == "文件对比一致，无须上传")
-                    BreakCount++;
-                else
+                List<string> FileList = (List<string>)obj;
+                int i = 0;
+                int TrueCount = 0;
+                int FalseCount = 0;
+                int BreakCount = 0;
+                List<string> FailureTryList = new List<string>();//失败重试队列
+                this.Invoke(new Action(() =>
                 {
-                    FailureTryList.Add(item);
-                    FalseCount++;
-                }
-                i++;
-                data.ProgressNowValue = i;
-                fun(data);
-            }
-            data.FormText = "上传完毕";
-            data.FormPGTip = $"成功{TrueCount}个 跳过{BreakCount}个 失败{FalseCount}个";
-            fun(data);
-
-            i = 0;
-            int trycount = 0;
-            List<string> TryOverList = new List<string>();
-            while ((FailureTryList.Count - TryOverList.Count) > 0 && trycount < Settings.Default.FailureTryNumber)
-            {
-                TrueCount = 0;
-                FalseCount = 0;
-                BreakCount = 0;
-                data.ProgressMaxValue = FailureTryList.Count - TryOverList.Count;
-                data.ProgressNowValue = 0;
-                foreach (var item in FailureTryList)
+                    But_UpLoadFile.Text = "正在上传";
+                    ProgressBarinTool.Maximum = FileList.Count;
+                    if (!Program.backWindows_State)
+                        Program.WinCommand.ChangeTips($"开始上传{i}/{FileList.Count}");
+                    else
+                        Program.WinCommand.ChangeTips("上传进度", $"开始上传{i}/{FileList.Count}", 2);
+                }));
+                foreach (var item in FileList)
                 {
-                    data.FormText = $"重试{trycount + 1} 进度：{FailureTryList.Count - TryOverList.Count}";
-                    data.FormPGTip = $"上传进度：{FailureTryList.Count - TryOverList.Count}，{item.Replace("|", "")}";
-                    fun(data);
-                    if (!TryOverList.Contains(item))
+                    this.Invoke(new Action(() =>
                     {
-                        string ret = oSS_QiNiu.UpLoadFile(item);
-                        if (ret == "1")
+                        if (!Program.backWindows_State)
+                            Program.WinCommand.ChangeTips($"上传进度{i}/{FileList.Count}");
+                        else
+                            Program.WinCommand.ChangeTips("上传正在进行", $"上传进度{i}/{FileList.Count}\r\n{item.Split('|')[1]}", 2);
+                    }));
+                    string ret = oSS_QiNiu.UpLoadFile(item);
+                    if (ret == "1")
+                        TrueCount++;
+                    else if (ret == "文件对比一致，无须上传")
+                        BreakCount++;
+                    else
+                    {
+                        FailureTryList.Add(item);
+                        FalseCount++;
+                    }
+                    i++;
+                    this.Invoke(new Action(() =>
+                    {
+                        ProgressBarinTool.Value = i;
+                    }));
+                }
+                if (FailureTryList.Count == 0)
+                {
+                    this.Invoke(new Action(() =>
+                    {
+                        if (!Program.backWindows_State)
                         {
-                            if (!TryOverList.Contains(item)) TryOverList.Add(item);
-                            TrueCount++;
-                        }
-                        else if (ret == "文件对比一致，无须上传")
-                        {
-                            if (!TryOverList.Contains(item)) TryOverList.Add(item);
-                            BreakCount++;
+                            Program.WinCommand.ChangeTips($"Over,成功{TrueCount}个 跳过{BreakCount}个 失败{FalseCount}个");
+                            MessageBox.Show($"Over,成功{TrueCount}个 跳过{BreakCount}个 失败{FalseCount}个", "上传完毕");
                         }
                         else
-                            FalseCount++;
-                        i++;
-                    }
-                    data.ProgressNowValue = i;
+                            Program.WinCommand.ChangeTips("上传结束", $"上传完成\r\n成功{TrueCount}个\r\n跳过{BreakCount}个\r\n失败{FalseCount}个", 3);
+                    }));
                 }
-                trycount++;
-            }
-            if (FailureTryList.Count != 0)
-            {
-                data.FormText = "重试上传完毕";
-                data.FormPGTip = $"成功{TrueCount}个 跳过{BreakCount}个 失败{FalseCount}个";
-                fun(data);
-            }
+                i = 0;
+                int trycount = 0;
+                List<string> TryOverList = new List<string>();
+                while ((FailureTryList.Count - TryOverList.Count) > 0 && trycount < Settings.Default.FailureTryNumber)
+                {
+                    TrueCount = 0;
+                    FalseCount = 0;
+                    BreakCount = 0;
+                    this.Invoke(new Action(() =>
+                    {
+                        ProgressBarinTool.Maximum = FailureTryList.Count - TryOverList.Count;
+                        ProgressBarinTool.Value = 0;
+                        if (!Program.backWindows_State)
+                            Program.WinCommand.ChangeTips($"开始重试上传");
+                        else
+                            Program.WinCommand.ChangeTips("重试上传", $"开始重试上传...", 2);
+                    }));
+                    foreach (var item in FailureTryList)
+                    {
+                        this.Invoke(new Action(() =>
+                        {
+                            ProgressBarinTool.Value = i;
+                            if (!Program.backWindows_State)
+                                Program.WinCommand.ChangeTips($"开始重试上传{FailureTryList.Count - TryOverList.Count}");
+                            else
+                                Program.WinCommand.ChangeTips("重试上传", $"重试上传第{FailureTryList.Count - TryOverList.Count}个\r\n{item.Split('|')[1]}", 2);
+                        }));
+                        if (!TryOverList.Contains(item))
+                        {
+                            string ret = oSS_QiNiu.UpLoadFile(item);
+                            if (ret == "1")
+                            {
+                                if (!TryOverList.Contains(item)) TryOverList.Add(item);
+                                TrueCount++;
+                            }
+                            else if (ret == "文件对比一致，无须上传")
+                            {
+                                if (!TryOverList.Contains(item)) TryOverList.Add(item);
+                                BreakCount++;
+                            }
+                            else
+                                FalseCount++;
+                            i++;
+                        }
+                    }
+                    trycount++;
+                }
+                this.Invoke(new Action(() =>
+                {
+                    But_UpLoadFile.Text = "手动上传";
+                }));
+
+                if (FailureTryList.Count != 0)
+                {
+                    MessageBox.Show($"成功{TrueCount}个 跳过{BreakCount}个 失败{FalseCount}个", "重试上传完毕");
+                    if (!Program.backWindows_State)
+                    {
+                        MessageBox.Show($"成功{TrueCount}个 跳过{BreakCount}个 失败{FalseCount}个", "重试上传完毕");
+                        Program.WinCommand.ChangeTips($"ReOver,成功{TrueCount}个 跳过{BreakCount}个 失败{FalseCount}个");
+                    }
+                    else
+                        Program.WinCommand.ChangeTips("重试上传完成", $"重试上传结束\r\n成功{TrueCount}个\r\n跳过{BreakCount}个\r\n失败{FalseCount}个", 3);
+                }
+            };
+            Thread thread = new Thread(new ParameterizedThreadStart(_Delegate));
+            thread.Start(FileList1);
         }
 
         /// <summary>
@@ -1093,6 +1244,8 @@ namespace My_Computer_Tools_Ⅱ
         {
             Form_SetPm form = new Form_SetPm();
             form.ShowDialog();
+            CheckHotKey();
+
             if (form.UpDateWeather)
             {
                 Program._Main.CreateThread(new CreateThread()
@@ -1144,14 +1297,15 @@ namespace My_Computer_Tools_Ⅱ
             };
             UpFormData(CWdata, $"shoutdown自动关机开始执行...");
 
-            if ((bool)data.Fundata )
-                if(Settings.Default.email != null)
+            if ((bool)data.Fundata)
+                if (Settings.Default.email != null)
                 {
                     string Text = $"<p>当前时间：{DateTime.Now:yyyy年MM月dd HH时mm分ss秒}<br>您的电脑开始执行关机操作！<p>";
                     string title = "X-Tools关机提醒";
                     Commands.SendEmail(Settings.Default.email, title, Text, true);
-                }else
-                    UpFormData(CWdata, $"您勾选了邮件提示，但是没有设置邮箱！所以我们无法发送邮件提醒你~请去设置中填写邮箱！",Log_Type.Warning);
+                }
+                else
+                    UpFormData(CWdata, $"您勾选了邮件提示，但是没有设置邮箱！所以我们无法发送邮件提醒你~请去设置中填写邮箱！", Log_Type.Warning);
 
             Process p = new Process();//实例化一个独立进程
             p.StartInfo.FileName = "cmd.exe";//进程打开的文件为Cmd
@@ -1165,6 +1319,7 @@ namespace My_Computer_Tools_Ⅱ
             UpFormData(CWdata, $"既然关机了，那我也不能留下了... 我先走一步了..");
             Application.Exit();
         }
+
         /// <summary>
         /// 任务：执行cmd指令
         /// </summary>
@@ -1199,6 +1354,106 @@ namespace My_Computer_Tools_Ⅱ
                 txt = p.StandardOutput.ReadToEnd();//输出
             p.Close();
             UpFormData(CWdata, $"cmd执行记录：\r\n{txt}");
+        }
+
+        /// <summary>
+        /// 开机伴随任务
+        /// </summary>
+        /// <param name="obj"></param>
+        private void BootRun(object obj)
+        {
+            ThreadData data = (ThreadData)obj;
+            ThreadFormData CWdata = new ThreadFormData()
+            {
+                name = data.Name,
+                id = data.ID,
+                grade = data.Grade,
+            };
+            UpFormData(CWdata, $"BootRun函数、伴随任务开始执行...");
+            dynamic _data = (dynamic)data.Fundata;
+            //开启app
+            List<string> app = _data?.applist;
+            foreach (var item in app)
+            {
+                string tmp = item.Trim();
+                try
+                {
+                    UpFormData(CWdata, $"启动App：{tmp}");
+                    Process.Start(tmp);
+                }
+                catch (Exception e)
+                {
+                    UpFormData(CWdata, $"启动App异常：{e.Message}", Log_Type.Warning);
+                }
+            }
+
+            //执行cmd代码
+            List<string> cmd = _data?.cmdlist;
+            if (cmd != null && cmd.Count > 0)
+            {
+                Process p = new Process();//实例化一个独立进程
+                p.StartInfo.FileName = "cmd.exe";//进程打开的文件为Cmd
+                p.StartInfo.UseShellExecute = false;//是否启动系统外壳选否
+                p.StartInfo.RedirectStandardInput = true;//这是是否从StandardInput输入
+                p.StartInfo.RedirectStandardOutput = true;//StandardOutput输出
+                p.StartInfo.CreateNoWindow = true;//这里是否显示程序
+                p.StartInfo.StandardOutputEncoding = Encoding.UTF8;//设置编码
+                p.Start();//启动
+                foreach (var item in cmd)
+                {
+                    if (item == "")
+                        continue;
+
+                    string tmp = item.Trim();
+                    p.StandardInput.WriteLine(tmp);//运行cmd命令
+                    UpFormData(CWdata, $"执行 cmd命令：{tmp}");
+                }
+                p.StandardInput.WriteLine("exit");//退出cmd
+                string txt = "";
+                while (!p.StandardOutput.EndOfStream)
+                    txt = p.StandardOutput.ReadToEnd();//输出
+                p.Close();
+                UpFormData(CWdata, $"cmd执行记录：\r\n{txt}");
+            }
+
+            UpFormData(CWdata, $"BootRun函数、伴随任务执行完毕！");
+        }
+
+        /// <summary>
+        /// 热键回调 手动上传
+        /// </summary>
+        private void HotKeyCallBack_UpFileQN()
+        {
+            UpLoad(Get_qnFileList());
+        }
+
+        /// <summary>
+        /// 检查设置热键
+        /// </summary>
+        private void CheckHotKey()
+        {
+            if (Settings.Default._HotKey == true)
+            {
+                //注册热键
+                /*
+                 手动上传： Alt + U
+                 */
+                //Hotkey.Regist(this.Handle, HotkeyModifiers.MOD_ALT, Keys.X, Test);
+                //MessageBox.Show("Alt+X键注册完毕");
+                try
+                {
+                    Hotkey.Regist(this.Handle, HotkeyModifiers.MOD_ALT, Keys.U, HotKeyCallBack_UpFileQN);
+                }
+                catch (Exception)
+                {
+
+                }
+            }
+            else
+            {
+                //注销热键
+                Hotkey.UnRegist(this.Handle, HotKeyCallBack_UpFileQN);
+            }
         }
     }
 }

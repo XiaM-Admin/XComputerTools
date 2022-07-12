@@ -19,11 +19,6 @@ namespace My_Computer_Tools_Ⅱ
         /// </summary>
         public bool UpDateWeather = false;
 
-        /// <summary>
-        /// 是否保存
-        /// </summary>
-        private bool IsUpdata = false;
-
         private void Form_SetPm_Load(object sender, EventArgs e)
         {
             //PicBox_TipFileCheck
@@ -52,7 +47,6 @@ namespace My_Computer_Tools_Ⅱ
                 catch (Exception)
                 {
                     settings.Default.City = "";
-                    settings.Default.Save();
                 }
             }
         }
@@ -180,43 +174,36 @@ namespace My_Computer_Tools_Ⅱ
         private void CBox_GeographyPos_SelectedIndexChanged(object sender, EventArgs e)
         {
             new SetComonBoxItemCity(CBox_City, CBox_GeographyPos.Text);
-            IsUpdata = true;
         }
 
         private void CBox_UpFileCheck_CheckedChanged(object sender, EventArgs e)
         {
             settings.Default.qnUpFileCheck = CBox_qnUpFileCheck.Checked;
-            IsUpdata = true;
         }
 
         private void CheackFileNumber_ValueChanged(object sender, EventArgs e)
         {
             settings.Default.CheckFileNumber = CheackFileNumber.Value;
-            IsUpdata = true;
         }
 
         private void CBox_qnShowMesg_CheckedChanged(object sender, EventArgs e)
         {
             settings.Default.qnShowMesg = CBox_qnShowMesg.Checked;
-            IsUpdata = true;
         }
 
         private void CBox_UpEnd_SelectedIndexChanged(object sender, EventArgs e)
         {
             settings.Default.qnUpEnd = CBox_UpEnd.Text;
-            IsUpdata = true;
         }
 
         private void Number_weather_ValueChanged(object sender, EventArgs e)
         {
             settings.Default.WeatherNumber = Number_weather.Value;
-            IsUpdata = true;
         }
 
         private void Tbox_ImgUpPath_TextChanged(object sender, EventArgs e)
         {
             settings.Default.qnImgPath = Tbox_ImgUpPath.Text;
-            IsUpdata = true;
         }
 
         private void but_ReSetIni_Click(object sender, EventArgs e)
@@ -234,42 +221,21 @@ namespace My_Computer_Tools_Ⅱ
         private void FailureTryNumber_ValueChanged(object sender, EventArgs e)
         {
             settings.Default.FailureTryNumber = FailureTryNumber.Value;
-            IsUpdata = true;
-        }
-
-        private void tbox_email_TextChanged(object sender, EventArgs e)
-        {
-            IsUpdata = true;
         }
 
         private void Form_SetPm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (CBox_OpenStartRun.Checked != settings.Default.OpenStartRun)
-            {
-                settings.Default.OpenStartRun = CBox_OpenStartRun.Checked;
-                IsUpdata = true;
-                SetMeStart(CBox_OpenStartRun.Checked);
-            }
-
-            if (CBox_ShowAccinCMBS.Checked != settings.Default.ShowAccinCMBS)
-            {
-                settings.Default.ShowAccinCMBS = CBox_ShowAccinCMBS.Checked;
-                IsUpdata = true;
-            }
+            SetMeStart(settings.Default.OpenStartRun);
 
             if (CBox_City.Text != "")
                 if (settings.Default.City != CBox_City.Text + "|" + CBox_GeographyPos.Text)
                 {
                     settings.Default.City = CBox_City.Text + "|" + CBox_GeographyPos.Text;
                     UpDateWeather = true;
-                    IsUpdata = true;
                 }
 
-            if (settings.Default.qnUpEnd is null)
-            {
-                IsUpdata = true;
+            if (settings.Default.qnUpEnd == "" || CBox_UpEnd.Text == "")
                 settings.Default.qnUpEnd = "MarkDown格式";
-            }
 
             //校验tbox_email是否符合邮箱格式
             if (tbox_email.Text.Length > 0)
@@ -277,7 +243,6 @@ namespace My_Computer_Tools_Ⅱ
                 if (tbox_email.Text.Contains("@") && tbox_email.Text.Contains("."))
                 {
                     settings.Default.email = tbox_email.Text;
-                    IsUpdata = true;
                 }
                 else
                 {
@@ -289,13 +254,59 @@ namespace My_Computer_Tools_Ⅱ
                 }
             }
             else
-            {
                 settings.Default.email = "";
-                IsUpdata = true;
-            }
+        }
 
-            if (IsUpdata)
-                settings.Default.Save();
+        /// <summary>
+        /// 加密测试
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void But_AccTest_Click(object sender, EventArgs e)
+        {
+            Program.AccXmlEncrypt = Program.CreaterXMLHelper().CheckNode("EncryptedData");
+            if (Program.AccXmlEncrypt)
+            {
+                MessageBox.Show("当前账号文本已被加密！请勿重新加密！\r\n需更换密码，请先解锁！", "错误");
+                return;
+            }
+            if (settings.Default.AccEncryptPwd == "")
+            {
+                MessageBox.Show("密码不能设置空！", "错误");
+                return;
+            }
+            string retstr = XmlEncrypt.EncryptXml_test(Application.StartupPath + "\\" + Program.xmlname, settings.Default.AccEncryptPwd, "UserInfo");
+            MessageBox.Show(retstr + "\r\n如果下面的信息出现\"EncryptedData\"则加密正确！\r\n自动保存成功...", "加密后信息：");
+        }
+
+        private void TBox_EncryptPwd_TextChanged(object sender, EventArgs e)
+        {
+            settings.Default.AccEncryptPwd = TBox_EncryptPwd.Text.Trim();
+        }
+
+        /// <summary>
+        /// 手动加密
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void But_AccEncrypt_Click(object sender, EventArgs e)
+        {
+            Program.AccXmlEncrypt = Program.CreaterXMLHelper().CheckNode("EncryptedData");
+            if (Program.AccXmlEncrypt)
+            {
+                MessageBox.Show("当前账号文本已被加密！请勿重新加密！\r\n需更换密码，请先解锁！", "错误");
+                return;
+            }
+            if (settings.Default.AccEncryptPwd == "")
+            {
+                MessageBox.Show("密码不能设置空！", "错误");
+                return;
+            }
+            string retstr = XmlEncrypt.EncryptXml(Application.StartupPath + "\\" + Program.xmlname, settings.Default.AccEncryptPwd, "UserInfo");
+            if (retstr != "1")
+                MessageBox.Show(retstr, "加密失败");
+            else
+                MessageBox.Show("加密完成，去直接界面账号本本看看吧！", "加密成功");
         }
     }
 }

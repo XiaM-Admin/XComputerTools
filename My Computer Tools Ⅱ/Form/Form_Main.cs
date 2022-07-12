@@ -1,4 +1,5 @@
 ﻿using My_Computer_Tools_Ⅱ.Properties;
+using NetCommandLib;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -21,39 +22,44 @@ namespace My_Computer_Tools_Ⅱ
             Program.WinCommand = WinCommand;//同步到Program里
         }
 
-        private readonly WindowsCommands WinCommand = new WindowsCommands();//窗口控件互动类
+        /// <summary>
+        /// 窗口控件互动实例
+        /// </summary>
+        private readonly WindowsCommands WinCommand = new WindowsCommands();
 
-        private readonly ShowBox showBox_Loc;//窗口控件互动类
+        /// <summary>
+        /// 提示窗口控件互动实例
+        /// </summary>
+        private readonly ShowBox showBox_Loc;
 
-        private int UserClassindex = 0;//用户账号分类索引
+        /// <summary>
+        /// 用户账号分类索引
+        /// </summary>
+        private int UserClassindex = 0;
 
         private void Form_Main_Load(object sender, EventArgs e)
         {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
             Program.IsReadlyNET = Program.CheckNet();
+            if (Program.IsReadlyNET == false)
+                NotifyIconBack.Text = "Computer Tools\r\n未连接互联网..";
 
             Program._Main = new Thread_Main(new Fun_delegate(UpFormData), new Fun_delegate(RefreshTaskUI));
             Program._ProgressBar = new Form_ProgressBar("初始化", "正在初始化，请耐心等待。", 100, this);
             STrip_Main_init();
             Control_Init();
-            Command_Init();
-
-            //处理完毕
-            WinCommand.ChangeTips("初始化完毕");
-        }
-
-        /// <summary>
-        /// 状态栏定时器事件
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Timer_STrip_Tick(object sender, EventArgs e)
-        {
-            StaLab_Time.Text = "Time：" + DateTime.Now.ToString();
-            //日月处理显示 线程队列搞定后移动到线程中
-            lab_TimeDate.Text = "日期：" + DateTime.Now.ToString("D") + " " + DateTime.Now.ToString("dddd");
-            //日月处理显示 线程队列搞定后移动到线程中
-            if (!lab_HyperData.Text.Contains("未查询到") || !lab_HyperData.Text.Contains("天气数据"))
-                NotifyIconBack.Text = "XComputerTools\r\n" + lab_HyperData.Text;
+            //异步加载
+            Task.Run(() =>
+            {
+                Command_Init();
+            });
+            //Command_Init();
+            CheckHotKey();//热键检查
+            stopwatch.Stop();
+            Console.WriteLine("启动初始化用时 " + stopwatch.Elapsed.ToString());
+            WinCommand.ChangeTips("初始化完毕 用时：" + stopwatch.Elapsed.ToString());
         }
 
         /// <summary>
@@ -78,7 +84,12 @@ namespace My_Computer_Tools_Ⅱ
         private void 退出ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             NotifyIconBack.Visible = false;
-            Timer_STrip.Enabled = false;
+            //保存所有配置
+            Settings.Default.Save();
+
+            //加密密码本
+            if (!Program.CreaterXMLHelper().CheckNode("EncryptedData"))
+                XmlEncrypt.EncryptXml(Application.StartupPath + "\\" + Program.xmlname, Settings.Default.AccEncryptPwd, "UserInfo");
             GC.Collect();
             Application.Exit();
             Application.Exit();
@@ -128,6 +139,7 @@ namespace My_Computer_Tools_Ⅱ
             {
                 this.Show();
                 Program.backWindows_State = false;
+                tabControl1.SelectedIndex = 0;
                 //激活窗口 最前显示一下
                 this.TopMost = true;
                 this.TopMost = false;
@@ -160,11 +172,38 @@ namespace My_Computer_Tools_Ⅱ
             switch (tabControl1.SelectedIndex)
             {
                 case 1:
+                    Program.AccXmlEncrypt = Program.CreaterXMLHelper().CheckNode("EncryptedData");//被动更新
+
                     //刷新class的items！
                     Commands.CreatFile(Program.xmlname, true);
+
+                    //判断密码文件有无加密 判断 "EncryptedData"节点
+
+                    /*
+此密码本数据被加密！请输入密码解锁！\r\n
+如果您并未设置过密码，请尝试空密码直接解锁！\r\n
+解锁后请去设置中设置您自己的加密的密码！\r\n
+----------------------------------------------------\r\n
+
+                     */
+                    if (Program.AccXmlEncrypt)
+                    {
+                        TBox_EncryptTip.Text = "此密码本数据被加密！请输入密码解锁！\r\n" +
+                            "如果您并未设置过密码，请尝试空密码直接解锁！\r\n" +
+                            "解锁后请去设置中设置您自己的加密的密码！\r\n" +
+                            "------------------------------------------------\r\n";
+                        TBox_EncryptPwd.Text = "";
+                        TBox_EncryptPwd.Focus();
+                        Gbox_encrypt.Visible = true;
+                        return;
+                    }
+                    else
+                        Gbox_encrypt.Visible = false;
+
                     ClsXMLoperate clsXM = Program.CreaterXMLHelper();
                     string ret = clsXM.GetNodeContent("UserInfo/Class");
-                    string[] vs = ret.Split('|');
+                    string[] vs = ret?.Split('|');
+                    if (vs == null) break;
                     if (vs.Length != Cbox_UserClass.Items.Count)
                     {
                         Cbox_UserClass.Items.Clear();
@@ -240,8 +279,22 @@ namespace My_Computer_Tools_Ⅱ
         /// <param name="e"></param>
         private void Cbox_UserClass_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Thread thread = new Thread(UpdateUserACC);
-            thread.Start();
+            //被加密了？
+            if (Program.AccXmlEncrypt)
+            {
+                TBox_EncryptTip.Text = "此密码本数据被加密！请输入密码解锁！\r\n" +
+                    "如果您并未设置过密码，请尝试空密码直接解锁！\r\n" +
+                    "解锁后请去设置中设置您自己的加密的密码！\r\n" +
+                    "------------------------------------------------\r\n";
+                TBox_EncryptPwd.Text = "";
+                TBox_EncryptPwd.Focus();
+                Gbox_encrypt.Visible = true;
+                return;
+            }
+            else
+                Gbox_encrypt.Visible = false;
+
+            new Thread(UpdateUserACC).Start();
             UserClassindex = Cbox_UserClass.SelectedIndex;
         }
 
@@ -252,7 +305,8 @@ namespace My_Computer_Tools_Ⅱ
         /// <param name="e"></param>
         private void But_exportAcc_Click(object sender, EventArgs e)
         {
-            if (File.Exists("Account.xml"))
+            string path = Application.StartupPath + "\\" + Program.xmlname;
+            if (File.Exists(path))
             {
                 //导出文件
                 SaveFileDialog saveFileDialog = new SaveFileDialog
@@ -410,7 +464,6 @@ namespace My_Computer_Tools_Ⅱ
                     default:
                         break;
                 }
-                Settings.Default.Save();
                 WinCommand.ChangeTips($"{TBox.Text}已保存");
             }
         }
@@ -431,7 +484,6 @@ namespace My_Computer_Tools_Ⅱ
                 default:
                     break;
             }
-            Settings.Default.Save();
             WinCommand.ChangeTips($"{box.Text}已保存");
         }
 
@@ -470,7 +522,6 @@ namespace My_Computer_Tools_Ⅱ
         private void CBox_qnAutoStart_CheckedChanged(object sender, EventArgs e)
         {
             Settings.Default.qnStartFolderW = CBox_qnAutoStart.Checked;
-            Settings.Default.Save();
         }
 
         /// <summary>
@@ -511,6 +562,11 @@ namespace My_Computer_Tools_Ⅱ
             if (But_qnStart.Text == "停止监控")
             {
                 MessageBox.Show("自动监控中···\r\n两种操作不可同时进行！", "ERROR：");
+                return;
+            }
+            if (But_UpLoadFile.Text == "正在上传")
+            {
+                MessageBox.Show("您的上传任务正在进行中，如网络不好可结束程序后，重新上传。", "注意");
                 return;
             }
             if (!Program.IsReadlyNET)
@@ -842,6 +898,11 @@ namespace My_Computer_Tools_Ⅱ
             Process.Start("https://blog.x-tools.top");
         }
 
+        /// <summary>
+        /// 打开下载更新链接
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void but_DownloadDATA_Click(object sender, EventArgs e)
         {
             Process.Start(Program.UpdataURL);
@@ -865,6 +926,11 @@ namespace My_Computer_Tools_Ⅱ
             }
         }
 
+        /// <summary>
+        /// 托盘 打开图片Show
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void 图片ShowToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //刷新列表
@@ -901,12 +967,11 @@ namespace My_Computer_Tools_Ⅱ
         /// <param name="e"></param>
         private void But_shoutdown_Click(object sender, EventArgs e)
         {
-
-            int sec =Convert.ToInt32(numbermin.Value) * 60 + Convert.ToInt32(numbersec.Value);
+            int sec = Convert.ToInt32(numbermin.Value) * 60 + Convert.ToInt32(numbersec.Value);
             bool isemail = cbox_shoutdown.Checked;
-            if(sec == 0)
+            if (sec == 0)
             {
-                MessageBox.Show("延时关机暂不支持0s的关机...\r\n您可以手动关闭机器！","错误！");
+                WinCommand.ChangeTips("错误", "延时关机暂不支持0s的关机...\r\n您可以手动关闭机器！", 3, true);
                 return;
             }
             //加入到任务列表
@@ -922,10 +987,21 @@ namespace My_Computer_Tools_Ⅱ
                     Name = "延时关机",
                     Fundata = isemail
                 });
-                MessageBox.Show("任务添加完成！在'任务池'-'用户'项中即可查看！","提示");
+                WinCommand.ChangeTips("提示", "任务添加完成！\r\n在'任务池'-'用户'项中即可查看！", 3);
             }
             else
-                MessageBox.Show("已经存在一个延时关机任务，请去任务池结束后重试！","错误");
+                WinCommand.ChangeTips("错误", "已经存在一个延时关机任务，\r\n请去任务池结束后重试！", 3, true);
+        }
+
+        /// <summary>
+        /// 重构消息处理
+        /// </summary>
+        /// <param name="m"></param>
+        protected override void WndProc(ref Message m)
+        {
+            
+            base.WndProc(ref m);
+            Hotkey.ProcessHotKey(m);
         }
 
         /// <summary>
@@ -936,23 +1012,29 @@ namespace My_Computer_Tools_Ⅱ
         private void lab_ProName_Click(object sender, EventArgs e)
         {
             //其实是我测试函数的.. 不想删了
-            MessageBox.Show("人生没有捷径，就像去二仙桥，就必须要走成华大道...","Boom");
+            WinCommand.ChangeTips("Boom", "人生没有捷径\r\n就像去二仙桥\r\n就必须要走成华大道...", 3);
+            //Hotkey.Regist(this.Handle, HotkeyModifiers.MOD_ALT, Keys.X, Test);
+            //MessageBox.Show("Alt+X键注册完毕");
         }
 
+        /// <summary>
+        /// 加入cmd任务
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_cmdStart_Click(object sender, EventArgs e)
         {
             int sec = Convert.ToInt32(numbe_cmdtimemin.Value) * 60 + Convert.ToInt32(numbe_cmdtimesecc.Value);
             if (sec == 0)
             {
-                MessageBox.Show("暂不支持0s的设置...\r\n您可以手动执行cmd指令！", "错误！");
+                WinCommand.ChangeTips("错误", "暂不支持0s的设置...\r\n您可以手动执行cmd指令！", 3, true);
                 return;
             }
             if (tbox_cmdtxt.Text.Trim() == "")
             {
-                MessageBox.Show("请输入要执行的命令！", "错误！");
+                WinCommand.ChangeTips("错误", "请输入要执行的命令！", 3, true);
                 return;
             }
-            Settings.Default.Save();
             List<string> listcmd = new List<string>();
             foreach (string str in tbox_cmdtxt.Lines)
             {
@@ -974,11 +1056,12 @@ namespace My_Computer_Tools_Ⅱ
                     Name = "CMD执行",
                     Fundata = listcmd
                 });
-                MessageBox.Show("任务添加完成！在'任务池'-'用户'项中即可查看！", "CMD执行");
+                WinCommand.ChangeTips("CMD执行", "任务添加完成！\r\n在'任务池'-'用户'项中即可查看！", 3);
             }
             else
-                MessageBox.Show("已经存在一个CMD执行任务，请去任务池结束后重试！", "错误");
+                WinCommand.ChangeTips("错误", "已经存在一个CMD执行任务\r\n请去任务池结束后重试！", 3, true);
         }
+
         /// <summary>
         /// 终止当前选中任务
         /// </summary>
@@ -986,7 +1069,7 @@ namespace My_Computer_Tools_Ⅱ
         /// <param name="e"></param>
         private void Button_StopTask_Click(object sender, EventArgs e)
         {
-            if(CBox_ThreadGrade.Text=="系统")
+            if (CBox_ThreadGrade.Text == "系统")
             {
                 MessageBox.Show("很抱歉！\r\n系统任务不能终止！", "错误！");
                 return;
@@ -997,12 +1080,17 @@ namespace My_Computer_Tools_Ⅱ
                 ThreadData data = Program._Main.Get_ThreadDatainList(Tbox_TaskName.Text);
                 Program._Main.Set_ThreadExit(data.ID);
                 //特殊处理下
-                if(Tbox_TaskName.Text== "七牛云同步")
+                if (Tbox_TaskName.Text == "七牛云同步")
                     But_qnStart.Text = "开启监控";
             }
             MessageBox.Show("任务终止成功！\r\n有些任务需耐心等待一会才会生效！", "提示");
         }
 
+        /// <summary>
+        /// 任务池中查看任务日志
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_OpenLog_Click(object sender, EventArgs e)
         {
             string Path = "";
@@ -1014,9 +1102,247 @@ namespace My_Computer_Tools_Ⅱ
             }
             catch (Exception)
             {
-                MessageBox.Show($"打开日志错误！可能文件不存在或未找到！\r\n路径：{Path}","错误");
+                MessageBox.Show($"打开日志错误！可能文件不存在或未找到！\r\n路径：{Path}", "错误");
+            }
+        }
+
+        /// <summary>
+        /// 自动保存伴随任务
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CBox_bootrun_CheckedChanged(object sender, EventArgs e)
+        {
+            Settings.Default.BootRun = !Settings.Default.BootRun;
+            Settings.Default.BootNumber = numbe_BootSleep.Value;
+        }
+
+        /// <summary>
+        /// 手动保存伴随任务
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void But_BootSave_Click(object sender, EventArgs e)
+        {
+            Settings.Default.BootRun = CBox_bootrun.Checked;
+            Settings.Default.BootNumber = numbe_BootSleep.Value;
+        }
+
+        /// <summary>
+        /// 解锁密码文件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void But_DeEncrypt_Click(object sender, EventArgs e)
+        {
+            //if (TBox_EncryptPwd.Text.Trim() == "")
+            //{
+            //    WinCommand.ChangeTips("账号本本", "密码框内容不能为空！", 3, true);
+            //    TBox_EncryptTip.AppendText("错误：密码框内容不能为空！\r\n");
+            //    return;
+            //}
+
+            string retstr = XmlEncrypt.DecryptXml(Application.StartupPath + "\\" + Program.xmlname, TBox_EncryptPwd.Text);
+            if (retstr == "1")
+            {
+                WinCommand.ChangeTips("账号本本", "解锁完成！", 3);
+                TBox_EncryptTip.AppendText("提示：密码解锁完毕！\r\n请稍后...1s");
+                Task.Delay(1000).ContinueWith(t =>
+                {
+                    this.Invoke(new Action(() =>
+                    {
+                        Gbox_encrypt.Visible = false;
+                        Program.AccXmlEncrypt = Program.CreaterXMLHelper().CheckNode("EncryptedData");//被动更新
+                        //刷新class的items！
+                        Commands.CreatFile(Program.xmlname, true);
+
+                        ClsXMLoperate clsXM = Program.CreaterXMLHelper();
+                        string ret = clsXM.GetNodeContent("UserInfo/Class");
+                        string[] vs = ret?.Split('|');
+                        if (vs == null) return;
+                        if (vs.Length != Cbox_UserClass.Items.Count)
+                        {
+                            Cbox_UserClass.Items.Clear();
+                            foreach (var item in vs)
+                                Cbox_UserClass.Items.Add(item);
+                            Cbox_UserClass.SelectedIndex = UserClassindex;
+                            Accstatistical();
+                        }
+                        AccCMBSinit(null);
+                    }));
+                });
+            }
+            else
+            {
+                WinCommand.ChangeTips("账号本本", "解锁发生错误！\r\n请反馈右边提示框！", 3, true);
+                TBox_EncryptTip.AppendText("错误：解锁发生错误！请检查解锁密码！！\r\n");
+                TBox_EncryptTip.AppendText(retstr + "\r\n");
+            }
+        }
+
+        /// <summary>
+        /// 如果被加密
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AcctoolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Program.AccXmlEncrypt)
+            {
+                this.Show();
+                Program.backWindows_State = false;
+                tabControl1.SelectedIndex = 0;
+                //激活窗口 最前显示一下
+                this.TopMost = true;
+                this.TopMost = false;
+                tabControl1.SelectedIndex = 1;
+                TBox_EncryptPwd.Focus();
+                WinCommand.ChangeTips("账号本本", "密码本已加密\r\n请解锁！", 3);
+                return;
+            }
+        }
+        /// <summary>
+        /// 解锁密码回车事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TBox_EncryptPwd_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                But_DeEncrypt.PerformClick();
+            }
+        }
+        /// <summary>
+        /// 账号本本上传加密密码文件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void But_UpAccFile_Click(object sender, EventArgs e)
+        {
+            OSS_QiNiuSDK oSS_QiNiu = null;
+            switch (CBox_UpAccNet.SelectedIndex)
+            {
+                case 0://七牛云
+                    WinCommand.ChangeTips("账号同步", "开始加密同步！", 3);
+                    oSS_QiNiu = new OSS_QiNiuSDK(Settings.Default.qiniuBucket, Settings.Default.qiniuAK, Settings.Default.qiniuSK, Settings.Default.qiniuZoneID, Settings.Default.qiniuDomain);
+                    if (oSS_QiNiu.is_init == false)
+                    {
+                        WinCommand.ChangeTips("上传错误", "发生了参数缺省错误！\r\n请填写好自己的七牛云配置，\r\n并且测试通过之后，再上传！", 3, true);
+                        return;
+                    }
+                    break;
+                default:
+                    WinCommand.ChangeTips("预处理时发生错误", "发生了未知错误！\r\n你没有选中一个同步渠道！", 5, true);
+                    return;
+            }
+            //加密账号文件
+            Program.AccXmlEncrypt = Program.CreaterXMLHelper().CheckNode("EncryptedData");
+            if (!Program.AccXmlEncrypt)
+            {
+                if (Settings.Default.AccEncryptPwd == "")
+                {
+                    MessageBox.Show("未设置加密密码不可以使用此功能！\r\n请转到设置中设置好加密密码再来吧！","错误",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                    return;
+                }
+                XmlEncrypt.EncryptXml(Application.StartupPath + "\\" + Program.xmlname, Settings.Default.AccEncryptPwd, "UserInfo");
             }
 
+            //上传
+            switch (CBox_UpAccNet.SelectedIndex)
+            {
+                case 0://七牛云
+                    WinCommand.ChangeTips("账号同步", "开始上传至七牛云存储！", 3);
+                    string ret = oSS_QiNiu.UpLoadFile(Application.StartupPath + "\\" + Program.xmlname, "XAppInfo/XComputerTools_"+ Program.xmlname);
+                    if(ret != "1")
+                    {
+                        WinCommand.ChangeTips("上传错误", $"上传错误！\r\n错误信息:{ret}", 5, true);
+                        break;
+                    }
+                    WinCommand.ChangeTips("账号同步", "加密账号已上传至七牛云！", 3);
+                    break;
+                default:
+                    WinCommand.ChangeTips("上传错误", "发生了未知错误！\r\n你没有选中一个同步渠道！", 5, true);
+                    break;
+            }
+            //更新一下加密控件
+            tabControl1.SelectedIndex = 0;
+            tabControl1.SelectedIndex = 1;
+            //MessageBox.Show("账号本本上传加密密码文件");
+        }
+        /// <summary>
+        /// 账号本本下载云端文件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void But_DownAccFile_Click(object sender, EventArgs e)
+        {
+            OSS_QiNiuSDK oSS_QiNiu = null;
+            string url = "";
+            switch (CBox_UpAccNet.SelectedIndex)
+            {
+                case 0:
+                    WinCommand.ChangeTips("账号同步", "开始下载云端文件覆盖本地！", 3);
+                    oSS_QiNiu = new OSS_QiNiuSDK(Settings.Default.qiniuBucket, Settings.Default.qiniuAK, Settings.Default.qiniuSK, Settings.Default.qiniuZoneID, Settings.Default.qiniuDomain);
+                    if (oSS_QiNiu.is_init == false)
+                    {
+                        WinCommand.ChangeTips("下载错误", "发生了参数缺省错误！\r\n请填写好自己的七牛云配置，\r\n并且测试通过之后，再上传！", 3, true);
+                        return;
+                    }
+                    if(!oSS_QiNiu.HaveThisFile("XAppInfo/XComputerTools_" + Program.xmlname))
+                    {
+                        WinCommand.ChangeTips("下载错误", "云端没有账号文件！", 3, true);
+                        return;
+                    }
+                    url = oSS_QiNiu.GetKeyDownloadUrl("XAppInfo/XComputerTools_" + Program.xmlname);
+
+
+                    break;
+                default:
+                    WinCommand.ChangeTips("账号同步错误", "发生了未知错误！\r\n你没有选中一个同步渠道！", 3, true);
+                    return;
+            }
+            //下载云端文件
+            backgroundWorker = new System.ComponentModel.BackgroundWorker()
+            {
+                WorkerReportsProgress = true,
+                WorkerSupportsCancellation = false,
+            };
+
+            WebPost.Downdata downdata = new WebPost.Downdata()
+            {
+                Url = "http://" + url,
+                path = Application.StartupPath + "\\" + Program.xmlname,
+                OpenProg = true,
+                backgroundWorker = backgroundWorker,
+            };
+
+            backgroundWorker.ProgressChanged += BackgroundWorker_ProgressChanged;
+            backgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(WebPost.IThreadDownloadFile);
+            backgroundWorker.RunWorkerCompleted += (o, ea) =>
+            {
+                //如果任务异常结束 使用动态匿名对象 如果解析是不存在 则报错
+                dynamic res = ea.Result;
+                if ((bool)res?.retbool != true)
+                {
+                    WinCommand.ChangeTips("账号同步错误", $"下载发生了错误！\r\n{res?.msg}", 3, true);
+                    return;
+                }
+                else
+                {
+                    this.Invoke(new Action(() =>
+                    {
+                        WinCommand.ChangeTips("账号同步", "云端文件已覆盖到本地！\r\n请解锁使用！", 3);
+                        tabControl1.SelectedIndex = 0;
+                        tabControl1.SelectedIndex = 1;
+                    }));
+                    return;
+                }
+            };
+
+            backgroundWorker.RunWorkerAsync(downdata);
+
+            //MessageBox.Show("账号本本下载云端文件");
         }
     }
 }

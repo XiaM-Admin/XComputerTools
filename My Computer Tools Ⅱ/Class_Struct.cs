@@ -162,9 +162,30 @@ namespace My_Computer_Tools_Ⅱ
     /// timer 定时模式
     /// thread 循环模式
     /// OnlyOne 延迟执行一次
+    /// ReOnline 恢复网络后执行
     /// </summary>
     public enum Thread_RunMode
-    { timer = 0, thread = 1, OnlyOne = 2 }
+    {
+        /// <summary>
+        /// 定时模式
+        /// </summary>
+        timer = 0,
+
+        /// <summary>
+        /// 循环模式
+        /// </summary>
+        thread = 1,
+
+        /// <summary>
+        /// 延迟执行一次
+        /// </summary>
+        OnlyOne = 2,
+
+        /// <summary>
+        /// 恢复网络后执行
+        /// </summary>
+        ReOnline = 3
+    }
 
     public class ThreadFormData
     {
@@ -226,6 +247,11 @@ namespace My_Computer_Tools_Ⅱ
         /// </summary>
         private List<ThreadData> TimerDatas = new List<ThreadData>();
 
+        /// <summary>
+        /// 恢复网络执行任务列表
+        /// </summary>
+        private List<ThreadData> ReOnlineDatas = new List<ThreadData>();
+
         public Thread_Main(Fun_delegate fun, Fun_delegate UpThreadChiForm)
         {
             Count = 1;
@@ -255,22 +281,40 @@ namespace My_Computer_Tools_Ⅱ
         private void ThreadMain()
         {
             Console.WriteLine("ThreadMain 启动");
+            Task.Run(() =>
+            {
+                Console.WriteLine("开始定时、网络任务监控");
+                while (true)
+                {
+                    Thread.Sleep(1000);
+                    CheckTimerThread();
+                    CheckNetisOnline();
+                }
+            });
             while (true)
             {
-                foreach (ThreadData threadData in threadDatas)
+                try
                 {
-                    if (threadData.State == Thread_State.stop || threadData.State == Thread_State.exit)
-                        continue;
-
-                    Console.WriteLine($"当前总线程{Count} 任务名:{threadData.Name} id:{threadData.ID} 状态:{threadData.thread?.ThreadState}");//检查失效线程
-                    //运行模式为延迟执行，并且线程状态为终止count-- 线程状态设置为抛弃
-                    if (threadData.RunMode == Thread_RunMode.OnlyOne && threadData.thread.ThreadState == ThreadState.Stopped)
+                    foreach (ThreadData threadData in threadDatas)
                     {
-                        Count--;
-                        threadData.State = Thread_State.exit;
+                        if (threadData.State == Thread_State.stop || threadData.State == Thread_State.exit)
+                            continue;
+
+                        //Console.WriteLine($"当前总线程{Count} 任务名:{threadData.Name} id:{threadData.ID} 状态:{threadData.thread?.ThreadState}");//检查失效线程
+                        //运行模式为延迟执行，并且线程状态为终止count-- 线程状态设置为抛弃
+                        if (threadData.RunMode == Thread_RunMode.OnlyOne && threadData.thread.ThreadState == ThreadState.Stopped)
+                        {
+                            Count--;
+                            threadData.State = Thread_State.exit;
+                        }
                     }
                 }
-                CheckTimerThread();
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+
+                //网络监测判断
                 CheckExitThread();
                 Thread.Sleep(999);
             }
@@ -331,6 +375,40 @@ namespace My_Computer_Tools_Ⅱ
         }
 
         /// <summary>
+        /// 扫描执行网络在线任务
+        /// </summary>
+        private void CheckNetisOnline()
+        {
+            foreach (ThreadData OnlineDataTask in ReOnlineDatas)
+            {
+                if (Program.IsReadlyNET && OnlineDataTask.State != Thread_State.exit)
+                {
+                    ThreadFormData CWdata = new ThreadFormData()
+                    {
+                        name = OnlineDataTask.Name,
+                        id = OnlineDataTask.ID,
+                        grade = OnlineDataTask.Grade,
+                    };
+                    Console.WriteLine($"网络任务 {OnlineDataTask.Name} id:{OnlineDataTask.ID} 开始执行");
+                    //开启线程执行
+                    CWdata.text = $"网络任务 {OnlineDataTask.Name} id:{OnlineDataTask.ID} 开始执行";
+                    Main_CW(CWdata);
+
+                    OnlineDataTask.thread = new Thread(new ParameterizedThreadStart(OnlineDataTask.Fun))
+                    {
+                        IsBackground = true//后台线程
+                    };
+                    Task.Delay(Convert.ToInt32(OnlineDataTask.ModePar)).ContinueWith(t =>
+                    {
+                        Console.WriteLine($"{DateTime.Now}：任务{OnlineDataTask.Name}启动了，任务状态 {OnlineDataTask.thread.ThreadState}");
+                        OnlineDataTask.thread.Start(OnlineDataTask);
+                    });
+                    OnlineDataTask.State = Thread_State.exit;
+                }
+            }
+        }
+
+        /// <summary>
         /// 循环执行模式
         /// </summary>
         /// <param name="obj">ThreadData</param>
@@ -354,7 +432,18 @@ namespace My_Computer_Tools_Ⅱ
                 {
                     break;
                 }
-                threadData.Fun(threadData);
+
+                try
+                {
+                    threadData.Fun(threadData);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    CWdata.text = $"循环任务 {threadData.Name} 发生异常：{e.Message}";
+                    Main_CW(CWdata);
+                    break;
+                }
             }
 
             Console.WriteLine($"循环任务 {threadData.Name} 已结束");
@@ -425,6 +514,13 @@ namespace My_Computer_Tools_Ⅱ
                         Console.WriteLine($"{DateTime.Now}：任务{threadData.Name}启动了，任务状态 {threadData.thread.ThreadState}");
                         threadData.thread.Start(threadData);
                     });
+                    break;
+
+                case Thread_RunMode.ReOnline:
+                    Console.WriteLine($"{DateTime.Now}：任务{threadData.Name}网络恢复后执行  等待{threadData.ModePar}毫秒");
+                    CWdata.text = $"任务{threadData.Name}网络恢复后执行  等待{threadData.ModePar}毫秒";
+                    this.Main_CW(CWdata);
+                    ReOnlineDatas.Add(threadData);
                     break;
 
                 default:

@@ -42,7 +42,9 @@
             this.lab_Tip.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.lab_Tip.AutoSize = true;
+            this.lab_Tip.BackColor = System.Drawing.Color.Transparent;
             this.lab_Tip.Font = new System.Drawing.Font("微软雅黑", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lab_Tip.ForeColor = System.Drawing.Color.White;
             this.lab_Tip.Location = new System.Drawing.Point(0, 19);
             this.lab_Tip.Name = "lab_Tip";
             this.lab_Tip.Size = new System.Drawing.Size(50, 26);
@@ -54,6 +56,8 @@
             // 
             this.lab_Txt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.lab_Txt.AutoSize = true;
+            this.lab_Txt.BackColor = System.Drawing.Color.Transparent;
+            this.lab_Txt.ForeColor = System.Drawing.Color.White;
             this.lab_Txt.Location = new System.Drawing.Point(116, 9);
             this.lab_Txt.Name = "lab_Txt";
             this.lab_Txt.Size = new System.Drawing.Size(37, 20);
@@ -65,7 +69,8 @@
             // 
             this.lab_About.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lab_About.AutoSize = true;
-            this.lab_About.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.lab_About.BackColor = System.Drawing.Color.Transparent;
+            this.lab_About.ForeColor = System.Drawing.Color.White;
             this.lab_About.Location = new System.Drawing.Point(301, 38);
             this.lab_About.Name = "lab_About";
             this.lab_About.Size = new System.Drawing.Size(116, 20);
@@ -88,13 +93,15 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.PaleTurquoise;
+            this.BackColor = System.Drawing.Color.DodgerBlue;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ClientSize = new System.Drawing.Size(431, 61);
             this.ControlBox = false;
             this.Controls.Add(this.but_Run);
             this.Controls.Add(this.lab_About);
             this.Controls.Add(this.lab_Txt);
             this.Controls.Add(this.lab_Tip);
+            this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -115,11 +122,10 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Label lab_Tip;
         private System.Windows.Forms.Label lab_Txt;
         private System.Windows.Forms.Label lab_About;
         private System.Windows.Forms.ToolTip ToolTip;
         private System.Windows.Forms.Button but_Run;
+        private System.Windows.Forms.Label lab_Tip;
     }
 }

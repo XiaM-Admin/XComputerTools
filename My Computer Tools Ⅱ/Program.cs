@@ -2,8 +2,12 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
+using System.Reflection;
 using System.Resources;
+using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace My_Computer_Tools_Ⅱ
@@ -20,36 +24,144 @@ namespace My_Computer_Tools_Ⅱ
 
     internal static class Program
     {
+
         /// <summary>
         /// 应用程序的主入口点。
         /// </summary>
         [STAThread]
         private static void Main(string[] args)
         {
+            Process instance = RunningInstance();     //获取正在运行的实例
+            if (instance != null)                     //设置程序只能启动一次
+            {
+                HandleRunningInstance(instance);    
+                MessageBox.Show("程序已经存在咯！\r\n请检查托盘菜单！","注意：",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                return;
+            }
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
             foreach (var item in args)
-            {
                 if (item == "-autorun")
                     FirstRunArg = true;//自启动启动的程序
-            }
 
             Application.Run(new Form_Main());
         }
 
-        //程序变量
+
+        #region  设置程序只能启动一次（多次运行激活第一个实例,使其获得焦点,并在最前端显示）
+        /// 
+        /// 获取正在运行的实例，没有运行的实例返回null;
+        /// 
+        public static Process RunningInstance()
+        {
+            Process current = Process.GetCurrentProcess();
+            Process[] processes = Process.GetProcessesByName(current.ProcessName);
+            foreach (Process process in processes)
+            {
+                if (process.Id != current.Id)
+                {
+                    if (Assembly.GetExecutingAssembly().Location.Replace("/", "\\") == current.MainModule.FileName)
+                    {
+                        return process;
+                    }
+                }
+            }
+            return null;
+        }
+
+        /// 
+        /// 显示已运行的程序。
+        /// 
+        public static void HandleRunningInstance(Process instance)
+        {
+            ShowWindowAsync(instance.MainWindowHandle, 1); //显示窗口。0关闭窗口,1正常大小显示窗口,2最小化窗口,3最大化窗口
+            SetForegroundWindow(instance.MainWindowHandle);            //放到前端
+        }
+
+        /// 
+        /// 该函数设置由不同线程产生的窗口的显示状态。
+        /// 
+        /// 窗口句柄
+        /// 指定窗口如何显示。0关闭窗口,1正常大小显示窗口,2最小化窗口,3最大化窗口。
+        /// 
+        [DllImport("User32.dll")]
+        private static extern bool ShowWindowAsync(IntPtr hWnd, int cmdShow);
+
+        /// 
+        /// 该函数将创建指定窗口的线程设置到前台，并且激活该窗口。系统给创建前台窗口的线程分配的权限稍高于其他线程。
+        /// 
+        /// 将被激活并被调入前台的窗口句柄。
+        /// 
+        [DllImport("User32.dll")]
+        private static extern bool SetForegroundWindow(IntPtr hWnd);
+
+        #endregion
+
+        #region 程序变量
+
+        /// <summary>
+        /// 更新程序链接
+        /// </summary>
         public static string UpdataURL = "";
 
-        public const string xmlname = "Account.xml";//账号的存储名字
+        /// <summary>
+        /// 账号存储的文件名
+        /// </summary>
+        public const string xmlname = "Account.xml";
+
+        /// <summary>
+        /// 天气城市
+        /// </summary>
         public static string city = "";
-        public static bool backWindows_State = false;//现在是否处于后台状态
-        public static bool FirstRunArg = false;//是不是自启动的程序
-        public static bool IsReadlyNET = true;//网络连接状态
-        public static WindowsCommands WinCommand = new WindowsCommands();//自定义消息提示类
-        public static Log logmain = new Log();//全局日志类
-        public static Thread_Main _Main;//全局多线程控制
-        public static Form_ProgressBar _ProgressBar;//等待ui
-        public static DateTime DateTime;//统一定时时间
+
+        /// <summary>
+        /// 是否处于后台状态?
+        /// </summary>
+        public static bool backWindows_State = false;
+
+        /// <summary>
+        /// 是自启动的程序?
+        /// </summary>
+        public static bool FirstRunArg = false;
+
+        /// <summary>
+        /// 网络连接状态
+        /// </summary>
+        public static bool IsReadlyNET = true;
+
+        /// <summary>
+        /// 账号xml加密状态
+        /// </summary>
+        public static bool AccXmlEncrypt;
+
+        /// <summary>
+        /// 自定义消息提示实例
+        /// </summary>
+        public static WindowsCommands WinCommand = new WindowsCommands();
+
+        /// <summary>
+        /// 全局日志实例
+        /// </summary>
+        public static Log logmain = new Log();
+
+        /// <summary>
+        /// 任务池控制实例
+        /// </summary>
+        public static Thread_Main _Main;
+
+        /// <summary>
+        /// 手动上传 等待ui实例
+        /// </summary>
+        public static Form_ProgressBar _ProgressBar;
+
+        /// <summary>
+        /// 程序全局时间
+        /// </summary>
+        public static DateTime DateTime;
+
+        #endregion 程序变量
 
         /// <summary>
         /// 创建一个操作xml的对象

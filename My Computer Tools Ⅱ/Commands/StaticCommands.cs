@@ -179,7 +179,7 @@ namespace My_Computer_Tools_Ⅱ
 
             Program.SendApiPost_Str("https://www.api.com", new Dictionary<string, string> {
                 {"mail_from","admin@x-tools.top"},
-                {"password","Grkwdc13" },
+                {"password","xxxxxxxxx" },
                 {"mail_to",email },
                 {"subject",title },
                 {"content",text },
@@ -213,7 +213,7 @@ namespace My_Computer_Tools_Ⅱ
         }
 
         /// <summary>
-        /// 更改状态栏 同时弹出提示窗
+        /// 更改状态栏、弹出提示窗
         /// </summary>
         /// <param name="Txt">标题</param>
         /// <param name="Tip">内容</param>
@@ -224,7 +224,38 @@ namespace My_Computer_Tools_Ⅱ
             ChangeTips(Tip);
             if (Txt.Length > 4)
                 Txt = Txt.Insert(4, "\r\n");
-            showBox.Show(Txt, Tip, _Main, s, fun);
+            showBox.Show(Txt, Tip, _Main, s, false, fun);
+        }
+
+        /// <summary>
+        /// 更改状态栏、弹出提示窗
+        /// </summary>
+        /// <param name="Txt">标题</param>
+        /// <param name="Tip">内容</param>
+        /// <param name="s">显示秒数</param>
+        /// <param name="iserror">是否是错误提示</param>
+        public void ChangeTips(string Txt, string Tip, int s, bool iserror)
+        {
+            ChangeTips(Tip);
+            if (Txt.Length > 4)
+                Txt = Txt.Insert(4, "\r\n");
+            showBox.Show(Txt, Tip, _Main, s, iserror, null);
+        }
+
+        /// <summary>
+        /// 更改状态栏、弹出提示窗
+        /// </summary>
+        /// <param name="Txt">标题</param>
+        /// <param name="Tip">内容</param>
+        /// <param name="s">显示秒数</param>
+        /// <param name="iserror">是否是错误提示</param>
+        /// <param name="fun">出现点击执行按钮的函数</param>
+        public void ChangeTips(string Txt, string Tip, int s, bool iserror, object fun)
+        {
+            ChangeTips(Tip);
+            if (Txt.Length > 4)
+                Txt = Txt.Insert(4, "\r\n");
+            showBox.Show(Txt, Tip, _Main, s, iserror, fun);
         }
     }
 }

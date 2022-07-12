@@ -83,7 +83,19 @@ namespace My_Computer_Tools_Ⅱ
         /// <returns></returns>
         public string GetNodeContent(string XmlNode)
         {
-            return objXmlDoc.SelectSingleNode(XmlNode).InnerText;
+            try
+            {
+                //判断密码文件有无加密 判断 "EncryptedData"节点
+                bool isen = this.CheckNode("EncryptedData");
+                if (isen)
+                    return null;
+
+                return objXmlDoc.SelectSingleNode(XmlNode).InnerText;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -107,10 +119,13 @@ namespace My_Computer_Tools_Ⅱ
         /// <returns></returns>
         public bool CheckNode(string rootpath)
         {
-            var root = objXmlDoc.SelectSingleNode(rootpath);
-            if (root == null)
+            if (rootpath.Contains("/"))
+            {
+                var root = objXmlDoc.SelectSingleNode(rootpath);
+                if (root != null) return true;
                 return false;
-            return true;
+            }
+            return objXmlDoc.InnerXml.Contains(rootpath);
         }
 
         /// <summary>

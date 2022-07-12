@@ -36,7 +36,6 @@
             this.StaLab_LoginState = new System.Windows.Forms.ToolStripStatusLabel();
             this.StaLab_State = new System.Windows.Forms.ToolStripStatusLabel();
             this.ProgressBarinTool = new System.Windows.Forms.ToolStripProgressBar();
-            this.Timer_STrip = new System.Windows.Forms.Timer(this.components);
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabP_Home = new System.Windows.Forms.TabPage();
             this.but_DownloadDATA = new System.Windows.Forms.Button();
@@ -54,6 +53,11 @@
             this.GBox_NewTip = new System.Windows.Forms.GroupBox();
             this.Text_NewTip = new System.Windows.Forms.TextBox();
             this.tabP_UorP = new System.Windows.Forms.TabPage();
+            this.GBox_UpAccOL = new System.Windows.Forms.GroupBox();
+            this.CBox_UpAccNet = new System.Windows.Forms.ComboBox();
+            this.But_UpAccFile = new System.Windows.Forms.Button();
+            this.But_DownAccFile = new System.Windows.Forms.Button();
+            this.lab_Sptil = new System.Windows.Forms.Label();
             this.label_AccStical = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.but_Find = new System.Windows.Forms.Button();
@@ -62,14 +66,17 @@
             this.but_exportAcc = new System.Windows.Forms.Button();
             this.but_ImportAcc = new System.Windows.Forms.Button();
             this.lab_SGTip = new System.Windows.Forms.Label();
-            this.lab_UserTip = new System.Windows.Forms.Label();
-            this.lab_Sptil = new System.Windows.Forms.Label();
             this.but_ShowAccC = new System.Windows.Forms.Button();
             this.lab_AccountTip = new System.Windows.Forms.Label();
             this.lab_UserClass = new System.Windows.Forms.Label();
             this.but_ChangClass = new System.Windows.Forms.Button();
             this.Cbox_UserClass = new System.Windows.Forms.ComboBox();
             this.tlp = new System.Windows.Forms.TableLayoutPanel();
+            this.Gbox_encrypt = new System.Windows.Forms.GroupBox();
+            this.TBox_EncryptTip = new System.Windows.Forms.TextBox();
+            this.But_DeEncrypt = new System.Windows.Forms.Button();
+            this.TBox_EncryptPwd = new System.Windows.Forms.TextBox();
+            this.label18 = new System.Windows.Forms.Label();
             this.tabP_FileSyn = new System.Windows.Forms.TabPage();
             this.tabC_FileSynClass = new System.Windows.Forms.TabControl();
             this.tabP_qiniu = new System.Windows.Forms.TabPage();
@@ -100,6 +107,14 @@
             this.tabP_CustomTask = new System.Windows.Forms.TabPage();
             this.TaskTab = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.But_BootSave = new System.Windows.Forms.Button();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label14 = new System.Windows.Forms.Label();
             this.Button_cmdStart = new System.Windows.Forms.Button();
@@ -167,6 +182,10 @@
             this.Tbox_qiniuBucket = new System.Windows.Forms.TextBox();
             this.Tbox_qiniuSK = new System.Windows.Forms.TextBox();
             this.Tbox_qiniuAK = new System.Windows.Forms.TextBox();
+            this.numbe_BootSleep = new System.Windows.Forms.NumericUpDown();
+            this.TBox_Bootcmd = new System.Windows.Forms.TextBox();
+            this.TBox_bootrunapp = new System.Windows.Forms.TextBox();
+            this.CBox_bootrun = new System.Windows.Forms.CheckBox();
             this.tbox_cmdtxt = new System.Windows.Forms.TextBox();
             this.STrip_Main.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -174,6 +193,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.PBox_Data)).BeginInit();
             this.GBox_NewTip.SuspendLayout();
             this.tabP_UorP.SuspendLayout();
+            this.GBox_UpAccOL.SuspendLayout();
+            this.Gbox_encrypt.SuspendLayout();
             this.tabP_FileSyn.SuspendLayout();
             this.tabC_FileSynClass.SuspendLayout();
             this.tabP_qiniu.SuspendLayout();
@@ -183,6 +204,9 @@
             this.tabP_CustomTask.SuspendLayout();
             this.TaskTab.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.groupBox4.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numbe_cmdtimesecc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numbe_cmdtimemin)).BeginInit();
@@ -195,6 +219,7 @@
             this.groupBox1.SuspendLayout();
             this.GBox_Target.SuspendLayout();
             this.CMBS.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numbe_BootSleep)).BeginInit();
             this.SuspendLayout();
             // 
             // STrip_Main
@@ -241,11 +266,6 @@
             // 
             this.ProgressBarinTool.Name = "ProgressBarinTool";
             this.ProgressBarinTool.Size = new System.Drawing.Size(150, 16);
-            // 
-            // Timer_STrip
-            // 
-            this.Timer_STrip.Interval = 999;
-            this.Timer_STrip.Tick += new System.EventHandler(this.Timer_STrip_Tick);
             // 
             // tabControl1
             // 
@@ -405,7 +425,7 @@
             this.lab_ProName.AutoSize = true;
             this.lab_ProName.Font = new System.Drawing.Font("微软雅黑", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.lab_ProName.ForeColor = System.Drawing.Color.DarkViolet;
-            this.lab_ProName.Location = new System.Drawing.Point(479, 21);
+            this.lab_ProName.Location = new System.Drawing.Point(475, 21);
             this.lab_ProName.Name = "lab_ProName";
             this.lab_ProName.Size = new System.Drawing.Size(298, 39);
             this.lab_ProName.TabIndex = 1;
@@ -436,6 +456,8 @@
             // 
             // tabP_UorP
             // 
+            this.tabP_UorP.Controls.Add(this.GBox_UpAccOL);
+            this.tabP_UorP.Controls.Add(this.lab_Sptil);
             this.tabP_UorP.Controls.Add(this.label_AccStical);
             this.tabP_UorP.Controls.Add(this.label9);
             this.tabP_UorP.Controls.Add(this.but_Find);
@@ -444,14 +466,13 @@
             this.tabP_UorP.Controls.Add(this.but_exportAcc);
             this.tabP_UorP.Controls.Add(this.but_ImportAcc);
             this.tabP_UorP.Controls.Add(this.lab_SGTip);
-            this.tabP_UorP.Controls.Add(this.lab_UserTip);
-            this.tabP_UorP.Controls.Add(this.lab_Sptil);
             this.tabP_UorP.Controls.Add(this.but_ShowAccC);
             this.tabP_UorP.Controls.Add(this.lab_AccountTip);
             this.tabP_UorP.Controls.Add(this.lab_UserClass);
             this.tabP_UorP.Controls.Add(this.but_ChangClass);
             this.tabP_UorP.Controls.Add(this.Cbox_UserClass);
             this.tabP_UorP.Controls.Add(this.tlp);
+            this.tabP_UorP.Controls.Add(this.Gbox_encrypt);
             this.tabP_UorP.Location = new System.Drawing.Point(4, 26);
             this.tabP_UorP.Name = "tabP_UorP";
             this.tabP_UorP.Padding = new System.Windows.Forms.Padding(3);
@@ -459,6 +480,58 @@
             this.tabP_UorP.TabIndex = 1;
             this.tabP_UorP.Text = "账号本本";
             this.tabP_UorP.UseVisualStyleBackColor = true;
+            // 
+            // GBox_UpAccOL
+            // 
+            this.GBox_UpAccOL.Controls.Add(this.CBox_UpAccNet);
+            this.GBox_UpAccOL.Controls.Add(this.But_UpAccFile);
+            this.GBox_UpAccOL.Controls.Add(this.But_DownAccFile);
+            this.GBox_UpAccOL.Location = new System.Drawing.Point(6, 324);
+            this.GBox_UpAccOL.Name = "GBox_UpAccOL";
+            this.GBox_UpAccOL.Size = new System.Drawing.Size(145, 85);
+            this.GBox_UpAccOL.TabIndex = 18;
+            this.GBox_UpAccOL.TabStop = false;
+            this.GBox_UpAccOL.Text = "云同步";
+            // 
+            // CBox_UpAccNet
+            // 
+            this.CBox_UpAccNet.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CBox_UpAccNet.FormattingEnabled = true;
+            this.CBox_UpAccNet.Items.AddRange(new object[] {
+            "七牛云"});
+            this.CBox_UpAccNet.Location = new System.Drawing.Point(9, 19);
+            this.CBox_UpAccNet.Name = "CBox_UpAccNet";
+            this.CBox_UpAccNet.Size = new System.Drawing.Size(121, 25);
+            this.CBox_UpAccNet.TabIndex = 0;
+            // 
+            // But_UpAccFile
+            // 
+            this.But_UpAccFile.Location = new System.Drawing.Point(14, 50);
+            this.But_UpAccFile.Name = "But_UpAccFile";
+            this.But_UpAccFile.Size = new System.Drawing.Size(53, 23);
+            this.But_UpAccFile.TabIndex = 1;
+            this.But_UpAccFile.Text = "上传";
+            this.But_UpAccFile.UseVisualStyleBackColor = true;
+            this.But_UpAccFile.Click += new System.EventHandler(this.But_UpAccFile_Click);
+            // 
+            // But_DownAccFile
+            // 
+            this.But_DownAccFile.Location = new System.Drawing.Point(72, 50);
+            this.But_DownAccFile.Name = "But_DownAccFile";
+            this.But_DownAccFile.Size = new System.Drawing.Size(53, 23);
+            this.But_DownAccFile.TabIndex = 2;
+            this.But_DownAccFile.Text = "下载";
+            this.But_DownAccFile.UseVisualStyleBackColor = true;
+            this.But_DownAccFile.Click += new System.EventHandler(this.But_DownAccFile_Click);
+            // 
+            // lab_Sptil
+            // 
+            this.lab_Sptil.AutoSize = true;
+            this.lab_Sptil.Location = new System.Drawing.Point(154, 2);
+            this.lab_Sptil.Name = "lab_Sptil";
+            this.lab_Sptil.Size = new System.Drawing.Size(11, 408);
+            this.lab_Sptil.TabIndex = 7;
+            this.lab_Sptil.Text = "|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|";
             // 
             // label_AccStical
             // 
@@ -536,27 +609,6 @@
             this.lab_SGTip.TabIndex = 9;
             this.lab_SGTip.Text = "— 导入导出";
             // 
-            // lab_UserTip
-            // 
-            this.lab_UserTip.AutoSize = true;
-            this.lab_UserTip.ForeColor = System.Drawing.Color.Red;
-            this.lab_UserTip.Location = new System.Drawing.Point(3, 323);
-            this.lab_UserTip.Name = "lab_UserTip";
-            this.lab_UserTip.Size = new System.Drawing.Size(152, 85);
-            this.lab_UserTip.TabIndex = 8;
-            this.lab_UserTip.Text = "注意：\r\n此程序不会将用户账号\r\n进行上传，修改等！\r\n代码开源！\r\n不放心可以不使用此功能！";
-            this.lab_UserTip.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // lab_Sptil
-            // 
-            this.lab_Sptil.AutoSize = true;
-            this.lab_Sptil.Location = new System.Drawing.Point(151, -29);
-            this.lab_Sptil.Name = "lab_Sptil";
-            this.lab_Sptil.Size = new System.Drawing.Size(11, 544);
-            this.lab_Sptil.TabIndex = 7;
-            this.lab_Sptil.Text = "|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n" +
-    "|\r\n|\r\n|\r\n|\r\n|\r\n";
-            // 
             // but_ShowAccC
             // 
             this.but_ShowAccC.Location = new System.Drawing.Point(12, 90);
@@ -600,7 +652,7 @@
             this.Cbox_UserClass.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.Cbox_UserClass.FormattingEnabled = true;
             this.Cbox_UserClass.Items.AddRange(new object[] {
-            "未分类"});
+            "defualt"});
             this.Cbox_UserClass.Location = new System.Drawing.Point(12, 39);
             this.Cbox_UserClass.Name = "Cbox_UserClass";
             this.Cbox_UserClass.Size = new System.Drawing.Size(109, 25);
@@ -624,6 +676,66 @@
             this.tlp.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlp.Size = new System.Drawing.Size(620, 403);
             this.tlp.TabIndex = 0;
+            // 
+            // Gbox_encrypt
+            // 
+            this.Gbox_encrypt.Controls.Add(this.TBox_EncryptTip);
+            this.Gbox_encrypt.Controls.Add(this.But_DeEncrypt);
+            this.Gbox_encrypt.Controls.Add(this.TBox_EncryptPwd);
+            this.Gbox_encrypt.Controls.Add(this.label18);
+            this.Gbox_encrypt.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Gbox_encrypt.Location = new System.Drawing.Point(3, 3);
+            this.Gbox_encrypt.Name = "Gbox_encrypt";
+            this.Gbox_encrypt.Size = new System.Drawing.Size(787, 409);
+            this.Gbox_encrypt.TabIndex = 17;
+            this.Gbox_encrypt.TabStop = false;
+            this.Gbox_encrypt.Text = "解密此账号文件";
+            this.Gbox_encrypt.Visible = false;
+            // 
+            // TBox_EncryptTip
+            // 
+            this.TBox_EncryptTip.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.TBox_EncryptTip.Location = new System.Drawing.Point(215, 16);
+            this.TBox_EncryptTip.Multiline = true;
+            this.TBox_EncryptTip.Name = "TBox_EncryptTip";
+            this.TBox_EncryptTip.ReadOnly = true;
+            this.TBox_EncryptTip.Size = new System.Drawing.Size(565, 387);
+            this.TBox_EncryptTip.TabIndex = 3;
+            this.TBox_EncryptTip.Text = "此密码本数据被加密！请输入密码解锁！\r\n如果您并未设置过密码，请尝试空密码直接解锁！\r\n解锁后请去设置中设置您自己的加密的密码！\r\n---------------" +
+    "-------------------------------------\r\n";
+            // 
+            // But_DeEncrypt
+            // 
+            this.But_DeEncrypt.Font = new System.Drawing.Font("微软雅黑", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.But_DeEncrypt.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.But_DeEncrypt.Location = new System.Drawing.Point(25, 222);
+            this.But_DeEncrypt.Name = "But_DeEncrypt";
+            this.But_DeEncrypt.Size = new System.Drawing.Size(161, 38);
+            this.But_DeEncrypt.TabIndex = 2;
+            this.But_DeEncrypt.Text = "解锁";
+            this.But_DeEncrypt.UseVisualStyleBackColor = true;
+            this.But_DeEncrypt.Click += new System.EventHandler(this.But_DeEncrypt_Click);
+            // 
+            // TBox_EncryptPwd
+            // 
+            this.TBox_EncryptPwd.Location = new System.Drawing.Point(25, 181);
+            this.TBox_EncryptPwd.Name = "TBox_EncryptPwd";
+            this.TBox_EncryptPwd.PasswordChar = '*';
+            this.TBox_EncryptPwd.Size = new System.Drawing.Size(159, 23);
+            this.TBox_EncryptPwd.TabIndex = 1;
+            this.TBox_EncryptPwd.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TBox_EncryptPwd_KeyDown);
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label18.ForeColor = System.Drawing.Color.IndianRed;
+            this.label18.Location = new System.Drawing.Point(23, 111);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(163, 40);
+            this.label18.TabIndex = 0;
+            this.label18.Text = "你的账号文件已被加密\r\n输入设置的密码即可查看";
+            this.label18.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // tabP_FileSyn
             // 
@@ -926,6 +1038,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.groupBox4);
             this.tabPage1.Controls.Add(this.groupBox3);
             this.tabPage1.Controls.Add(this.groupBox2);
             this.tabPage1.Location = new System.Drawing.Point(4, 4);
@@ -935,6 +1048,94 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "杂项";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.But_BootSave);
+            this.groupBox4.Controls.Add(this.label17);
+            this.groupBox4.Controls.Add(this.numbe_BootSleep);
+            this.groupBox4.Controls.Add(this.label16);
+            this.groupBox4.Controls.Add(this.groupBox6);
+            this.groupBox4.Controls.Add(this.groupBox5);
+            this.groupBox4.Controls.Add(this.CBox_bootrun);
+            this.groupBox4.Location = new System.Drawing.Point(212, 6);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(425, 271);
+            this.groupBox4.TabIndex = 2;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "开机后执行";
+            // 
+            // But_BootSave
+            // 
+            this.But_BootSave.Location = new System.Drawing.Point(6, 241);
+            this.But_BootSave.Name = "But_BootSave";
+            this.But_BootSave.Size = new System.Drawing.Size(75, 23);
+            this.But_BootSave.TabIndex = 7;
+            this.But_BootSave.Text = "保存";
+            this.But_BootSave.UseVisualStyleBackColor = true;
+            this.But_BootSave.Click += new System.EventHandler(this.But_BootSave_Click);
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(245, 243);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(44, 17);
+            this.label17.TabIndex = 6;
+            this.label17.Text = "秒执行";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(166, 243);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(32, 17);
+            this.label16.TabIndex = 3;
+            this.label16.Text = "延迟";
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.label15);
+            this.groupBox6.Controls.Add(this.TBox_Bootcmd);
+            this.groupBox6.Location = new System.Drawing.Point(216, 22);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(204, 214);
+            this.groupBox6.TabIndex = 2;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "开机执行Cmd指令";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.ForeColor = System.Drawing.Color.OrangeRed;
+            this.label15.Location = new System.Drawing.Point(58, 172);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(93, 34);
+            this.label15.TabIndex = 9;
+            this.label15.Text = "填写cmd指令！\r\n一行一句！";
+            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.label8);
+            this.groupBox5.Controls.Add(this.TBox_bootrunapp);
+            this.groupBox5.Location = new System.Drawing.Point(6, 22);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(204, 214);
+            this.groupBox5.TabIndex = 1;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "开机执行打开App";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.ForeColor = System.Drawing.Color.OrangeRed;
+            this.label8.Location = new System.Drawing.Point(18, 172);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(164, 34);
+            this.label8.TabIndex = 9;
+            this.label8.Text = "填写可执行程序路径或网址！\r\n一行一个！";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // groupBox3
             // 
@@ -1341,7 +1542,7 @@
             this.linkLabel_BLogLink.AutoSize = true;
             this.linkLabel_BLogLink.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.linkLabel_BLogLink.LinkColor = System.Drawing.SystemColors.MenuHighlight;
-            this.linkLabel_BLogLink.Location = new System.Drawing.Point(30, 132);
+            this.linkLabel_BLogLink.Location = new System.Drawing.Point(109, 162);
             this.linkLabel_BLogLink.Name = "linkLabel_BLogLink";
             this.linkLabel_BLogLink.Size = new System.Drawing.Size(65, 20);
             this.linkLabel_BLogLink.TabIndex = 13;
@@ -1355,7 +1556,7 @@
             this.linkLabel_WaiIpLink.AutoSize = true;
             this.linkLabel_WaiIpLink.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.linkLabel_WaiIpLink.LinkColor = System.Drawing.SystemColors.MenuHighlight;
-            this.linkLabel_WaiIpLink.Location = new System.Drawing.Point(225, 230);
+            this.linkLabel_WaiIpLink.Location = new System.Drawing.Point(304, 260);
             this.linkLabel_WaiIpLink.Name = "linkLabel_WaiIpLink";
             this.linkLabel_WaiIpLink.Size = new System.Drawing.Size(86, 20);
             this.linkLabel_WaiIpLink.TabIndex = 12;
@@ -1369,7 +1570,7 @@
             this.linkLabel_TaoBaoAPILink.AutoSize = true;
             this.linkLabel_TaoBaoAPILink.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.linkLabel_TaoBaoAPILink.LinkColor = System.Drawing.SystemColors.MenuHighlight;
-            this.linkLabel_TaoBaoAPILink.Location = new System.Drawing.Point(222, 249);
+            this.linkLabel_TaoBaoAPILink.Location = new System.Drawing.Point(301, 279);
             this.linkLabel_TaoBaoAPILink.Name = "linkLabel_TaoBaoAPILink";
             this.linkLabel_TaoBaoAPILink.Size = new System.Drawing.Size(92, 20);
             this.linkLabel_TaoBaoAPILink.TabIndex = 11;
@@ -1383,7 +1584,7 @@
             this.linkLabel_QNSDKLink.AutoSize = true;
             this.linkLabel_QNSDKLink.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.linkLabel_QNSDKLink.LinkColor = System.Drawing.SystemColors.MenuHighlight;
-            this.linkLabel_QNSDKLink.Location = new System.Drawing.Point(220, 209);
+            this.linkLabel_QNSDKLink.Location = new System.Drawing.Point(299, 239);
             this.linkLabel_QNSDKLink.Name = "linkLabel_QNSDKLink";
             this.linkLabel_QNSDKLink.Size = new System.Drawing.Size(96, 20);
             this.linkLabel_QNSDKLink.TabIndex = 10;
@@ -1397,7 +1598,7 @@
             this.linkLabel_WeatherLink.AutoSize = true;
             this.linkLabel_WeatherLink.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.linkLabel_WeatherLink.LinkColor = System.Drawing.SystemColors.MenuHighlight;
-            this.linkLabel_WeatherLink.Location = new System.Drawing.Point(235, 187);
+            this.linkLabel_WeatherLink.Location = new System.Drawing.Point(314, 217);
             this.linkLabel_WeatherLink.Name = "linkLabel_WeatherLink";
             this.linkLabel_WeatherLink.Size = new System.Drawing.Size(65, 20);
             this.linkLabel_WeatherLink.TabIndex = 9;
@@ -1450,7 +1651,7 @@
             // 
             this.lab_MySaid.AutoSize = true;
             this.lab_MySaid.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lab_MySaid.Location = new System.Drawing.Point(30, 28);
+            this.lab_MySaid.Location = new System.Drawing.Point(109, 58);
             this.lab_MySaid.Name = "lab_MySaid";
             this.lab_MySaid.Size = new System.Drawing.Size(289, 240);
             this.lab_MySaid.TabIndex = 6;
@@ -1545,6 +1746,7 @@
             this.AcctoolStripMenuItem.Name = "AcctoolStripMenuItem";
             this.AcctoolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.AcctoolStripMenuItem.Text = "账号本本";
+            this.AcctoolStripMenuItem.Click += new System.EventHandler(this.AcctoolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
@@ -1649,6 +1851,56 @@
             this.Tbox_qiniuAK.Text = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.qiniuAK;
             this.Tbox_qiniuAK.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextEnterSave);
             // 
+            // numbe_BootSleep
+            // 
+            this.numbe_BootSleep.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "BootNumber", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.numbe_BootSleep.Location = new System.Drawing.Point(199, 240);
+            this.numbe_BootSleep.Maximum = new decimal(new int[] {
+            120,
+            0,
+            0,
+            0});
+            this.numbe_BootSleep.Name = "numbe_BootSleep";
+            this.numbe_BootSleep.Size = new System.Drawing.Size(44, 23);
+            this.numbe_BootSleep.TabIndex = 4;
+            this.numbe_BootSleep.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numbe_BootSleep.Value = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.BootNumber;
+            // 
+            // TBox_Bootcmd
+            // 
+            this.TBox_Bootcmd.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "BootRunCmd", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.TBox_Bootcmd.Location = new System.Drawing.Point(6, 22);
+            this.TBox_Bootcmd.Multiline = true;
+            this.TBox_Bootcmd.Name = "TBox_Bootcmd";
+            this.TBox_Bootcmd.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.TBox_Bootcmd.Size = new System.Drawing.Size(188, 147);
+            this.TBox_Bootcmd.TabIndex = 8;
+            this.TBox_Bootcmd.Text = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.BootRunCmd;
+            // 
+            // TBox_bootrunapp
+            // 
+            this.TBox_bootrunapp.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "BootRunApp", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.TBox_bootrunapp.Location = new System.Drawing.Point(6, 22);
+            this.TBox_bootrunapp.Multiline = true;
+            this.TBox_bootrunapp.Name = "TBox_bootrunapp";
+            this.TBox_bootrunapp.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.TBox_bootrunapp.Size = new System.Drawing.Size(188, 147);
+            this.TBox_bootrunapp.TabIndex = 8;
+            this.TBox_bootrunapp.Text = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.BootRunApp;
+            // 
+            // CBox_bootrun
+            // 
+            this.CBox_bootrun.AutoSize = true;
+            this.CBox_bootrun.Checked = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.BootRun;
+            this.CBox_bootrun.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "BootRun", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.CBox_bootrun.Location = new System.Drawing.Point(308, 242);
+            this.CBox_bootrun.Name = "CBox_bootrun";
+            this.CBox_bootrun.Size = new System.Drawing.Size(111, 21);
+            this.CBox_bootrun.TabIndex = 0;
+            this.CBox_bootrun.Text = "下次开机时执行";
+            this.CBox_bootrun.UseVisualStyleBackColor = true;
+            this.CBox_bootrun.CheckedChanged += new System.EventHandler(this.CBox_bootrun_CheckedChanged);
+            // 
             // tbox_cmdtxt
             // 
             this.tbox_cmdtxt.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "RunCmdText", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
@@ -1688,6 +1940,9 @@
             this.GBox_NewTip.PerformLayout();
             this.tabP_UorP.ResumeLayout(false);
             this.tabP_UorP.PerformLayout();
+            this.GBox_UpAccOL.ResumeLayout(false);
+            this.Gbox_encrypt.ResumeLayout(false);
+            this.Gbox_encrypt.PerformLayout();
             this.tabP_FileSyn.ResumeLayout(false);
             this.tabC_FileSynClass.ResumeLayout(false);
             this.tabP_qiniu.ResumeLayout(false);
@@ -1699,6 +1954,12 @@
             this.tabP_CustomTask.ResumeLayout(false);
             this.TaskTab.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numbe_cmdtimesecc)).EndInit();
@@ -1716,6 +1977,7 @@
             this.groupBox1.ResumeLayout(false);
             this.GBox_Target.ResumeLayout(false);
             this.CMBS.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.numbe_BootSleep)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1725,7 +1987,6 @@
 
         private System.Windows.Forms.StatusStrip STrip_Main;
         private System.Windows.Forms.ToolStripStatusLabel StaLab_Time;
-        private System.Windows.Forms.Timer Timer_STrip;
         private System.Windows.Forms.ToolStripStatusLabel StaLab_Spilt1;
         private System.Windows.Forms.ToolStripStatusLabel StaLab_LoginState;
         private System.Windows.Forms.TabControl tabControl1;
@@ -1757,7 +2018,6 @@
         private System.Windows.Forms.Button but_ShowAccC;
         private System.Windows.Forms.Label lab_AccountTip;
         private System.Windows.Forms.Label lab_Sptil;
-        private System.Windows.Forms.Label lab_UserTip;
         private System.Windows.Forms.Label lab_SGTip;
         private System.Windows.Forms.Button but_exportAcc;
         private System.Windows.Forms.Button but_ImportAcc;
@@ -1818,7 +2078,6 @@
         private System.Windows.Forms.Button But_DownloadFile;
         private System.Windows.Forms.Button But_GetFileDownloadurl;
         public System.Windows.Forms.ToolStripProgressBar ProgressBarinTool;
-        private System.ComponentModel.BackgroundWorker backgroundWorker;
         private System.Windows.Forms.ToolStripMenuItem 设置toolStripMenuItem;
         private System.Windows.Forms.Button but_qnclipboard;
         private System.Windows.Forms.Button but_Set;
@@ -1861,5 +2120,27 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Button Button_StopTask;
         private System.Windows.Forms.Button Button_OpenLog;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.CheckBox CBox_bootrun;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.TextBox TBox_bootrunapp;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.TextBox TBox_Bootcmd;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.NumericUpDown numbe_BootSleep;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Button But_BootSave;
+        private System.Windows.Forms.GroupBox Gbox_encrypt;
+        private System.Windows.Forms.TextBox TBox_EncryptPwd;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Button But_DeEncrypt;
+        private System.Windows.Forms.TextBox TBox_EncryptTip;
+        private System.ComponentModel.BackgroundWorker backgroundWorker;
+        private System.Windows.Forms.GroupBox GBox_UpAccOL;
+        private System.Windows.Forms.ComboBox CBox_UpAccNet;
+        private System.Windows.Forms.Button But_UpAccFile;
+        private System.Windows.Forms.Button But_DownAccFile;
     }
 }

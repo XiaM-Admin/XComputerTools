@@ -1,7 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Management;
+using System.Runtime.InteropServices;
+using System.Security.Cryptography;
+using System.Security.Cryptography.Xml;
+using System.Text;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace NetCommandLib
 {
@@ -176,7 +183,10 @@ namespace NetCommandLib
             }
         }
 
-        //获得Ip地址
+        /// <summary>
+        /// 获得Ip地址
+        /// </summary>
+        /// <returns></returns>
         private string GetIPAddress()
         {
             try
@@ -321,6 +331,9 @@ namespace NetCommandLib
         }
     }
 
+    /// <summary>
+    /// 心知天气免费版本支持城市
+    /// </summary>
     public class SetComonBoxItemCity
     {
         //北京
@@ -959,4 +972,343 @@ namespace NetCommandLib
             }
         }
     }
+
+    /// <summary>
+    /// 字符串等加解密
+    /// </summary>
+    public class Encrypt
+    {
+        private static Encoding encoding = Encoding.UTF8;
+
+        /// <summary>
+        /// 加密字符串
+        /// </summary>
+        /// <param name="encryptString">需加密的字符串</param>
+        /// <param name="key">秘钥</param>
+        /// <returns></returns>
+        public static string EncryptDES(string encryptString, string key)
+        {
+            var input = encoding.GetBytes(encryptString);
+            var ouptputData = ProcessDES(input, key, true);
+            var outputStr = Convert.ToBase64String(ouptputData);
+
+            return outputStr.Replace('/', '@');
+        }
+
+        /// <summary>
+        /// 解密字符串
+        /// </summary>
+        /// <param name="decryptString">需解密的字符串</param>
+        /// <param name="key">秘钥</param>
+        /// <returns></returns>
+        public static string DecryptDES(string decryptString, string key)
+        {
+            decryptString = decryptString.Replace('@', '/');
+
+            var input = Convert.FromBase64String(decryptString);
+            var data = ProcessDES(input, key, false);
+            return encoding.GetString(data);
+        }
+
+        private static byte[] ProcessDES(byte[] data, string key, bool isEncrypt)
+        {
+            using (var dCSP = new DESCryptoServiceProvider())
+            {
+                var keyData = Md5(key);
+                var rgbKey = new ArraySegment<byte>(keyData, 0, 8).ToArray();
+                var rgbIV = new ArraySegment<byte>(keyData, 8, 8).ToArray();
+                var dCSPKey = isEncrypt ? dCSP.CreateEncryptor(rgbKey, rgbIV) : dCSP.CreateDecryptor(rgbKey, rgbIV);
+
+                using (var memory = new MemoryStream())
+                using (var cStream = new CryptoStream(memory, dCSPKey, CryptoStreamMode.Write))
+                {
+                    cStream.Write(data, 0, data.Length);
+                    cStream.FlushFinalBlock();
+                    return memory.ToArray();
+                }
+            }
+        }
+
+        public static byte[] Md5(string str)
+        {
+            using (var md5 = MD5.Create())
+            {
+                return md5.ComputeHash(Encoding.UTF8.GetBytes(str));
+            }
+        }
+    }
+
+    /// <summary>
+    /// xml文件加解密
+    /// </summary>
+    public class XmlEncrypt
+    {
+        /// <summary>
+        /// 加密文件
+        /// </summary>
+        /// <param name="xmlpath">xml路径</param>
+        /// <param name="key_str">字符串秘钥</param>
+        /// <param name="node_str">加密节点</param>
+        /// <returns></returns>
+        public static string EncryptXml(string xmlpath, string key_str, string node_str)
+        {
+            try
+            {
+                Aes key = Aes.Create();
+                byte[] saltBytes = Encoding.UTF8.GetBytes("XComputer");
+                var p = new Rfc2898DeriveBytes(key_str, saltBytes);
+                key.IV = p.GetBytes(key.BlockSize / 8);
+                key.Key = p.GetBytes(key.KeySize / 8);
+
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.PreserveWhitespace = true;
+                xmlDoc.Load(xmlpath);
+
+                Encrypt(xmlDoc, node_str, key);
+
+                xmlDoc.Save(xmlpath);
+
+                return "1";
+            }
+            catch (Exception e)
+            {
+                return e.Message;
+            }
+        }
+
+        /// <summary>
+        /// 加密文件测试
+        /// </summary>
+        /// <param name="xmlpath">xml路径</param>
+        /// <param name="key_str">字符串秘钥</param>
+        /// <param name="node_str">加密节点</param>
+        /// <returns></returns>
+        public static string EncryptXml_test(string xmlpath, string key_str, string node_str)
+        {
+            try
+            {
+                Aes key = Aes.Create();
+                byte[] saltBytes = Encoding.UTF8.GetBytes("XComputer");
+                var p = new Rfc2898DeriveBytes(key_str, saltBytes);
+                key.IV = p.GetBytes(key.BlockSize / 8);
+                key.Key = p.GetBytes(key.KeySize / 8);
+
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.PreserveWhitespace = true;
+                xmlDoc.Load(xmlpath);
+
+                Encrypt(xmlDoc, node_str, key);
+
+                return xmlDoc.InnerXml;
+            }
+            catch (Exception e)
+            {
+                return e.Message;
+            }
+        }
+
+        /// <summary>
+        /// 解密文件
+        /// </summary>
+        /// <param name="xmlpath">xml路径</param>
+        /// <param name="key_str">字符串秘钥</param>
+        /// <returns></returns>
+        public static string DecryptXml(string xmlpath, string key_str)
+        {
+            try
+            {
+                Aes key = Aes.Create();
+                byte[] saltBytes = Encoding.UTF8.GetBytes("XComputer");
+                var p = new Rfc2898DeriveBytes(key_str, saltBytes);
+                key.IV = p.GetBytes(key.BlockSize / 8);
+                key.Key = p.GetBytes(key.KeySize / 8);
+
+                XmlDocument xmlDoc = new XmlDocument
+                {
+                    PreserveWhitespace = true
+                };
+                xmlDoc.Load(xmlpath);
+
+                Decrypt(xmlDoc, key);
+
+                xmlDoc.Save(xmlpath);
+
+                return "1";
+            }
+            catch (Exception e)
+            {
+                return e.Message;
+            }
+        }
+
+        private static void Encrypt(XmlDocument Doc, string ElementName, SymmetricAlgorithm Key)
+        {
+            if (Doc == null)
+                throw new ArgumentNullException("Doc");
+            if (ElementName == null)
+                throw new ArgumentNullException("ElementToEncrypt");
+            if (Key == null)
+                throw new ArgumentNullException("Alg");
+
+            ////////////////////////////////////////////////
+            // Find the specified element in the XmlDocument
+            // object and create a new XmlElement object.
+            ////////////////////////////////////////////////
+            XmlElement elementToEncrypt = Doc.GetElementsByTagName(ElementName)[0] as XmlElement;
+            // Throw an XmlException if the element was not found.
+            if (elementToEncrypt == null)
+            {
+                throw new XmlException("The specified element was not found");
+            }
+
+            //////////////////////////////////////////////////
+            // Create a new instance of the EncryptedXml class
+            // and use it to encrypt the XmlElement with the
+            // symmetric key.
+            //////////////////////////////////////////////////
+
+            EncryptedXml eXml = new EncryptedXml();
+
+            byte[] encryptedElement = eXml.EncryptData(elementToEncrypt, Key, false);
+            ////////////////////////////////////////////////
+            // Construct an EncryptedData object and populate
+            // it with the desired encryption information.
+            ////////////////////////////////////////////////
+
+            EncryptedData edElement = new EncryptedData();
+            edElement.Type = EncryptedXml.XmlEncElementUrl;
+
+            // Create an EncryptionMethod element so that the
+            // receiver knows which algorithm to use for decryption.
+            // Determine what kind of algorithm is being used and
+            // supply the appropriate URL to the EncryptionMethod element.
+
+            string encryptionMethod = null;
+
+            if (Key is Aes)
+            {
+                encryptionMethod = EncryptedXml.XmlEncAES256Url;
+            }
+            else
+            {
+                // Throw an exception if the transform is not AES
+                throw new CryptographicException("The specified algorithm is not supported or not recommended for XML Encryption.");
+            }
+
+            edElement.EncryptionMethod = new EncryptionMethod(encryptionMethod);
+
+            // Add the encrypted element data to the
+            // EncryptedData object.
+            edElement.CipherData.CipherValue = encryptedElement;
+
+            ////////////////////////////////////////////////////
+            // Replace the element from the original XmlDocument
+            // object with the EncryptedData element.
+            ////////////////////////////////////////////////////
+            EncryptedXml.ReplaceElement(elementToEncrypt, edElement, false);
+        }
+
+        private static void Decrypt(XmlDocument Doc, SymmetricAlgorithm Alg)
+        {
+            // Check the arguments.
+            if (Doc == null)
+                throw new ArgumentNullException("Doc");
+            if (Alg == null)
+                throw new ArgumentNullException("Alg");
+
+            // Find the EncryptedData element in the XmlDocument.
+            XmlElement encryptedElement = Doc.GetElementsByTagName("EncryptedData")[0] as XmlElement;
+
+            // If the EncryptedData element was not found, throw an exception.
+            if (encryptedElement == null)
+            {
+                throw new XmlException("The EncryptedData element was not found.");
+            }
+
+            // Create an EncryptedData object and populate it.
+            EncryptedData edElement = new EncryptedData();
+            edElement.LoadXml(encryptedElement);
+
+            // Create a new EncryptedXml object.
+            EncryptedXml exml = new EncryptedXml();
+
+            // Decrypt the element using the symmetric key.
+            byte[] rgbOutput = exml.DecryptData(edElement, Alg);
+
+            // Replace the encryptedData element with the plaintext XML element.
+            exml.ReplaceData(encryptedElement, rgbOutput);
+        }
+    }
+
+    public class Hotkey
+    {
+        #region 系统api
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool RegisterHotKey(IntPtr hWnd, int id, HotkeyModifiers fsModifiers, Keys vk);
+
+        [DllImport("user32.dll")]
+        static extern bool UnregisterHotKey(IntPtr hWnd, int id);
+        #endregion
+
+        /// <summary> 
+        /// 注册快捷键 
+        /// </summary> 
+        /// <param name="hWnd">持有快捷键窗口的句柄</param> 
+        /// <param name="fsModifiers">组合键</param> 
+        /// <param name="vk">快捷键的虚拟键码</param> 
+        /// <param name="callBack">回调函数</param> 
+        public static void Regist(IntPtr hWnd, HotkeyModifiers fsModifiers, Keys vk, HotKeyCallBackHanlder callBack)
+        {
+            int id = keyid++;
+            if (!RegisterHotKey(hWnd, id, fsModifiers, vk))
+                throw new Exception("regist hotkey fail.");
+            keymap[id] = callBack;
+        }
+
+        /// <summary> 
+        /// 注销快捷键 
+        /// </summary> 
+        /// <param name="hWnd">持有快捷键窗口的句柄</param> 
+        /// <param name="callBack">回调函数</param> 
+        public static void UnRegist(IntPtr hWnd, HotKeyCallBackHanlder callBack)
+        {
+            foreach (KeyValuePair<int, HotKeyCallBackHanlder> var in keymap)
+            {
+                if (var.Value == callBack)
+                    UnregisterHotKey(hWnd, var.Key);
+            }
+        }
+
+        /// <summary> 
+        /// 快捷键消息处理 
+        /// </summary> 
+        public static void ProcessHotKey(Message m)
+        {
+            if (m.Msg == WM_HOTKEY)
+            {
+                int id = m.WParam.ToInt32();
+                HotKeyCallBackHanlder callback;
+                if (keymap.TryGetValue(id, out callback))
+                {
+                    callback();
+                }
+            }
+        }
+
+        const int WM_HOTKEY = 0x312;
+        static int keyid = 10;
+        static Dictionary<int, HotKeyCallBackHanlder> keymap = new Dictionary<int, HotKeyCallBackHanlder>();
+
+        public delegate void HotKeyCallBackHanlder();
+    }
+    public enum HotkeyModifiers
+    {
+        MOD_ALT = 0x1,
+        MOD_CONTROL = 0x2,
+        MOD_SHIFT = 0x4,
+        MOD_WIN = 0x8
+    }
+
+
 }

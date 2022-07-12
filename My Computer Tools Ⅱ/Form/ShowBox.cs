@@ -99,8 +99,15 @@ namespace My_Computer_Tools_Ⅱ
 
         private Thread thread;
 
-        public void Show(string Tip, string Txt, Form_Main form_Main, int S, object fun = null)
+        public void Show(string Tip, string Txt, Form_Main form_Main, int S, bool iserror, object fun = null)
         {
+            //是否为错误提示
+            if (iserror)
+                this.BackColor = Color.Crimson;
+            else
+                this.BackColor = Color.DodgerBlue;
+
+            //是否执行函数委托
             if (fun != null)
             {
                 fun_ = (Fun_delegate_void)fun;
@@ -117,6 +124,7 @@ namespace My_Computer_Tools_Ⅱ
                 lab_Tip.Text = Tip;
                 lab_Txt.Text = Txt;
                 this.S = S;
+                ChangThisSize();
                 return;
             }
 
@@ -149,7 +157,7 @@ namespace My_Computer_Tools_Ⅱ
             if (Program.backWindows_State)//主窗口在后台
             {
                 this.Size = new Size(this.Width, h + 30);
-                this.Location = new Point(Screen.PrimaryScreen.WorkingArea.Size.Width - this.Width, Screen.PrimaryScreen.WorkingArea.Size.Height - this.Height);
+                this.Location = new Point(Screen.PrimaryScreen.WorkingArea.Size.Width - this.Width - 5, Screen.PrimaryScreen.WorkingArea.Size.Height - this.Height - 10);
             }
             else
             {
@@ -176,6 +184,7 @@ namespace My_Computer_Tools_Ⅱ
                 if (this.IsHandleCreated)
                     this.Invoke(new MethodInvoker(delegate ()
                     {
+                        AnimateWindow(this.Handle, 300, AW_HIDE | AW_BLEND);
                         this.Hide();
                         ShowNow = false;
                     }));
@@ -187,6 +196,7 @@ namespace My_Computer_Tools_Ⅱ
 
         private void Lab_About_Click(object sender, EventArgs e)
         {
+            AnimateWindow(this.Handle, 300, AW_HIDE | AW_BLEND);
             this.Hide();
             ShowNow = false;
             thread = null;

@@ -69,6 +69,22 @@ namespace My_Computer_Tools_Ⅱ
         }
 
         /// <summary>
+        /// 判断有无此Key
+        /// </summary>
+        /// <returns></returns>
+        public bool HaveThisFile(string key)
+        {
+            Mac mac = new Mac(AccessKey, SecretKey);
+            Config config = new Config();
+            config.Zone = dicZone[ZoneID];
+            BucketManager bucketManager = new BucketManager(mac, config);
+            StatResult statRet = bucketManager.Stat(Bucket, key);
+            if (statRet.Code != (int)HttpCode.OK)
+                return false;
+            return true;
+        }
+
+        /// <summary>
         /// 上传测试1
         /// </summary>
         public bool UploadFileTest()
@@ -188,9 +204,9 @@ namespace My_Computer_Tools_Ⅱ
         }
 
         /// <summary>
-        /// 上传文件
+        /// 上传文件合并路径
         /// </summary>
-        /// <param name="path">字符Key</param>
+        /// <param name="path">带'|'的路径 如D:\\七牛云同步\\|笔记\\AlistCookie部分.md</param>
         /// <returns></returns>
         public string UpLoadFile(string path)
         {
@@ -198,6 +214,57 @@ namespace My_Computer_Tools_Ⅱ
                 return "文件不存在";
             Mac mac = new Mac(AccessKey, SecretKey);
             string key = string.Format(PathToKey(path));
+
+            //上传检查
+            if (Properties.Settings.Default.qnUpFileCheck)
+            {
+                string FileQhash_Online = GetFileQhash(key);
+                string FileQhash_Local = CalcETag(path);
+                Console.WriteLine($"文件信息比对 O:{FileQhash_Online} L:{FileQhash_Local}");
+                if (FileQhash_Online == FileQhash_Local)
+                {
+                    Console.WriteLine(path + "文件已经存在");
+                    return "文件对比一致，无须上传";
+                }
+            }
+            path = path.Replace("|", "");
+            //生成凭证
+            PutPolicy putPolicy = new PutPolicy
+            {
+                Scope = Bucket + ":" + key
+            };
+            putPolicy.SetExpires(3600);
+            string token = Auth.CreateUploadToken(mac, putPolicy.ToJsonString());
+            //设置上传配置
+            Config config = new Config
+            {
+                Zone = dicZone[ZoneID],
+                UseHttps = true,
+                UseCdnDomains = true,
+                ChunkSize = ChunkUnit.U512K
+            };
+            FormUploader target = new FormUploader(config);
+            PutExtra extra = new PutExtra();
+            extra.Version = "v2";
+            extra.PartSize = 4 * 1024 * 1024;
+            HttpResult result = target.UploadFile(path, key, token, extra);
+            if (result.Code == 200)
+                return "1";
+            else
+                return $"{result.Code}";
+        }
+
+        /// <summary>
+        /// 上传文件
+        /// </summary>
+        /// <param name="path">文件路径</param>
+        /// <param name="key">上传至Key路径</param>
+        /// <returns></returns>
+        public string UpLoadFile(string path, string key)
+        {
+            if (!File.Exists(path) || !is_init)
+                return "文件不存在";
+            Mac mac = new Mac(AccessKey, SecretKey);
 
             //上传检查
             if (Properties.Settings.Default.qnUpFileCheck)

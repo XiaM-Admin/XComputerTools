@@ -5,9 +5,9 @@ using System.Runtime.InteropServices;
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
 [assembly: AssemblyTitle("My Computer Tools Ⅱ")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("一个很好用的电脑小工具！")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("My Computer Tools Ⅱ")]
 [assembly: AssemblyProduct("My Computer Tools Ⅱ")]
 [assembly: AssemblyCopyright("Copyright ©  2022")]
 [assembly: AssemblyTrademark("")]
