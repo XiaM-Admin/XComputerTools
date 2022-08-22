@@ -177,14 +177,8 @@ namespace My_Computer_Tools_Ⅱ
             if (ishtml)
                 text = text + "<br><br><br>----------------------------<br>感谢使用XComputerTools小工具<br>此邮件仅用于提示提醒，请勿回复！<br><a href=\"https://x-tools.top\" target=\"_blank\">x-tools.top</a> | 一个小工具网站，还没写<br><a href=\"https://blog.x-tools.top\" target=\"_blank\">blog.x-tools.top</a> | 我的博客站<br><a href=\"https://file.x-tools.top\" target=\"_blank\">file.x-tools.top</a> | 资源直链站<br>----------------------------<br>";
 
-            Program.SendApiPost_Str("http://admin.x-tools.top:1842/mail_sys/send_mail_http.json", new Dictionary<string, string> {
-                {"mail_from","admin@x-tools.top"},
-                {"password","Grkwdc13" },
-                {"mail_to",email },
-                {"subject",title },
-                {"content",text },
-                {"subtype",ishtml?"html":"plain"},
-            });
+            //发送邮件api
+
         }
     }
 

@@ -1015,6 +1015,14 @@ namespace My_Computer_Tools_Ⅱ
             WinCommand.ChangeTips("Boom", "人生没有捷径\r\n就像去二仙桥\r\n就必须要走成华大道...", 3);
             //Hotkey.Regist(this.Handle, HotkeyModifiers.MOD_ALT, Keys.X, Test);
             //MessageBox.Show("Alt+X键注册完毕");
+
+            //MessageBox.Show($"CPU温度：{ Program.CCore.GetCpuTemp()}°C\r\n" +
+            //    $"英伟达GPU温度：{Program.CCore.GetGpuTemp(true)}°C\r\n" +
+            //    $"AMD GPU温度：{Program.CCore.GetGpuTemp(false)}°C");
+
+            Class.CpuTemperatureReader cpu = new Class.CpuTemperatureReader();
+            cpu.GetTemperaturesInCelsius();
+            Console.WriteLine("============================================================");
         }
 
         /// <summary>
@@ -1343,6 +1351,69 @@ namespace My_Computer_Tools_Ⅱ
             backgroundWorker.RunWorkerAsync(downdata);
 
             //MessageBox.Show("账号本本下载云端文件");
+        }
+
+        private void But_UpTemp_Click(object sender, EventArgs e)
+        {
+            /*
+             硬件温度
+            CPU：0°C
+            GPU：0°C
+             */
+            label19.Text = "硬件温度\r\n" +
+                $"CPU：{Program.computer_temp.CPUTemp.ToString("#0.0")}°C\r\n" +
+                $"GPU：{Program.computer_temp.GPUTemp.ToString("#0.0")}°C";
+        }
+
+        private void But_CheckTempTask_Click(object sender, EventArgs e)
+        {
+            string datestr = "";
+            /*
+             >=
+             <=
+            与
+            或
+             */
+            if (CBox_CPUCond.Text != ">=" && CBox_CPUCond.Text != "<=")
+            {
+                WinCommand.ChangeTips("错误", "任务参数设置错误！请检查后重试！", 3, true);
+                return;
+            }
+            if (CBox_GPUCond.Text != ">=" && CBox_GPUCond.Text != "<=")
+            {
+                WinCommand.ChangeTips("错误", "任务参数设置错误！请检查后重试！", 3, true);
+                return;
+            }
+            if(CBox_CondTask.Text!="关机")
+            {
+                WinCommand.ChangeTips("错误", "任务参数设置错误！请检查后重试！", 3, true);
+                return;
+            }
+            if(CBox_CheckTempCond.Text!= "与" && CBox_CheckTempCond.Text != "或")
+            {
+                WinCommand.ChangeTips("错误", "任务参数设置错误！请检查后重试！", 3, true);
+                return;
+            }
+
+            //cpu条件 cpu温度 与或 gpu条件 gpu温度 任务
+            datestr = $"{CBox_CPUCond.Text}^{Convert.ToInt32(numberCPUTemp.Value)}^{CBox_CheckTempCond.Text}^{CBox_GPUCond.Text}^{Convert.ToInt32(numberGPUTemp.Value)}^{CBox_CondTask.Text}";
+
+            if (Program._Main.Get_ThreadDatainList("硬件监控") == null)
+            {
+                Program._Main.CreateThread(new CreateThread()
+                {
+                    Grade = Thread_Grade.user,
+                    Fun = new Fun_delegate(Task_CheckTempRunTask),
+                    RunMode = Thread_RunMode.thread,
+                    ModePar = "1000",
+                    Explain = $"监控系统温度并且符合条件后执行操作\t延时间隔：1秒",
+                    Name = "硬件监控",
+                    Fundata = datestr
+                }) ;
+                WinCommand.ChangeTips("提示", "任务添加完成！\r\n在'任务池'-'用户'项中即可查看！", 3);
+            }
+            else
+                WinCommand.ChangeTips("错误", "已经存在一个硬件监控任务，\r\n请去任务池结束后重试！", 3, true);
         }
     }
 }

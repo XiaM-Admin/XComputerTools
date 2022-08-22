@@ -161,6 +161,22 @@ namespace My_Computer_Tools_Ⅱ
         /// </summary>
         public static DateTime DateTime;
 
+        /// <summary>
+        /// 系统温度变量
+        /// </summary>
+        public static COMPUTER_TEMP computer_temp = new COMPUTER_TEMP();
+
+        public class COMPUTER_TEMP
+        {
+            public float CPUTemp=0;
+            public float GPUTemp=0;
+        }
+
+        /// <summary>
+        /// 系统温度获取
+        /// </summary>
+        public static Class.ComputerCore CCore= new Class.ComputerCore();
+
         #endregion 程序变量
 
         /// <summary>

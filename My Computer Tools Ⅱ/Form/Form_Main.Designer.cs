@@ -85,6 +85,7 @@
             this.But_qnDelItem = new System.Windows.Forms.Button();
             this.But_UpLoadFile = new System.Windows.Forms.Button();
             this.But_qnStart = new System.Windows.Forms.Button();
+            this.CBox_qnAutoStart = new System.Windows.Forms.CheckBox();
             this.But_qnAddFolder = new System.Windows.Forms.Button();
             this.LBox_FolderList = new System.Windows.Forms.ListBox();
             this.GBox_Folderfrom = new System.Windows.Forms.GroupBox();
@@ -98,10 +99,15 @@
             this.columnHeader_type = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.But_qnSubfolder = new System.Windows.Forms.Button();
             this.GBox_AKkey = new System.Windows.Forms.GroupBox();
+            this.TBox_Domain = new System.Windows.Forms.TextBox();
             this.But_qnUpTest = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.CBox_qiniuZoneID = new System.Windows.Forms.ComboBox();
             this.lab_zoneId = new System.Windows.Forms.Label();
+            this.Tbox_qiniuBucket = new System.Windows.Forms.TextBox();
             this.lab_Bucket = new System.Windows.Forms.Label();
+            this.Tbox_qiniuSK = new System.Windows.Forms.TextBox();
+            this.Tbox_qiniuAK = new System.Windows.Forms.TextBox();
             this.label_SK = new System.Windows.Forms.Label();
             this.label_AK = new System.Windows.Forms.Label();
             this.tabP_CustomTask = new System.Windows.Forms.TabPage();
@@ -110,14 +116,19 @@
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.But_BootSave = new System.Windows.Forms.Button();
             this.label17 = new System.Windows.Forms.Label();
+            this.numbe_BootSleep = new System.Windows.Forms.NumericUpDown();
             this.label16 = new System.Windows.Forms.Label();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.label15 = new System.Windows.Forms.Label();
+            this.TBox_Bootcmd = new System.Windows.Forms.TextBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.label8 = new System.Windows.Forms.Label();
+            this.TBox_bootrunapp = new System.Windows.Forms.TextBox();
+            this.CBox_bootrun = new System.Windows.Forms.CheckBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label14 = new System.Windows.Forms.Label();
             this.Button_cmdStart = new System.Windows.Forms.Button();
+            this.tbox_cmdtxt = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.numbe_cmdtimesecc = new System.Windows.Forms.NumericUpDown();
@@ -176,17 +187,19 @@
             this.设置toolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.退出ExitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
-            this.CBox_qnAutoStart = new System.Windows.Forms.CheckBox();
-            this.TBox_Domain = new System.Windows.Forms.TextBox();
-            this.CBox_qiniuZoneID = new System.Windows.Forms.ComboBox();
-            this.Tbox_qiniuBucket = new System.Windows.Forms.TextBox();
-            this.Tbox_qiniuSK = new System.Windows.Forms.TextBox();
-            this.Tbox_qiniuAK = new System.Windows.Forms.TextBox();
-            this.numbe_BootSleep = new System.Windows.Forms.NumericUpDown();
-            this.TBox_Bootcmd = new System.Windows.Forms.TextBox();
-            this.TBox_bootrunapp = new System.Windows.Forms.TextBox();
-            this.CBox_bootrun = new System.Windows.Forms.CheckBox();
-            this.tbox_cmdtxt = new System.Windows.Forms.TextBox();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.But_UpTemp = new System.Windows.Forms.Button();
+            this.numberCPUTemp = new System.Windows.Forms.NumericUpDown();
+            this.numberGPUTemp = new System.Windows.Forms.NumericUpDown();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.CBox_CPUCond = new System.Windows.Forms.ComboBox();
+            this.CBox_GPUCond = new System.Windows.Forms.ComboBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.CBox_CondTask = new System.Windows.Forms.ComboBox();
+            this.But_CheckTempTask = new System.Windows.Forms.Button();
+            this.CBox_CheckTempCond = new System.Windows.Forms.ComboBox();
             this.STrip_Main.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabP_Home.SuspendLayout();
@@ -205,6 +218,7 @@
             this.TaskTab.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numbe_BootSleep)).BeginInit();
             this.groupBox6.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -219,7 +233,9 @@
             this.groupBox1.SuspendLayout();
             this.GBox_Target.SuspendLayout();
             this.CMBS.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numbe_BootSleep)).BeginInit();
+            this.groupBox7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numberCPUTemp)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numberGPUTemp)).BeginInit();
             this.SuspendLayout();
             // 
             // STrip_Main
@@ -828,6 +844,19 @@
             this.But_qnStart.UseVisualStyleBackColor = true;
             this.But_qnStart.Click += new System.EventHandler(this.But_qnStart_Click);
             // 
+            // CBox_qnAutoStart
+            // 
+            this.CBox_qnAutoStart.AutoSize = true;
+            this.CBox_qnAutoStart.Checked = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.qnStartFolderW;
+            this.CBox_qnAutoStart.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "qnStartFolderW", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.CBox_qnAutoStart.Location = new System.Drawing.Point(353, 80);
+            this.CBox_qnAutoStart.Name = "CBox_qnAutoStart";
+            this.CBox_qnAutoStart.Size = new System.Drawing.Size(75, 21);
+            this.CBox_qnAutoStart.TabIndex = 3;
+            this.CBox_qnAutoStart.Text = "自动开启";
+            this.CBox_qnAutoStart.UseVisualStyleBackColor = true;
+            this.CBox_qnAutoStart.CheckedChanged += new System.EventHandler(this.CBox_qnAutoStart_CheckedChanged);
+            // 
             // But_qnAddFolder
             // 
             this.But_qnAddFolder.Location = new System.Drawing.Point(351, 23);
@@ -960,6 +989,16 @@
             this.GBox_AKkey.TabStop = false;
             this.GBox_AKkey.Text = "七牛秘钥设置 - 回车保存";
             // 
+            // TBox_Domain
+            // 
+            this.TBox_Domain.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "qiniuDomain", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.TBox_Domain.Location = new System.Drawing.Point(107, 122);
+            this.TBox_Domain.Name = "TBox_Domain";
+            this.TBox_Domain.Size = new System.Drawing.Size(199, 23);
+            this.TBox_Domain.TabIndex = 9;
+            this.TBox_Domain.Text = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.qiniuDomain;
+            this.TBox_Domain.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextEnterSave);
+            // 
             // But_qnUpTest
             // 
             this.But_qnUpTest.Location = new System.Drawing.Point(231, 157);
@@ -979,6 +1018,25 @@
             this.label1.TabIndex = 8;
             this.label1.Text = "域名";
             // 
+            // CBox_qiniuZoneID
+            // 
+            this.CBox_qiniuZoneID.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "qiniuZoneID", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.CBox_qiniuZoneID.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CBox_qiniuZoneID.FormattingEnabled = true;
+            this.CBox_qiniuZoneID.Items.AddRange(new object[] {
+            "华东",
+            "华东-浙江2",
+            "华北",
+            "华南",
+            "北美",
+            "东南亚"});
+            this.CBox_qiniuZoneID.Location = new System.Drawing.Point(108, 156);
+            this.CBox_qiniuZoneID.Name = "CBox_qiniuZoneID";
+            this.CBox_qiniuZoneID.Size = new System.Drawing.Size(117, 25);
+            this.CBox_qiniuZoneID.TabIndex = 7;
+            this.CBox_qiniuZoneID.Text = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.qiniuZoneID;
+            this.CBox_qiniuZoneID.SelectedIndexChanged += new System.EventHandler(this.SelectedIndexChangedSave);
+            // 
             // lab_zoneId
             // 
             this.lab_zoneId.AutoSize = true;
@@ -988,6 +1046,16 @@
             this.lab_zoneId.TabIndex = 6;
             this.lab_zoneId.Text = "地区";
             // 
+            // Tbox_qiniuBucket
+            // 
+            this.Tbox_qiniuBucket.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "qiniuBucket", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.Tbox_qiniuBucket.Location = new System.Drawing.Point(107, 88);
+            this.Tbox_qiniuBucket.Name = "Tbox_qiniuBucket";
+            this.Tbox_qiniuBucket.Size = new System.Drawing.Size(199, 23);
+            this.Tbox_qiniuBucket.TabIndex = 5;
+            this.Tbox_qiniuBucket.Text = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.qiniuBucket;
+            this.Tbox_qiniuBucket.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextEnterSave);
+            // 
             // lab_Bucket
             // 
             this.lab_Bucket.AutoSize = true;
@@ -996,6 +1064,27 @@
             this.lab_Bucket.Size = new System.Drawing.Size(47, 17);
             this.lab_Bucket.TabIndex = 4;
             this.lab_Bucket.Text = "Bucket";
+            // 
+            // Tbox_qiniuSK
+            // 
+            this.Tbox_qiniuSK.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "qiniuSK", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.Tbox_qiniuSK.Location = new System.Drawing.Point(107, 54);
+            this.Tbox_qiniuSK.Name = "Tbox_qiniuSK";
+            this.Tbox_qiniuSK.PasswordChar = '*';
+            this.Tbox_qiniuSK.Size = new System.Drawing.Size(199, 23);
+            this.Tbox_qiniuSK.TabIndex = 3;
+            this.Tbox_qiniuSK.Text = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.qiniuSK;
+            this.Tbox_qiniuSK.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextEnterSave);
+            // 
+            // Tbox_qiniuAK
+            // 
+            this.Tbox_qiniuAK.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "qiniuAK", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.Tbox_qiniuAK.Location = new System.Drawing.Point(108, 22);
+            this.Tbox_qiniuAK.Name = "Tbox_qiniuAK";
+            this.Tbox_qiniuAK.Size = new System.Drawing.Size(199, 23);
+            this.Tbox_qiniuAK.TabIndex = 2;
+            this.Tbox_qiniuAK.Text = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.qiniuAK;
+            this.Tbox_qiniuAK.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextEnterSave);
             // 
             // label_SK
             // 
@@ -1038,6 +1127,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.groupBox7);
             this.tabPage1.Controls.Add(this.groupBox4);
             this.tabPage1.Controls.Add(this.groupBox3);
             this.tabPage1.Controls.Add(this.groupBox2);
@@ -1084,6 +1174,21 @@
             this.label17.TabIndex = 6;
             this.label17.Text = "秒执行";
             // 
+            // numbe_BootSleep
+            // 
+            this.numbe_BootSleep.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "BootNumber", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.numbe_BootSleep.Location = new System.Drawing.Point(199, 240);
+            this.numbe_BootSleep.Maximum = new decimal(new int[] {
+            120,
+            0,
+            0,
+            0});
+            this.numbe_BootSleep.Name = "numbe_BootSleep";
+            this.numbe_BootSleep.Size = new System.Drawing.Size(44, 23);
+            this.numbe_BootSleep.TabIndex = 4;
+            this.numbe_BootSleep.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numbe_BootSleep.Value = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.BootNumber;
+            // 
             // label16
             // 
             this.label16.AutoSize = true;
@@ -1115,6 +1220,17 @@
             this.label15.Text = "填写cmd指令！\r\n一行一句！";
             this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // TBox_Bootcmd
+            // 
+            this.TBox_Bootcmd.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "BootRunCmd", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.TBox_Bootcmd.Location = new System.Drawing.Point(6, 22);
+            this.TBox_Bootcmd.Multiline = true;
+            this.TBox_Bootcmd.Name = "TBox_Bootcmd";
+            this.TBox_Bootcmd.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.TBox_Bootcmd.Size = new System.Drawing.Size(188, 147);
+            this.TBox_Bootcmd.TabIndex = 8;
+            this.TBox_Bootcmd.Text = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.BootRunCmd;
+            // 
             // groupBox5
             // 
             this.groupBox5.Controls.Add(this.label8);
@@ -1136,6 +1252,30 @@
             this.label8.TabIndex = 9;
             this.label8.Text = "填写可执行程序路径或网址！\r\n一行一个！";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // TBox_bootrunapp
+            // 
+            this.TBox_bootrunapp.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "BootRunApp", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.TBox_bootrunapp.Location = new System.Drawing.Point(6, 22);
+            this.TBox_bootrunapp.Multiline = true;
+            this.TBox_bootrunapp.Name = "TBox_bootrunapp";
+            this.TBox_bootrunapp.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.TBox_bootrunapp.Size = new System.Drawing.Size(188, 147);
+            this.TBox_bootrunapp.TabIndex = 8;
+            this.TBox_bootrunapp.Text = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.BootRunApp;
+            // 
+            // CBox_bootrun
+            // 
+            this.CBox_bootrun.AutoSize = true;
+            this.CBox_bootrun.Checked = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.BootRun;
+            this.CBox_bootrun.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "BootRun", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.CBox_bootrun.Location = new System.Drawing.Point(308, 242);
+            this.CBox_bootrun.Name = "CBox_bootrun";
+            this.CBox_bootrun.Size = new System.Drawing.Size(111, 21);
+            this.CBox_bootrun.TabIndex = 0;
+            this.CBox_bootrun.Text = "下次开机时执行";
+            this.CBox_bootrun.UseVisualStyleBackColor = true;
+            this.CBox_bootrun.CheckedChanged += new System.EventHandler(this.CBox_bootrun_CheckedChanged);
             // 
             // groupBox3
             // 
@@ -1174,6 +1314,17 @@
             this.Button_cmdStart.Text = "执行";
             this.Button_cmdStart.UseVisualStyleBackColor = true;
             this.Button_cmdStart.Click += new System.EventHandler(this.Button_cmdStart_Click);
+            // 
+            // tbox_cmdtxt
+            // 
+            this.tbox_cmdtxt.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "RunCmdText", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.tbox_cmdtxt.Location = new System.Drawing.Point(6, 78);
+            this.tbox_cmdtxt.Multiline = true;
+            this.tbox_cmdtxt.Name = "tbox_cmdtxt";
+            this.tbox_cmdtxt.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.tbox_cmdtxt.Size = new System.Drawing.Size(188, 147);
+            this.tbox_cmdtxt.TabIndex = 6;
+            this.tbox_cmdtxt.Text = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.RunCmdText;
             // 
             // label13
             // 
@@ -1778,139 +1929,148 @@
             // 
             this.backgroundWorker.WorkerReportsProgress = true;
             // 
-            // CBox_qnAutoStart
+            // groupBox7
             // 
-            this.CBox_qnAutoStart.AutoSize = true;
-            this.CBox_qnAutoStart.Checked = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.qnStartFolderW;
-            this.CBox_qnAutoStart.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "qnStartFolderW", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.CBox_qnAutoStart.Location = new System.Drawing.Point(353, 80);
-            this.CBox_qnAutoStart.Name = "CBox_qnAutoStart";
-            this.CBox_qnAutoStart.Size = new System.Drawing.Size(75, 21);
-            this.CBox_qnAutoStart.TabIndex = 3;
-            this.CBox_qnAutoStart.Text = "自动开启";
-            this.CBox_qnAutoStart.UseVisualStyleBackColor = true;
-            this.CBox_qnAutoStart.CheckedChanged += new System.EventHandler(this.CBox_qnAutoStart_CheckedChanged);
+            this.groupBox7.Controls.Add(this.CBox_CheckTempCond);
+            this.groupBox7.Controls.Add(this.But_CheckTempTask);
+            this.groupBox7.Controls.Add(this.CBox_CondTask);
+            this.groupBox7.Controls.Add(this.label22);
+            this.groupBox7.Controls.Add(this.CBox_GPUCond);
+            this.groupBox7.Controls.Add(this.CBox_CPUCond);
+            this.groupBox7.Controls.Add(this.label21);
+            this.groupBox7.Controls.Add(this.label20);
+            this.groupBox7.Controls.Add(this.numberGPUTemp);
+            this.groupBox7.Controls.Add(this.numberCPUTemp);
+            this.groupBox7.Controls.Add(this.But_UpTemp);
+            this.groupBox7.Controls.Add(this.label19);
+            this.groupBox7.Location = new System.Drawing.Point(212, 279);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(425, 94);
+            this.groupBox7.TabIndex = 3;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "监控触发";
             // 
-            // TBox_Domain
+            // label19
             // 
-            this.TBox_Domain.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "qiniuDomain", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.TBox_Domain.Location = new System.Drawing.Point(107, 122);
-            this.TBox_Domain.Name = "TBox_Domain";
-            this.TBox_Domain.Size = new System.Drawing.Size(199, 23);
-            this.TBox_Domain.TabIndex = 9;
-            this.TBox_Domain.Text = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.qiniuDomain;
-            this.TBox_Domain.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextEnterSave);
+            this.label19.AutoSize = true;
+            this.label19.ForeColor = System.Drawing.Color.OrangeRed;
+            this.label19.Location = new System.Drawing.Point(3, 19);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(65, 51);
+            this.label19.TabIndex = 10;
+            this.label19.Text = "硬件温度\r\nCPU：0°C\r\nGPU：0°C";
+            this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // CBox_qiniuZoneID
+            // But_UpTemp
             // 
-            this.CBox_qiniuZoneID.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "qiniuZoneID", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.CBox_qiniuZoneID.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.CBox_qiniuZoneID.FormattingEnabled = true;
-            this.CBox_qiniuZoneID.Items.AddRange(new object[] {
-            "华东",
-            "华东-浙江2",
-            "华北",
-            "华南",
-            "北美",
-            "东南亚"});
-            this.CBox_qiniuZoneID.Location = new System.Drawing.Point(108, 156);
-            this.CBox_qiniuZoneID.Name = "CBox_qiniuZoneID";
-            this.CBox_qiniuZoneID.Size = new System.Drawing.Size(117, 25);
-            this.CBox_qiniuZoneID.TabIndex = 7;
-            this.CBox_qiniuZoneID.Text = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.qiniuZoneID;
-            this.CBox_qiniuZoneID.SelectedIndexChanged += new System.EventHandler(this.SelectedIndexChangedSave);
+            this.But_UpTemp.Location = new System.Drawing.Point(6, 69);
+            this.But_UpTemp.Name = "But_UpTemp";
+            this.But_UpTemp.Size = new System.Drawing.Size(56, 23);
+            this.But_UpTemp.TabIndex = 11;
+            this.But_UpTemp.Text = "刷新";
+            this.But_UpTemp.UseVisualStyleBackColor = true;
+            this.But_UpTemp.Click += new System.EventHandler(this.But_UpTemp_Click);
             // 
-            // Tbox_qiniuBucket
+            // numberCPUTemp
             // 
-            this.Tbox_qiniuBucket.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "qiniuBucket", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.Tbox_qiniuBucket.Location = new System.Drawing.Point(107, 88);
-            this.Tbox_qiniuBucket.Name = "Tbox_qiniuBucket";
-            this.Tbox_qiniuBucket.Size = new System.Drawing.Size(199, 23);
-            this.Tbox_qiniuBucket.TabIndex = 5;
-            this.Tbox_qiniuBucket.Text = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.qiniuBucket;
-            this.Tbox_qiniuBucket.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextEnterSave);
+            this.numberCPUTemp.Location = new System.Drawing.Point(203, 17);
+            this.numberCPUTemp.Name = "numberCPUTemp";
+            this.numberCPUTemp.Size = new System.Drawing.Size(44, 23);
+            this.numberCPUTemp.TabIndex = 12;
+            this.numberCPUTemp.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // Tbox_qiniuSK
+            // numberGPUTemp
             // 
-            this.Tbox_qiniuSK.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "qiniuSK", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.Tbox_qiniuSK.Location = new System.Drawing.Point(107, 54);
-            this.Tbox_qiniuSK.Name = "Tbox_qiniuSK";
-            this.Tbox_qiniuSK.PasswordChar = '*';
-            this.Tbox_qiniuSK.Size = new System.Drawing.Size(199, 23);
-            this.Tbox_qiniuSK.TabIndex = 3;
-            this.Tbox_qiniuSK.Text = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.qiniuSK;
-            this.Tbox_qiniuSK.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextEnterSave);
+            this.numberGPUTemp.Location = new System.Drawing.Point(203, 64);
+            this.numberGPUTemp.Name = "numberGPUTemp";
+            this.numberGPUTemp.Size = new System.Drawing.Size(44, 23);
+            this.numberGPUTemp.TabIndex = 13;
+            this.numberGPUTemp.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // Tbox_qiniuAK
+            // label20
             // 
-            this.Tbox_qiniuAK.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "qiniuAK", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.Tbox_qiniuAK.Location = new System.Drawing.Point(108, 22);
-            this.Tbox_qiniuAK.Name = "Tbox_qiniuAK";
-            this.Tbox_qiniuAK.Size = new System.Drawing.Size(199, 23);
-            this.Tbox_qiniuAK.TabIndex = 2;
-            this.Tbox_qiniuAK.Text = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.qiniuAK;
-            this.Tbox_qiniuAK.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextEnterSave);
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(80, 20);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(68, 17);
+            this.label20.TabIndex = 14;
+            this.label20.Text = "当CPU温度";
             // 
-            // numbe_BootSleep
+            // label21
             // 
-            this.numbe_BootSleep.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "BootNumber", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.numbe_BootSleep.Location = new System.Drawing.Point(199, 240);
-            this.numbe_BootSleep.Maximum = new decimal(new int[] {
-            120,
-            0,
-            0,
-            0});
-            this.numbe_BootSleep.Name = "numbe_BootSleep";
-            this.numbe_BootSleep.Size = new System.Drawing.Size(44, 23);
-            this.numbe_BootSleep.TabIndex = 4;
-            this.numbe_BootSleep.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.numbe_BootSleep.Value = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.BootNumber;
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(79, 66);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(69, 17);
+            this.label21.TabIndex = 15;
+            this.label21.Text = "当GPU温度";
             // 
-            // TBox_Bootcmd
+            // CBox_CPUCond
             // 
-            this.TBox_Bootcmd.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "BootRunCmd", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.TBox_Bootcmd.Location = new System.Drawing.Point(6, 22);
-            this.TBox_Bootcmd.Multiline = true;
-            this.TBox_Bootcmd.Name = "TBox_Bootcmd";
-            this.TBox_Bootcmd.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.TBox_Bootcmd.Size = new System.Drawing.Size(188, 147);
-            this.TBox_Bootcmd.TabIndex = 8;
-            this.TBox_Bootcmd.Text = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.BootRunCmd;
+            this.CBox_CPUCond.FormattingEnabled = true;
+            this.CBox_CPUCond.Items.AddRange(new object[] {
+            ">=",
+            "<="});
+            this.CBox_CPUCond.Location = new System.Drawing.Point(151, 16);
+            this.CBox_CPUCond.Name = "CBox_CPUCond";
+            this.CBox_CPUCond.Size = new System.Drawing.Size(46, 25);
+            this.CBox_CPUCond.TabIndex = 16;
+            this.CBox_CPUCond.Text = "<=";
             // 
-            // TBox_bootrunapp
+            // CBox_GPUCond
             // 
-            this.TBox_bootrunapp.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "BootRunApp", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.TBox_bootrunapp.Location = new System.Drawing.Point(6, 22);
-            this.TBox_bootrunapp.Multiline = true;
-            this.TBox_bootrunapp.Name = "TBox_bootrunapp";
-            this.TBox_bootrunapp.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.TBox_bootrunapp.Size = new System.Drawing.Size(188, 147);
-            this.TBox_bootrunapp.TabIndex = 8;
-            this.TBox_bootrunapp.Text = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.BootRunApp;
+            this.CBox_GPUCond.FormattingEnabled = true;
+            this.CBox_GPUCond.Items.AddRange(new object[] {
+            ">=",
+            "<="});
+            this.CBox_GPUCond.Location = new System.Drawing.Point(151, 62);
+            this.CBox_GPUCond.Name = "CBox_GPUCond";
+            this.CBox_GPUCond.Size = new System.Drawing.Size(46, 25);
+            this.CBox_GPUCond.TabIndex = 17;
+            this.CBox_GPUCond.Text = "<=";
             // 
-            // CBox_bootrun
+            // label22
             // 
-            this.CBox_bootrun.AutoSize = true;
-            this.CBox_bootrun.Checked = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.BootRun;
-            this.CBox_bootrun.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "BootRun", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.CBox_bootrun.Location = new System.Drawing.Point(308, 242);
-            this.CBox_bootrun.Name = "CBox_bootrun";
-            this.CBox_bootrun.Size = new System.Drawing.Size(111, 21);
-            this.CBox_bootrun.TabIndex = 0;
-            this.CBox_bootrun.Text = "下次开机时执行";
-            this.CBox_bootrun.UseVisualStyleBackColor = true;
-            this.CBox_bootrun.CheckedChanged += new System.EventHandler(this.CBox_bootrun_CheckedChanged);
+            this.label22.AutoSize = true;
+            this.label22.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label22.Location = new System.Drawing.Point(246, 40);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(74, 21);
+            this.label22.TabIndex = 18;
+            this.label22.Text = "度时执行";
             // 
-            // tbox_cmdtxt
+            // CBox_CondTask
             // 
-            this.tbox_cmdtxt.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::My_Computer_Tools_Ⅱ.Properties.Settings.Default, "RunCmdText", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.tbox_cmdtxt.Location = new System.Drawing.Point(6, 78);
-            this.tbox_cmdtxt.Multiline = true;
-            this.tbox_cmdtxt.Name = "tbox_cmdtxt";
-            this.tbox_cmdtxt.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbox_cmdtxt.Size = new System.Drawing.Size(188, 147);
-            this.tbox_cmdtxt.TabIndex = 6;
-            this.tbox_cmdtxt.Text = global::My_Computer_Tools_Ⅱ.Properties.Settings.Default.RunCmdText;
+            this.CBox_CondTask.FormattingEnabled = true;
+            this.CBox_CondTask.Items.AddRange(new object[] {
+            "关机"});
+            this.CBox_CondTask.Location = new System.Drawing.Point(319, 39);
+            this.CBox_CondTask.Name = "CBox_CondTask";
+            this.CBox_CondTask.Size = new System.Drawing.Size(55, 25);
+            this.CBox_CondTask.TabIndex = 19;
+            this.CBox_CondTask.Text = "关机";
+            // 
+            // But_CheckTempTask
+            // 
+            this.But_CheckTempTask.Location = new System.Drawing.Point(374, 65);
+            this.But_CheckTempTask.Name = "But_CheckTempTask";
+            this.But_CheckTempTask.Size = new System.Drawing.Size(45, 23);
+            this.But_CheckTempTask.TabIndex = 20;
+            this.But_CheckTempTask.Text = "执行";
+            this.But_CheckTempTask.UseVisualStyleBackColor = true;
+            this.But_CheckTempTask.Click += new System.EventHandler(this.But_CheckTempTask_Click);
+            // 
+            // CBox_CheckTempCond
+            // 
+            this.CBox_CheckTempCond.FormattingEnabled = true;
+            this.CBox_CheckTempCond.Items.AddRange(new object[] {
+            "与",
+            "或"});
+            this.CBox_CheckTempCond.Location = new System.Drawing.Point(83, 39);
+            this.CBox_CheckTempCond.Name = "CBox_CheckTempCond";
+            this.CBox_CheckTempCond.Size = new System.Drawing.Size(40, 25);
+            this.CBox_CheckTempCond.TabIndex = 21;
+            this.CBox_CheckTempCond.Text = "或";
             // 
             // Form_Main
             // 
@@ -1956,6 +2116,7 @@
             this.tabPage1.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numbe_BootSleep)).EndInit();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
             this.groupBox5.ResumeLayout(false);
@@ -1977,7 +2138,10 @@
             this.groupBox1.ResumeLayout(false);
             this.GBox_Target.ResumeLayout(false);
             this.CMBS.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.numbe_BootSleep)).EndInit();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numberCPUTemp)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numberGPUTemp)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2142,5 +2306,18 @@
         private System.Windows.Forms.ComboBox CBox_UpAccNet;
         private System.Windows.Forms.Button But_UpAccFile;
         private System.Windows.Forms.Button But_DownAccFile;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Button But_UpTemp;
+        private System.Windows.Forms.NumericUpDown numberGPUTemp;
+        private System.Windows.Forms.NumericUpDown numberCPUTemp;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.ComboBox CBox_CPUCond;
+        private System.Windows.Forms.ComboBox CBox_GPUCond;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.ComboBox CBox_CondTask;
+        private System.Windows.Forms.Button But_CheckTempTask;
+        private System.Windows.Forms.ComboBox CBox_CheckTempCond;
     }
 }

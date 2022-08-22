@@ -540,9 +540,10 @@
             this.label15.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label15.Location = new System.Drawing.Point(167, 68);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(134, 19);
+            this.label15.Size = new System.Drawing.Size(142, 38);
             this.label15.TabIndex = 1;
-            this.label15.Text = "手动上传： Alt + U";
+            this.label15.Text = "手动上传： Alt + U\r\n剪贴板上传： Alt + I";
+            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label14
             // 

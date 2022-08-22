@@ -103,7 +103,7 @@ namespace My_Computer_Tools_Ⅱ
 
             Text_Username.Text = lbox_AccList.SelectedItem.ToString();
 
-            string[] vs = AccountStrs[lbox_AccList.SelectedItem.ToString()].Split('^');
+            string[] vs = AccountStrs[lbox_AccList.SelectedItem.ToString()].Split(' ');
             if (vs.Length != 0)
             {
                 Text_User.Text = vs[0];

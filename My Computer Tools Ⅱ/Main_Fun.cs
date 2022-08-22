@@ -923,6 +923,8 @@ namespace My_Computer_Tools_Ⅱ
                 grade = data.Grade,
             };
 
+            Program.DateTime = DateTime.Now;
+
             if (checkcount == 30)
             {
                 Program.IsReadlyNET = Program.CheckNet();
@@ -965,6 +967,15 @@ namespace My_Computer_Tools_Ⅱ
                 Program.AccXmlEncrypt = Program.CreaterXMLHelper().CheckNode("EncryptedData");
             }
 
+            //刷新系统硬件温度
+            float temp = Program.CCore.GetCpuTemp();
+            if(temp!=0)
+                Program.computer_temp.CPUTemp = temp;
+            temp = Program.CCore.GetGpuTemp();
+            float temp2 = Program.CCore.GetGpuTemp(false);
+            if (temp != 0) Program.computer_temp.GPUTemp = temp;
+            if (temp2 != 0) Program.computer_temp.GPUTemp = temp2;
+
             try
             {
                 if (this.IsHandleCreated)
@@ -978,7 +989,7 @@ namespace My_Computer_Tools_Ⅱ
                 Console.WriteLine("循环窗口已经结束或不存在时，此线程还没结束，会发生异常，无视即可。");
             }
 
-            Program.DateTime = DateTime.Now;
+            
             checkcount++;
         }
 
@@ -1081,8 +1092,8 @@ namespace My_Computer_Tools_Ⅱ
                     BreakCount = 0;
                     this.Invoke(new Action(() =>
                     {
-                        ProgressBarinTool.Maximum = FailureTryList.Count - TryOverList.Count;
                         ProgressBarinTool.Value = 0;
+                        ProgressBarinTool.Maximum = FailureTryList.Count - TryOverList.Count;
                         if (!Program.backWindows_State)
                             Program.WinCommand.ChangeTips($"开始重试上传");
                         else
@@ -1092,7 +1103,9 @@ namespace My_Computer_Tools_Ⅱ
                     {
                         this.Invoke(new Action(() =>
                         {
-                            ProgressBarinTool.Value = i;
+                            ProgressBarinTool.Maximum = FailureTryList.Count - TryOverList.Count;
+                            if(i <= ProgressBarinTool.Maximum)
+                                ProgressBarinTool.Value = i;
                             if (!Program.backWindows_State)
                                 Program.WinCommand.ChangeTips($"开始重试上传{FailureTryList.Count - TryOverList.Count}");
                             else
@@ -1118,22 +1131,24 @@ namespace My_Computer_Tools_Ⅱ
                     }
                     trycount++;
                 }
+
+                if (FailureTryList.Count != 0)
+                {
+                    this.Invoke(new Action(() =>
+                    {
+                        if (!Program.backWindows_State)
+                        {
+                            MessageBox.Show($"成功{TrueCount}个 跳过{BreakCount}个 失败{FalseCount}个", "重试上传完毕");
+                            Program.WinCommand.ChangeTips($"ReOver,成功{TrueCount}个 跳过{BreakCount}个 失败{FalseCount}个");
+                        }
+                        else
+                            Program.WinCommand.ChangeTips("重试上传完成", $"重试上传结束\r\n成功{TrueCount}个\r\n跳过{BreakCount}个\r\n失败{FalseCount}个", 3);
+                    }));
+                }
                 this.Invoke(new Action(() =>
                 {
                     But_UpLoadFile.Text = "手动上传";
                 }));
-
-                if (FailureTryList.Count != 0)
-                {
-                    MessageBox.Show($"成功{TrueCount}个 跳过{BreakCount}个 失败{FalseCount}个", "重试上传完毕");
-                    if (!Program.backWindows_State)
-                    {
-                        MessageBox.Show($"成功{TrueCount}个 跳过{BreakCount}个 失败{FalseCount}个", "重试上传完毕");
-                        Program.WinCommand.ChangeTips($"ReOver,成功{TrueCount}个 跳过{BreakCount}个 失败{FalseCount}个");
-                    }
-                    else
-                        Program.WinCommand.ChangeTips("重试上传完成", $"重试上传结束\r\n成功{TrueCount}个\r\n跳过{BreakCount}个\r\n失败{FalseCount}个", 3);
-                }
             };
             Thread thread = new Thread(new ParameterizedThreadStart(_Delegate));
             thread.Start(FileList1);
@@ -1428,6 +1443,14 @@ namespace My_Computer_Tools_Ⅱ
         }
 
         /// <summary>
+        /// 热键回调 剪贴板上传
+        /// </summary>
+        private void HotKeyCallBack_clipboard()
+        {
+            but_qnclipboard_Click(null,null);
+        }
+
+        /// <summary>
         /// 检查设置热键
         /// </summary>
         private void CheckHotKey()
@@ -1437,23 +1460,78 @@ namespace My_Computer_Tools_Ⅱ
                 //注册热键
                 /*
                  手动上传： Alt + U
+                 剪贴板上传：Alt + I
                  */
                 //Hotkey.Regist(this.Handle, HotkeyModifiers.MOD_ALT, Keys.X, Test);
                 //MessageBox.Show("Alt+X键注册完毕");
                 try
                 {
                     Hotkey.Regist(this.Handle, HotkeyModifiers.MOD_ALT, Keys.U, HotKeyCallBack_UpFileQN);
+                    Hotkey.Regist(this.Handle, HotkeyModifiers.MOD_ALT, Keys.I, HotKeyCallBack_clipboard);
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
+                    Console.WriteLine(e);
                 }
             }
             else
             {
                 //注销热键
                 Hotkey.UnRegist(this.Handle, HotKeyCallBack_UpFileQN);
+                Hotkey.UnRegist(this.Handle, HotKeyCallBack_clipboard);
             }
+        }
+
+        private void Task_CheckTempRunTask(object obj)
+        {
+            ThreadData data = (ThreadData)obj;
+            ThreadFormData CWdata = new ThreadFormData()
+            {
+                name = data.Name,
+                id = data.ID,
+                grade = data.Grade,
+            };
+            string datestr =  data.Fundata.ToString();
+            //cpu条件 cpu温度 与或 gpu条件 gpu温度 任务
+            string[] vs = datestr.Split('^');
+            bool isRun = false;
+            if (vs.Length != 6)
+                return;
+            if (vs[2] == "或")
+            {
+                if (vs[0] == "<=" && Program.computer_temp.CPUTemp <= Convert.ToDouble(vs[1]) || vs[0] == ">=" && Program.computer_temp.CPUTemp >= Convert.ToDouble(vs[1]))
+                    isRun = true;
+                if (vs[3] == "<=" && Program.computer_temp.GPUTemp <= Convert.ToDouble(vs[4]) || vs[3] == ">=" && Program.computer_temp.GPUTemp >= Convert.ToDouble(vs[4]))
+                    isRun = true;
+            }
+            else if (vs[2] == "与")
+            {
+                bool isRun1 = false, isRun2 = false;
+                if (vs[0] == "<=" && Program.computer_temp.CPUTemp <= Convert.ToDouble(vs[1]) || vs[0] == ">=" && Program.computer_temp.CPUTemp >= Convert.ToDouble(vs[1]))
+                    isRun1 = true;
+                if (vs[3] == "<=" && Program.computer_temp.GPUTemp <= Convert.ToDouble(vs[4]) || vs[3] == ">=" && Program.computer_temp.GPUTemp >= Convert.ToDouble(vs[4]))
+                    isRun2 = true;
+                if (isRun1 && isRun2) isRun = true;
+            }
+
+            if(isRun)
+                switch (vs[5])
+                {
+                    case "关机":
+                        UpFormData(CWdata, $"温度条件符合开始执行关机任务！");
+                        Process p = new Process();//实例化一个独立进程
+                        p.StartInfo.FileName = "cmd.exe";//进程打开的文件为Cmd
+                        p.StartInfo.UseShellExecute = false;//是否启动系统外壳选否
+                        p.StartInfo.RedirectStandardInput = true;//这是是否从StandardInput输入
+                        p.StartInfo.CreateNoWindow = true;//这里是启动程序是否显示窗体
+                        p.Start();//启动
+                        p.StandardInput.WriteLine("shutdown -s -t 0");//运行关机命令shutdown (-s)是关机 (-t)是延迟的时间 这里用秒计算 10就是10秒后关机
+                        p.StandardInput.WriteLine("exit");//退出cmd
+                        break;
+                    default:
+                        break;
+                }
+
         }
     }
 }
